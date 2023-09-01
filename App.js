@@ -1,20 +1,79 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import MainScreen from "./Screens/MainScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import LogInScreen from "./Screens/LogInScreen";
+import SignUpScreen from "./Screens/SignUpScreen";
+import TabNavigator from "./Screens/TabNavigator";
+import EditProfileScreen from "./Screens/EditProfileScreen";
+import UploadVideoScreen from "./Screens/UploadVideoScreen";
+import ResetPassword from "./Screens/ResetPasswordScreen";
+import MoreAboutUsScreen from "./Screens/MoreAboutUsScreen";
+import VideoScreen from "./Screens/VideoScreen";
+import WatchVideoScreen from "./Screens/WatchVideoScreen";
+import DrawingScreen from "./Screens/DrawingScreen";
 
 export default function App() {
+  const Stack = createNativeStackNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="MainScreen">
+        <Stack.Screen
+          name="MainScreen"
+          component={MainScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="LogInScreen"
+          component={LogInScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignUpScreen"
+          component={SignUpScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HomeScreen"
+          component={TabNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="EditProfileScreen"
+          component={EditProfileScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="UploadVideoScreen"
+          component={UploadVideoScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MoreAboutUsScreen"
+          component={MoreAboutUsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ResetPassword"
+          component={ResetPassword}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="VideoScreen"
+          component={VideoScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="WatchVideoScreen"
+          component={WatchVideoScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="DrawingScreen"
+          component={DrawingScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
