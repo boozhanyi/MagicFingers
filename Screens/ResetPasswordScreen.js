@@ -5,11 +5,12 @@ import {
   Text,
   Pressable,
   StatusBar,
+  Dimensions,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { ImageBackground } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { resetPassword } from "../Backend/Firebase";
 
 export default function ResetPassword({ navigation, route }) {
@@ -17,7 +18,19 @@ export default function ResetPassword({ navigation, route }) {
   const state = route.params?.state;
 
   const setNewPassword = async () => {
+    if (email === "") {
+      Alert.alert("Please enter a email!");
+      return;
+    }
     await resetPassword(email);
+    if (state === 0) {
+      navigation.navigate("LogInScreen");
+    } else {
+      navigation.navigate("Profile");
+    }
+  };
+
+  const back = () => {
     if (state === 0) {
       navigation.navigate("LogInScreen");
     } else {
@@ -28,33 +41,47 @@ export default function ResetPassword({ navigation, route }) {
   return (
     <ImageBackground
       source={require("../assets/Background.png")}
-      style={{ flex: 1 }}
+      style={{
+        flex: 1,
+        height: Dimensions.get("window").height,
+        width: Dimensions.get("window").width,
+      }}
+      resizeMode="cover"
     >
       <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <View style={styles.container}>
-            <Text style={styles.header}>Reset Password</Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                placeholder="Your Email"
-                onChangeText={(text) => setEmail(text)}
-                value={email}
-              />
-              <Pressable
-                style={({ pressed }) => [
-                  {
-                    backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
-                  },
-                  styles.button,
-                ]}
-                onPress={setNewPassword}
-              >
-                <Text style={styles.text}>Reset</Text>
-              </Pressable>
-            </View>
+        <View style={styles.container}>
+          <Text style={styles.header}>Reset Password</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Your Email"
+              onChangeText={(text) => setEmail(text)}
+              value={email}
+            />
+            <Pressable
+              style={({ pressed }) => [
+                {
+                  backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
+                },
+                styles.button,
+              ]}
+              onPress={setNewPassword}
+            >
+              <Text style={styles.text}>Reset</Text>
+            </Pressable>
+            <Pressable
+              style={({ pressed }) => [
+                {
+                  backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
+                },
+                styles.button,
+              ]}
+              onPress={back}
+            >
+              <Text style={styles.text}>Cancel</Text>
+            </Pressable>
           </View>
-        </KeyboardAwareScrollView>
+        </View>
       </SafeAreaView>
       <StatusBar style="auto" />
     </ImageBackground>
@@ -85,19 +112,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
-  passwordInput: {
-    height: 50,
-    width: "90%",
-    borderColor: "#000000",
-    borderRadius: 10,
-    borderWidth: 1,
-    padding: 10,
-    flexDirection: "row",
-  },
   button: {
     marginTop: 30,
-    width: "90%",
-    height: 50,
+    width: "70%",
+    height: 40,
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",

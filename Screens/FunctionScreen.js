@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,23 +6,26 @@ import {
   Image,
   Pressable,
   ImageBackground,
+  Dimensions,
+  KeyboardAvoidingView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as ImagePicker from "expo-image-picker";
 import { db, auth } from "../Backend/Firebase";
 import { onSnapshot, doc } from "firebase/firestore";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import SetProjectName from "../Components/SetProjectNameModel";
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function FunctionScreen({ navigation }) {
   const [profileImage, setProfileImage] = useState(null);
   const [nameModalVisible, setNameModal] = useState(false);
+  const [image, setImage] = useState(null);
 
   useFocusEffect(
     React.useCallback(() => {
       fetchData();
       setNameModal(false);
+      setImage(null);
     }, [])
   );
 
@@ -52,7 +55,8 @@ export default function FunctionScreen({ navigation }) {
     });
 
     if (!result.canceled) {
-      navigation.navigate("DrawingScreen", { image: result.assets[0].uri });
+      setImage(result.assets[0].uri);
+      setNameModal(true);
     } else {
       alert("You did not select any image.");
     }
@@ -77,16 +81,29 @@ export default function FunctionScreen({ navigation }) {
   return (
     <ImageBackground
       source={require("../assets/Background.png")}
-      style={{ flex: 1 }}
+      style={{
+        flex: 1,
+        height: Dimensions.get("window").height,
+        width: Dimensions.get("window").width,
+      }}
+      resizeMode="cover"
     >
-      <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <SafeAreaView
+        style={{
+          flex: 1,
+        }}
+      >
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          enabled={false}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
           <View
             style={[styles.container, { opacity: nameModalVisible ? 0.1 : 1 }]}
           >
             <View style={styles.titleContainer}>
               <Text style={styles.title}>EXPLORE</Text>
-              <View style={styles.flexSpacer} />
+
               <Pressable
                 style={styles.profileImageContainer}
                 onPress={onPressProfile}
@@ -143,12 +160,13 @@ export default function FunctionScreen({ navigation }) {
               </Pressable>
             </View>
           </View>
-        </KeyboardAwareScrollView>
+        </KeyboardAvoidingView>
       </SafeAreaView>
       <SetProjectName
         isVisible={nameModalVisible}
         onClose={onClose}
         navigation={navigation}
+        image={image}
       />
     </ImageBackground>
   );
@@ -163,9 +181,11 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
   },
   title: {
-    marginLeft: 115,
+    flex: 1,
+    textAlign: "center",
     fontSize: 30,
     fontWeight: "bold",
     fontStyle: "italic",
@@ -180,13 +200,11 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
-  flexSpacer: {
-    flex: 1,
-  },
   mainContainer: {
     marginTop: 50,
     width: "100%",
     alignItems: "center",
+    justifyContent: "center",
   },
   subContainer: {
     width: "90%",

@@ -7,6 +7,7 @@ import {
   Pressable,
   Image,
   ImageBackground,
+  Dimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -178,7 +179,12 @@ export default function HomeScreen() {
   return (
     <ImageBackground
       source={require("../assets/Background.png")}
-      style={{ flex: 1 }}
+      style={{
+        flex: 1,
+        height: Dimensions.get("window").height,
+        width: Dimensions.get("window").width,
+      }}
+      resizeMode="cover"
     >
       <SafeAreaView style={{ flex: 1 }}>
         <Text

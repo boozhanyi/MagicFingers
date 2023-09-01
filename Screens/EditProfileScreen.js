@@ -5,6 +5,7 @@ import {
   Text,
   Pressable,
   Image,
+  Dimensions,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
@@ -65,7 +66,12 @@ export default function EditProfileScreen({ navigation }) {
   return (
     <ImageBackground
       source={require("../assets/Background.png")}
-      style={{ flex: 1 }}
+      style={{
+        flex: 1,
+        height: Dimensions.get("window").height,
+        width: Dimensions.get("window").width,
+      }}
+      resizeMode="cover"
     >
       <SafeAreaView style={{ flex: 1 }}>
         <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>

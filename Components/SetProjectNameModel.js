@@ -9,15 +9,21 @@ import {
   Alert,
 } from "react-native";
 
-export default function SetProjectName({ isVisible, onClose, navigation }) {
+export default function SetProjectName({
+  isVisible,
+  onClose,
+  navigation,
+  image,
+}) {
   const [projectName, setProjectName] = useState("");
 
   const confirmName = () => {
     if (projectName === "") {
       Alert.alert("please give your project a name");
     } else {
-      navigation.navigate("DrawingScreen", { Name: projectName });
+      navigation.navigate("DrawingScreen", { Name: projectName, image: image });
     }
+    onClose();
   };
 
   useEffect(() => {

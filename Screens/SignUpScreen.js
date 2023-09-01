@@ -6,6 +6,7 @@ import {
   Pressable,
   StatusBar,
   Alert,
+  Dimensions,
 } from "react-native";
 import React, { useState } from "react";
 import { ImageBackground } from "react-native";
@@ -47,7 +48,12 @@ export default function LogInScreen({ navigation }) {
   return (
     <ImageBackground
       source={require("../assets/Background.png")}
-      style={{ flex: 1 }}
+      style={{
+        flex: 1,
+        height: Dimensions.get("window").height,
+        width: Dimensions.get("window").width,
+      }}
+      resizeMode="cover"
     >
       <SafeAreaView style={{ flex: 1 }}>
         <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -130,7 +136,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 100,
+    marginTop: 50,
     width: "100%",
   },
   nameInput: {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Canvas,
   useTouchHandler,
@@ -25,7 +25,7 @@ import {
   Modal,
   Alert,
   KeyboardAvoidingView,
-  Dimensions,
+  TextInput,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
@@ -61,22 +61,11 @@ export default function A({ route, navigation }) {
   const [isTextModelVisible, setTextVisible] = useState(false);
   const [isDeletePressed, setDeletePressed] = useState(false);
   const [status, requestPermission] = MediaLibrary.usePermissions();
-  const selectedBackground = useImage(route.params?.image);
-  const [background, backgroundSelected] = useState(false);
+  const selectedBackgorund = useImage(route.params?.image);
   const [canvaWidth, setCanvaWidth] = useState(0);
   const [canvaHeight, setCanvaHeight] = useState(0);
-  const [footerHeight, setFooterHeight] = useState(0);
-  const [headerHeight, setHeaderHeight] = useState(0);
   const drawingName = route.params?.Name;
   const [backModelVisible, setBackModelVisible] = useState(false);
-
-  useEffect(() => {
-    if (route.params?.image) {
-      backgroundSelected(true);
-    } else {
-      backgroundSelected(false);
-    }
-  }, []);
 
   if (status === null) {
     requestPermission();
@@ -107,7 +96,7 @@ export default function A({ route, navigation }) {
         });
         await MediaLibrary.saveToLibraryAsync(localUri);
         if (localUri) {
-          alert("Saved to your gallery!");
+          alert("Saved!");
         }
       } else {
         Alert.alert("You havet draw anything!");
@@ -415,13 +404,7 @@ export default function A({ route, navigation }) {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View style={styles.container}>
-          <View
-            style={styles.headerContainer}
-            onLayout={(event) => {
-              const height = event.nativeEvent.layout.height;
-              setHeaderHeight(height);
-            }}
-          >
+          <View style={styles.headerContainer}>
             <Pressable onPress={back} style={{ marginLeft: 10 }}>
               <Ionicons name="arrow-back" size={20} color="black" />
             </Pressable>
@@ -452,16 +435,9 @@ export default function A({ route, navigation }) {
           <Canvas
             style={[
               styles.drawingCanva,
-              background
+              selectedBackgorund
                 ? { backgroundColor: "transparent" }
                 : { backgroundColor: "white" },
-              {
-                height:
-                  Dimensions.get("window").height -
-                  footerHeight -
-                  headerHeight -
-                  35,
-              },
             ]}
             onTouch={onTouch}
             ref={imageRef}
@@ -473,9 +449,9 @@ export default function A({ route, navigation }) {
               setCanvaHeight(height);
             }}
           >
-            {background && (
+            {selectedBackgorund && (
               <BackgroundImage
-                image={selectedBackground}
+                image={selectedBackgorund}
                 fit="fill"
                 x={0}
                 y={0}
@@ -550,13 +526,7 @@ export default function A({ route, navigation }) {
               }
             })}
           </Canvas>
-          <View
-            style={styles.drawingTools}
-            onLayout={(event) => {
-              const height = event.nativeEvent.layout.height;
-              setFooterHeight(height);
-            }}
-          >
+          <View style={styles.drawingTools}>
             <Pressable onPress={onOpenPencil}>
               <Image
                 style={styles.image}
@@ -723,6 +693,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
+    width: "100%",
     backgroundColor: "#D2FEFF",
     padding: 5,
     alignItems: "center",
@@ -748,9 +719,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   drawingTools: {
-    bottom: 0,
-    position: "absolute",
-    width: "100%",
     backgroundColor: "#D2FEFF",
     marginTop: 10,
     borderWidth: 1,
@@ -764,7 +732,8 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   drawingCanva: {
-    marginTop: 5,
+    marginTop: 10,
+    flex: 1,
     backgroundColor: "white",
   },
   deleteContainer: {

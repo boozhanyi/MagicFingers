@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, Pressable, TextInput } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  TextInput,
+  Modal,
+} from "react-native";
 import Slider from "@react-native-community/slider";
 
 export default function TextView({

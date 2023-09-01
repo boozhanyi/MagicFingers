@@ -7,11 +7,11 @@ import {
   StatusBar,
   ImageBackground,
   Alert,
-  Image,
+  Dimensions,
+  KeyboardAvoidingView,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { LogInAccount } from "../Backend/Firebase";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -28,12 +28,6 @@ export default function LogInScreen({ navigation }) {
       Alert.alert(logInStatus.error);
     }
   };
-
-  const googleLogIn = async () => {
-    await googleSignIn();
-    navigation.navigate("HomeScreen");
-  };
-
   const showPassword = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -45,10 +39,18 @@ export default function LogInScreen({ navigation }) {
   return (
     <ImageBackground
       source={require("../assets/Background.png")}
-      style={{ flex: 1 }}
+      style={{
+        flex: 1,
+        height: Dimensions.get("window").height,
+        width: Dimensions.get("window").width,
+      }}
+      resizeMode="cover"
     >
       <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
           <View style={styles.container}>
             <Text style={styles.header}>Log In</Text>
             <View style={styles.inputContainer}>
@@ -95,7 +97,7 @@ export default function LogInScreen({ navigation }) {
               </Pressable>
             </View>
           </View>
-        </KeyboardAwareScrollView>
+        </KeyboardAvoidingView>
       </SafeAreaView>
       <StatusBar style="auto" />
     </ImageBackground>
