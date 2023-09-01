@@ -58,6 +58,18 @@ const LogInAccount = async (email, password) => {
   }
 };
 
+const LogIn = async (email, password) => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+
+    console.log("Successfully logged in");
+    return { status: true, error: null };
+  } catch (error) {
+    console.log(error);
+    return { status: false, error: error.message };
+  }
+};
+
 const SignUpAccount = async (email, password, username) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
