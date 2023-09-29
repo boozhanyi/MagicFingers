@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import Slider from "@react-native-community/slider";
 import { TriangleColorPicker } from "react-native-color-picker";
-import { center } from "@shopify/react-native-skia";
 
 export default function Lines({ onSetColor, onSetRadius }) {
   const [radius, setRadius] = useState(1);

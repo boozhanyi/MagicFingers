@@ -37,20 +37,12 @@ export default function ProjectFucntion({ isVisible, onClose, projects }) {
         Alert.alert("Permission needed!");
       }
 
-      projects.forEach(async (item) => {
-        const fileUri =
-          FileSystem.documentDirectory + item.DrawingName + ".png";
-        const downloadResumable = FileSystem.createDownloadResumable(
-          item.DrawingUrl,
-          fileUri,
-          {},
-          false
+      projects.forEach(async (drawing) => {
+        const { uri } = await FileSystem.downloadAsync(
+          drawing.DrawingUrl,
+          FileSystem.cacheDirectory + drawing.DrawingName + ".png"
         );
-        const { uri } = await downloadResumable.downloadAsync(null, {
-          shouldCache: false,
-        });
-        console.log(uri);
-        await MediaLibrary.createAssetAsync(uri);
+        await MediaLibrary.saveToLibraryAsync(uri);
       });
 
       Alert.alert("Download Complete");
@@ -70,17 +62,11 @@ export default function ProjectFucntion({ isVisible, onClose, projects }) {
       return;
     }
 
-    projects.forEach(async (item) => {
-      const fileUri = FileSystem.documentDirectory + item.DrawingName + ".png";
-      const downloadResumable = FileSystem.createDownloadResumable(
-        item.DrawingUrl,
-        fileUri,
-        {},
-        false
+    projects.forEach(async (drawing) => {
+      const { uri } = await FileSystem.downloadAsync(
+        drawing.DrawingUrl,
+        FileSystem.cacheDirectory + drawing.DrawingName + ".png"
       );
-      const { uri } = await downloadResumable.downloadAsync(null, {
-        shouldCache: false,
-      });
       await Sharing.shareAsync(uri);
     });
   };
