@@ -1,7 +1,6 @@
 import {
   View,
   TextInput,
-  StyleSheet,
   Text,
   Pressable,
   Image,
@@ -73,71 +72,47 @@ export default function EditProfileScreen({ navigation }) {
       }}
       resizeMode="cover"
     >
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView className="flex-1">
         <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <View style={styles.inner}>
-            <Pressable
-              style={{
-                width: "90%",
-                justifyContent: "flex-start",
-              }}
-              onPress={back}
-            >
+          <View className="flex-1 justify-center items-center">
+            <Pressable className="w-11/12 justify-start" onPress={back}>
               <Ionicons name="arrow-back" size={24} color="black" />
             </Pressable>
-            <View style={styles.profileImageContainer}>
-              <Image
-                source={{ uri: profileImage }}
-                style={styles.profileImage}
-              />
+            <View className="overflow-hidden border rounded-full mt-10">
+              <Image source={{ uri: profileImage }} className="w-24 h-24" />
             </View>
             <Pressable
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? "#C3BFBF" : "black",
-                },
-                styles.uploadPhotoContainer,
-              ]}
+              className="flex flex-row mt-5 border rounded-lg p-2 gap-x-2 bg-black justify-center items-center"
               onPress={uploadPhoto}
             >
-              <Text style={styles.uploadPhotoText}>Upload Photo</Text>
+              <Text className="text-white">Upload Photo</Text>
               <FontAwesome name="upload" size={24} color="white" />
             </Pressable>
-            <View style={styles.profileContainer}>
-              <Text style={styles.profileText}>Username</Text>
+            <View className="w-11/12 justify-start mt-5">
+              <Text className="text-sm">Username</Text>
               <TextInput
-                style={styles.textInputContainer}
+                className="border rounded-lg mt-2 h-10 p-2"
                 onChangeText={(text) => setUsername(text)}
                 value={username}
               ></TextInput>
-              <Text style={styles.profileText}>Email</Text>
+              <Text className="text-sm mt-5">Email</Text>
               <TextInput
-                style={styles.textInputContainer}
+                className="border rounded-lg mt-2 h-10 p-2"
                 onChangeText={(text) => setEmail(text)}
                 value={email}
               ></TextInput>
             </View>
             <Pressable
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
-                },
-                styles.updateContainer,
-              ]}
+              className="w-3/5 h-12 rounded-full bg-cyan-50  mt-5 justify-center items-center shadow-lg shadow-neutral-950"
               onPress={update}
             >
-              <Text style={styles.updateText}>Update</Text>
+              <Text className="font-bold text-base">Update</Text>
             </Pressable>
             <Pressable
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
-                },
-                styles.updateContainer,
-              ]}
+              className="w-3/5 h-12 rounded-full bg-cyan-50  mt-5 justify-center items-center shadow-lg shadow-neutral-950"
               onPress={resetPass}
             >
-              <Text style={styles.updateText}>Reset Password</Text>
+              <Text className="font-bold text-base">Reset Password</Text>
             </Pressable>
           </View>
         </KeyboardAwareScrollView>
@@ -146,66 +121,3 @@ export default function EditProfileScreen({ navigation }) {
     </ImageBackground>
   );
 }
-
-const styles = StyleSheet.create({
-  inner: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  profileImageContainer: {
-    overflow: "hidden",
-    borderRadius: 50,
-    borderWidth: 2,
-  },
-  profileImage: {
-    width: 100,
-    height: 100,
-  },
-  uploadPhotoContainer: {
-    flexDirection: "row",
-    marginTop: 20,
-    borderRadius: 10,
-    padding: 8,
-    elevation: 10,
-  },
-  uploadPhotoText: {
-    marginRight: 15,
-    color: "white",
-  },
-  profileContainer: {
-    width: "90%",
-    justifyContent: "flex-start",
-  },
-  profileText: {
-    fontSize: 15,
-    marginTop: 20,
-  },
-  textInputContainer: {
-    borderRadius: 10,
-    borderWidth: 1,
-    marginTop: 10,
-    height: 40,
-    padding: 10,
-  },
-  updateContainer: {
-    marginTop: 40,
-    width: "70%",
-    height: 50,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
-    shadowOpacity: 1,
-    shadowRadius: 4,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    elevation: 3,
-  },
-  updateText: {
-    fontWeight: "bold",
-    fontSize: 15,
-  },
-});

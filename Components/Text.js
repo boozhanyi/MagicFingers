@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-  TextInput,
-  Modal,
-} from "react-native";
+import { View, Text, Pressable, TextInput } from "react-native";
 import Slider from "@react-native-community/slider";
 
 export default function TextView({
@@ -39,83 +32,30 @@ export default function TextView({
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Size : {size}</Text>
-      <Slider
-        value={size}
-        style={{ width: 200, height: 50 }}
-        minimumValue={0}
-        maximumValue={100}
-        minimumTrackTintColor="black"
-        maximumTrackTintColor="black"
-        onValueChange={handleSizeChange}
-      />
-      <TextInput
-        style={styles.textInput}
-        placeholder="Enter text"
-        onChangeText={(text) => onSettext(text)}
-      ></TextInput>
-      <Pressable
-        style={({ pressed }) => [
-          {
-            backgroundColor: pressed ? "#A3FFFE" : "#B9B9B9",
-          },
-          styles.confirmButton,
-        ]}
-        onPress={() => onConfirm(6)}
-      >
-        <Text>Confirm</Text>
-      </Pressable>
+    <View className="justify-center items-center flex-1">
+      <View className="flex-1 absolute bottom-20 bg-cyan-50 p-2 border justify-center items-center rounded-xl">
+        <Text>Size : {size}</Text>
+        <Slider
+          value={size}
+          style={{ width: 200, height: 50 }}
+          minimumValue={0}
+          maximumValue={100}
+          minimumTrackTintColor="black"
+          maximumTrackTintColor="black"
+          onValueChange={handleSizeChange}
+        />
+        <TextInput
+          className="w-72 h-10 border rounded-xl p-2"
+          placeholder="Enter text"
+          onChangeText={(text) => onSettext(text)}
+        ></TextInput>
+        <Pressable
+          className="bg-slate-200 p-2 h-10 rounded-xl w-1/2 justify-center items-center mt-3 mb-2"
+          onPress={() => onConfirm(6)}
+        >
+          <Text className="font-bold">Confirm</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: "absolute",
-    padding: 10,
-    bottom: 80,
-    alignItems: "center",
-    backgroundColor: "#E9FFFF",
-    justifyContent: "center",
-    borderWidth: 1,
-    borderRadius: 20,
-  },
-  image: {
-    width: 50,
-    height: 50,
-    marginLeft: 20,
-  },
-  confirmButton: {
-    width: 70,
-    height: 40,
-    margin: 5,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.4,
-    shadowRadius: 4,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    elevation: 3,
-  },
-  textInput: {
-    marginLeft: 10,
-    height: 40,
-    width: 300,
-    marginTop: 10,
-    marginBottom: 10,
-    paddingLeft: 10,
-    justifyContent: "center",
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "black",
-    backgroundColor: "#F1F1F1",
-  },
-});

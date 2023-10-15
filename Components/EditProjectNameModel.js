@@ -25,38 +25,25 @@ export default function EditProjectName({ isVisible, onClose, project }) {
 
   return (
     <Modal animationType="fade" transparent={true} visible={isVisible}>
-      <View style={styles.centeredView}>
-        <View style={styles.modalContent}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>Enter New Project Name</Text>
-          </View>
-          <View style={styles.textInputContainer}>
-            <TextInput
-              onChangeText={(text) => setProjectName(text)}
-              value={projectName}
-            />
-          </View>
+      <View className="flex-1 justify-center items-center">
+        <View className="w-11/12 p-10 bg-cyan-50 shadow-xl shadow-slate-950 items-center rounded-xl">
+          <Text className="text-base font-bold">Enter New Project Name</Text>
+          <TextInput
+            className="w-11/12 border rounded-xl mt-5 p-2 "
+            onChangeText={(text) => setProjectName(text)}
+            value={projectName}
+          />
           <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? "#A3FFFE" : "#B9B9B9",
-              },
-              styles.confirmButton,
-            ]}
+            className="bg-slate-200 w-2/4 p-2 mt-5 justify-center items-center rounded-xl"
             onPress={updateProjectName}
           >
-            <Text style={styles.text}>Confirm</Text>
+            <Text className="font-bold text-sm">Confirm</Text>
           </Pressable>
           <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? "#A3FFFE" : "#B9B9B9",
-              },
-              styles.cancelButton,
-            ]}
+            className="bg-slate-200 w-2/4 p-2 mt-5 justify-center items-center rounded-xl"
             onPress={onClose}
           >
-            <Text style={styles.text}>Cancel</Text>
+            <Text className="font-bold text-sm">Cancel</Text>
           </Pressable>
         </View>
       </View>

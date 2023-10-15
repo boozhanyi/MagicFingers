@@ -162,109 +162,61 @@ export default function VideoScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView className="flex-1">
       <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={styles.container}>
-          <Pressable
-            style={{
-              width: "90%",
-              justifyContent: "flex-start",
-              marginTop: 20,
-            }}
-            onPress={back}
-          >
+        <View className="flex-1 items-center">
+          <Pressable className="w-11/12 justify-start mt-5" onPress={back}>
             <Ionicons name="arrow-back" size={24} color="black" />
           </Pressable>
-          <Text style={{ fontWeight: "bold" }}>How To Draw For Kids</Text>
-          <Text style={{ fontWeight: "100", margin: 10, textAlign: "center" }}>
+          <Text className="font-bold">How To Draw For Kids</Text>
+          <Text className="text-center mt-3 font-extralight mr-2 ml-2">
             Here is where you'll find every single on of our how to draw
             lessons! It's a massive drawing library! You'll find lessons for
             young and old kids. You'll find everything from how to draw cupcakes
             to how to draw sharks. So, what are you waiting for? Grab a marker
             and follow along with us.
           </Text>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              width: "95%",
-              borderWidth: 1,
-              borderRadius: 10,
-              marginTop: 10,
-            }}
-          >
-            <Ionicons
-              style={{ marginLeft: 10 }}
-              name="md-search-sharp"
-              size={24}
-              color="black"
-            />
+          <View className="flex flex-row items-center w-11/12 border mt-5 rounded-xl p-2">
+            <Ionicons name="md-search-sharp" size={24} color="black" />
             <TextInput
-              style={styles.videoNameInput}
+              className="flex-1 ml-2 text-sm"
               placeholder="Search your video name here"
               onChangeText={(text) => search(text)}
               value={videoName}
             ></TextInput>
           </View>
-          <View style={styles.filterContainer}>
+          <View className="flex flex-row mt-2 self-start ml-3">
             <Pressable
-              style={[
-                styles.filterButton,
-                {
-                  backgroundColor: isPressedButtonAll.current
-                    ? "rgb(210, 230, 255)"
-                    : "#DDFFFF",
-                },
-              ]}
+              className="bg-cyan-50 active:bg-cyan-100 w-1/5 rounded-xl justify-center items-center h-10 "
               onPress={pressedButtonAll}
             >
-              <Text style={{ fontSize: 10, fontWeight: "600" }}>All</Text>
+              <Text className="font-semibold text-xs">All</Text>
             </Pressable>
             <Pressable
-              style={[
-                styles.filterButton,
-                {
-                  backgroundColor: isPressedButtonHistory.current
-                    ? "rgb(210, 230, 255)"
-                    : "#DDFFFF",
-                },
-              ]}
+              className="bg-cyan-50 active:bg-cyan-100 w-1/5 rounded-xl justify-center items-center h-10 ml-2"
               onPress={pressedButtonHistory}
             >
-              <Text style={{ fontSize: 10, fontWeight: "600" }}>History</Text>
+              <Text className="font-semibold text-xs">History</Text>
             </Pressable>
             <Pressable
-              style={[
-                styles.filterButton,
-                {
-                  backgroundColor: isPressedButtonStar.current
-                    ? "rgb(210, 230, 255)"
-                    : "#DDFFFF",
-                },
-              ]}
+              className="bg-cyan-50 active:bg-cyan-100 w-auto p-2 rounded-xl justify-center items-center h-10 ml-2"
               onPress={pressedButtonStar}
             >
-              <Text style={{ fontSize: 10, fontWeight: "600" }}>
-                Stared Video
-              </Text>
+              <Text className="font-semibold text-xs">Stared Video</Text>
             </Pressable>
           </View>
-          <View style={styles.videoContainer}>
+          <View className="w-full mt-5">
             {video.map((item) => (
               <View
-                style={{
-                  width: "100%",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
+                className="w-full justify-center items-center"
                 key={item.id}
               >
                 <Pressable
-                  style={styles.video}
+                  className="w-11/12 h-20 bg-black rounded-lg mt-3"
                   onPress={() => selectedVideo(item)}
                 >
                   <Video
-                    style={{ width: "100%", height: "100%" }}
+                    className="w-full h-full"
                     useNativeControls
                     resizeMode="contain"
                     source={{ uri: item.VideoUrl }}
@@ -273,14 +225,7 @@ export default function VideoScreen({ navigation }) {
                     isLooping
                   />
                 </Pressable>
-                <Text
-                  style={{
-                    fontWeight: "500",
-                    fontSize: 15,
-                    marginTop: 10,
-                    textAlign: "center",
-                  }}
-                >
+                <Text className="font-medium text-base mt-5 text-center">
                   {item.VideoName}
                 </Text>
               </View>
@@ -291,44 +236,3 @@ export default function VideoScreen({ navigation }) {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  videoNameInput: {
-    width: "95%",
-    padding: 5,
-  },
-  videoContainer: {
-    flex: 1,
-    width: "100%",
-    marginTop: 10,
-    alignItems: "center",
-  },
-  video: {
-    width: "90%",
-    height: 100,
-    borderRadius: 10,
-    borderWidth: 1,
-    marginTop: 20,
-    backgroundColor: "black",
-  },
-  filterContainer: {
-    flexDirection: "row",
-    marginTop: 5,
-    alignSelf: "flex-start",
-    marginLeft: 5,
-  },
-  filterButton: {
-    width: "20%",
-    height: 40,
-    margin: 5,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 3,
-  },
-});

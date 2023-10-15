@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Pressable,
-  ImageBackground,
-} from "react-native";
+import { Text, View, Image, Pressable, ImageBackground } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
@@ -75,43 +68,52 @@ export default function ProfileScreen({ navigation }) {
       source={require("../assets/Background.png")}
       style={{ flex: 1 }}
     >
-      <SafeAreaView style={styles.container}>
-        <View style={styles.profileImageContainer}>
-          <Image source={{ uri: profileImage }} style={styles.profileImage} />
+      <SafeAreaView className="flex-1 items-center">
+        <View className="overflow-hidden border rounded-full mt-10">
+          <Image source={{ uri: profileImage }} className="w-24 h-24" />
         </View>
-        <Text style={styles.nameText}>{username}</Text>
-        <Pressable style={styles.editButtonContainer} onPress={editProfile}>
-          <Text style={styles.editNametext}>Edit Profile</Text>
+        <Text className="font-bold text-lg mt-5">{username}</Text>
+        <Pressable
+          className="items-center justify-center border rounded-xl p-1 w-2/5 bg-black mt-5"
+          onPress={editProfile}
+        >
+          <Text className="font-bold text-white text-sm">Edit Profile</Text>
         </Pressable>
-        <View style={styles.Linecontainer}>
-          <View style={styles.line} />
+        <View className="flex flex-row items-center mt-5 w-11/12">
+          <View className="flex-1 h-0.5 bg-black opacity-80" />
         </View>
-        <View style={styles.functionContainer}>
+        <View className="flex flex-row mt-6 w-11/12 justify-between items-center">
           <FontAwesome name="file" size={24} color="black" />
-          <Text style={styles.functionText}>Your Project</Text>
+          <Text className="flex-1 text-base font-medium ml-4">
+            Your Project
+          </Text>
           <Pressable onPress={yourProject}>
             <MaterialIcons name="navigate-next" size={27} color="black" />
           </Pressable>
         </View>
-        <View style={styles.functionContainer}>
+        <View className="flex flex-row mt-6 w-11/12 justify-between items-center">
           <Entypo name="info-with-circle" size={24} color="black" />
-          <Text style={styles.functionText}>More About Us</Text>
+          <Text className="flex-1 text-base font-medium ml-4">
+            More About Us
+          </Text>
           <Pressable onPress={moreAboutUs}>
             <MaterialIcons name="navigate-next" size={27} color="black" />
           </Pressable>
         </View>
         {userID === "LE5gtcFiv8feSDeYqnpBhjrA9f42" && (
-          <View style={styles.functionContainer}>
+          <View className="flex flex-row mt-6 w-11/12 justify-between items-center">
             <Entypo name="upload-to-cloud" size={24} color="black" />
-            <Text style={styles.functionText}>UploadVideo</Text>
+            <Text className="flex-1 text-base font-medium ml-4">
+              UploadVideo
+            </Text>
             <Pressable onPress={uploadVideo}>
               <MaterialIcons name="navigate-next" size={27} color="black" />
             </Pressable>
           </View>
         )}
-        <View style={styles.functionContainer}>
+        <View className="flex flex-row mt-6 w-11/12 justify-between items-center">
           <MaterialCommunityIcons name="logout" size={24} color="black" />
-          <Text style={styles.functionText}>Log Out</Text>
+          <Text className="flex-1 text-base font-medium ml-4">Log Out</Text>
           <Pressable onPress={LogOut}>
             <MaterialIcons name="navigate-next" size={27} color="black" />
           </Pressable>
@@ -120,66 +122,3 @@ export default function ProfileScreen({ navigation }) {
     </ImageBackground>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-  },
-  profileImageContainer: {
-    overflow: "hidden",
-    borderRadius: 50,
-    borderWidth: 2,
-    marginTop: 40,
-  },
-  profileImage: {
-    width: 100,
-    height: 100,
-  },
-  nameText: {
-    fontWeight: "bold",
-    fontSize: 20,
-    marginTop: 20,
-  },
-  editButtonContainer: {
-    alignItems: "center",
-    alignContent: "center",
-    borderWidth: 2,
-    borderRadius: 10,
-    padding: 5,
-    marginTop: 20,
-    width: "40%",
-    backgroundColor: "black",
-    elevation: 10,
-  },
-  editNametext: {
-    fontWeight: "bold",
-    fontSize: 15,
-    color: "white",
-  },
-  Linecontainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 20,
-    width: "95%",
-  },
-  line: {
-    flex: 1,
-    height: 2,
-    backgroundColor: "black",
-    opacity: 0.4,
-  },
-  functionContainer: {
-    flexDirection: "row",
-    marginTop: 30,
-    width: "90%",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  functionText: {
-    flex: 1,
-    fontSize: 15,
-    fontWeight: "600",
-    marginLeft: 10,
-  },
-});

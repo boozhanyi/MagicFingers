@@ -48,37 +48,31 @@ export default function ResetPassword({ navigation, route }) {
       }}
       resizeMode="cover"
     >
-      <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.container}>
-          <Text style={styles.header}>Reset Password</Text>
-          <View style={styles.inputContainer}>
+      <SafeAreaView className="flex-1">
+        <View className="flex-1 justify-center items-center ">
+          <Text className="text-3xl font-bold">Reset Password</Text>
+          <View className="justify-center items-center w-full mt-10">
             <TextInput
-              style={styles.input}
+              className="w-11/12 h-14 border rounded-xl p-3"
               placeholder="Your Email"
               onChangeText={(text) => setEmail(text)}
               value={email}
             />
             <Pressable
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
-                },
-                styles.button,
-              ]}
+              className="w-3/5 h-10 rounded-xl mt-5 justify-center items-center bg-cyan-50 shadow-xl shadow-neutral-950"
               onPress={setNewPassword}
             >
-              <Text style={styles.text}>Reset</Text>
+              <Text className="text-base uppercase text-black font-semibold">
+                Reset
+              </Text>
             </Pressable>
             <Pressable
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
-                },
-                styles.button,
-              ]}
+              className="w-3/5 h-10 rounded-xl mt-5 justify-center items-center bg-cyan-50 shadow-xl shadow-neutral-950"
               onPress={back}
             >
-              <Text style={styles.text}>Cancel</Text>
+              <Text className="text-base uppercase text-black font-semibold">
+                Cancel
+              </Text>
             </Pressable>
           </View>
         </View>

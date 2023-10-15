@@ -39,118 +39,57 @@ export default function UploadVideoScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView className="flex-1">
       <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={styles.container}>
-          <Pressable
-            style={{
-              width: "90%",
-              justifyContent: "flex-start",
-            }}
-            onPress={back}
-          >
+        <View className="flex-1 justify-center items-center">
+          <Pressable className="w-11/12 justify-start" onPress={back}>
             <Ionicons name="arrow-back" size={24} color="black" />
           </Pressable>
-          <View style={{ width: "100%", height: 200 }}>
+          <View className="w-full h-1/4 justify-center items-center">
             {videoSource && (
               <Video
                 source={{ uri: videoSource }}
-                style={styles.video}
+                className="w-full h-full"
                 useNativeControls
                 resizeMode="contain"
               />
             )}
+            {!videoSource && (
+              <View className="w-2/4 h-full items-center justify-center bg-slate-200">
+                <Text className="font-bold text-xl ">Video</Text>
+              </View>
+            )}
           </View>
           <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
-              },
-              styles.uploadVideoBtn,
-            ]}
+            className="w-3/5 mt-5 justify-center items-center bg-cyan-50 shadow-xl shadow-neutral-950 h-10 rounded-xl"
             onPress={selectVideo}
           >
-            <Text style={styles.uploadVideoText}>Upload Video</Text>
+            <Text className="text-base font-bold">Upload Video</Text>
           </Pressable>
-          <View style={styles.videoInput}>
-            <Text style={{ fontSize: 15, fontWeight: "500" }}>Name</Text>
+          <View className="w-full justify-start items-start mt-5">
+            <Text className="text-sm font-bold ml-5">Name</Text>
             <TextInput
-              style={styles.inputContainer}
+              className="w-11/12 ml-5 border rounded-lg h-10 mt-3 p-2"
               placeholder="Your Video Name"
               onChangeText={(text) => setVideoName(text)}
               value={videoName}
             />
-            <Text style={{ fontSize: 15, fontWeight: "500", marginTop: 10 }}>
-              Keyword
-            </Text>
+            <Text className="text-sm font-bold ml-5 mt-3">Keyword</Text>
             <TextInput
-              style={styles.inputContainer}
+              className="w-11/12 ml-5 border rounded-lg h-10 mt-3 p-2"
               placeholder="Your Video Name"
               onChangeText={(text) => setKeyword(text)}
               value={keyword}
             />
           </View>
           <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
-              },
-              styles.confirmBtn,
-            ]}
+            className="bg-cyan-50 mt-10 w-1/2 h-10 justify-center items-center rounded-xl shadow-lg shadow-neutral-950"
             onPress={confirm}
           >
-            <Text style={styles.uploadVideoText}>Confirm</Text>
+            <Text className="text-base font-bold">Confirm</Text>
           </Pressable>
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  video: {
-    width: "100%",
-    height: "100%",
-  },
-  uploadVideoBtn: {
-    marginTop: 10,
-    width: "60%",
-    height: 50,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 10,
-  },
-  uploadVideoText: {
-    fontSize: 15,
-    fontWeight: "800",
-  },
-  videoInput: {
-    marginTop: 20,
-    marginLeft: 30,
-    width: "100%",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-  },
-  inputContainer: {
-    width: "90%",
-    borderRadius: 10,
-    borderWidth: 1,
-    padding: 5,
-    marginTop: 10,
-  },
-  confirmBtn: {
-    width: "60%",
-    height: 50,
-    marginTop: 30,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 10,
-  },
-});

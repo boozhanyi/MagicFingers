@@ -15,35 +15,21 @@ export default function MainScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView className="flex-1 bg-cyan-200 items-center justify-center">
       <FadeInView style={styles.imageContainer}>
-        <Image source={PlaceHolderImage} style={styles.image}></Image>
-        <View style={styles.buttonContainer}>
-          <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
-              },
-              styles.button,
-            ]}
-            onPress={LogIn}
-          >
-            <Text style={styles.buttonText}>Log In</Text>
-          </Pressable>
-        </View>
-        <View style={styles.buttonContainer}>
-          <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
-              },
-              styles.button,
-            ]}
-            onPress={SignUp}
-          >
-            <Text style={styles.buttonText}>Sign Up</Text>
-          </Pressable>
-        </View>
+        <Image source={PlaceHolderImage} className="w-2/4 h-1/4"></Image>
+        <Pressable
+          className="bg-cyan-100 active:bg-white w-5/6 h-12 justify-center items-center rounded-full mt-6 border"
+          onPress={LogIn}
+        >
+          <Text className="text-sm uppercase font-medium">Log In</Text>
+        </Pressable>
+        <Pressable
+          className="bg-cyan-100 active:bg-white w-5/6 h-12 justify-center items-center rounded-full mt-6 border"
+          onPress={SignUp}
+        >
+          <Text className=" text-sm uppercase font-medium">Sign Up</Text>
+        </Pressable>
       </FadeInView>
       <StatusBar style="auto" />
     </SafeAreaView>
@@ -51,41 +37,10 @@ export default function MainScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#C5FFFF",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   imageContainer: {
     width: "100%",
     height: "100%",
     alignItems: "center",
     justifyContent: "center",
-  },
-  image: {
-    width: "50%",
-    height: "25%",
-  },
-  buttonContainer: {
-    width: "100%",
-    height: "10%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  button: {
-    width: "80%",
-    height: "70%",
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 15,
-    textTransform: "uppercase",
-    color: "black",
-    fontWeight: "500",
   },
 });

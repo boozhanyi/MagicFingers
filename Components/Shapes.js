@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, Pressable, Image } from "react-native";
+import { View, Text, Pressable, Image } from "react-native";
 import Slider from "@react-native-community/slider";
 import { TriangleColorPicker } from "react-native-color-picker";
 
@@ -43,16 +43,16 @@ export default function Shape({
   };
 
   return (
-    <View style={{ justifyContent: "center", alignItems: "center" }}>
-      <View style={styles.container}>
-        <Text style={{ textAlign: "center" }}>
+    <View className="justify-center items-center">
+      <View className="flex-1 absolute bottom-20 bg-cyan-50 p-2 border justify-center items-center rounded-xl">
+        <Text className="text-sm text-center">
           Press the color bar to confirm selection of color!
         </Text>
         <TriangleColorPicker
-          style={{ width: "80%", height: 150 }}
+          className="w-4/5 h-40"
           onColorSelected={(color) => onColorChange(color)}
         />
-        <Text style={{ marginTop: 10 }}>Radius : {radius}</Text>
+        <Text className="mt-5">Radius : {radius}</Text>
         <Slider
           value={radius}
           style={{ width: 200, height: 50 }}
@@ -82,23 +82,23 @@ export default function Shape({
           maximumTrackTintColor="black"
           onValueChange={handleHeigthChange}
         />
-        <View style={{ flexDirection: "row" }}>
+        <View className="flex flex-row gap-x-2">
           <Pressable onPress={() => selectShape(3)}>
             <Image
               source={require("../assets/Circle.png")}
-              style={styles.image}
+              className="w-10 h-10"
             ></Image>
           </Pressable>
           <Pressable onPress={() => selectShape(4)}>
             <Image
               source={require("../assets/Square.png")}
-              style={styles.image}
+              className="w-10 h-10"
             ></Image>
           </Pressable>
           <Pressable onPress={() => selectShape(5)}>
             <Image
               source={require("../assets/Oval.png")}
-              style={styles.image}
+              className="w-10 h-10"
             ></Image>
           </Pressable>
         </View>
@@ -106,22 +106,3 @@ export default function Shape({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: "absolute",
-    padding: 10,
-    bottom: 80,
-    alignItems: "center",
-    backgroundColor: "#E9FFFF",
-    justifyContent: "center",
-    borderWidth: 1,
-    borderRadius: 20,
-  },
-  image: {
-    width: 50,
-    height: 50,
-    marginLeft: 20,
-  },
-});

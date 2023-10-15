@@ -6,7 +6,7 @@ import { Video } from "expo-av";
 import { Entypo } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
-import { setStarVideo, setWatchHistory, storage } from "../Backend/Firebase";
+import { setStarVideo, setWatchHistory } from "../Backend/Firebase";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function WatchVideoScreen({ navigation, route }) {
@@ -20,7 +20,7 @@ export default function WatchVideoScreen({ navigation, route }) {
     const setHistory = async () => {
       await setWatchHistory(video);
     };
-    setHistory();
+    //   setHistory();
   }, []);
 
   const saveVideo = async () => {
@@ -60,20 +60,14 @@ export default function WatchVideoScreen({ navigation, route }) {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView className="flex-1">
       <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={styles.container}>
-          <Pressable
-            style={{
-              width: "90%",
-              justifyContent: "flex-start",
-            }}
-            onPress={back}
-          >
+        <View className="flex-1 justify-center items-center">
+          <Pressable className="w-11/12 justify-start" onPress={back}>
             <Ionicons name="arrow-back" size={24} color="black" />
           </Pressable>
           <Video
-            style={{ width: "100%", height: "50%" }}
+            className="w-full h-1/2"
             useNativeControls
             resizeMode="contain"
             source={{ uri: video.VideoUrl }}
@@ -81,54 +75,26 @@ export default function WatchVideoScreen({ navigation, route }) {
             isLooping
           />
 
-          <View style={styles.functionContainer}>
-            <Text
-              style={{
-                fontWeight: "bold",
-                flex: 1,
-                marginLeft: 20,
-                fontSize: 20,
-              }}
-            >
+          <View className="flex flex-row items-center justify-between mt-4">
+            <Text className="font-bold flex-1 ml-5 text-xl">
               {video.VideoName}
             </Text>
-
-            <Pressable onPress={saveVideo}>
-              <Entypo
-                style={{ marginRight: 20 }}
-                name="save"
-                size={24}
-                color="blue"
-              />
-            </Pressable>
-            <Pressable onPress={starVideo}>
-              <Entypo
-                style={{ marginRight: 10 }}
-                name="star"
-                size={24}
-                color="blue"
-              />
-            </Pressable>
+            <View className="flex flex-row gap-x-2 mr-2">
+              <Pressable onPress={saveVideo}>
+                <Entypo className="mr-5" name="save" size={24} color="blue" />
+              </Pressable>
+              <Pressable onPress={starVideo}>
+                <Entypo name="star" size={24} color="blue" />
+              </Pressable>
+            </View>
           </View>
-          <View style={{ width: "100%" }}>
-            <Text
-              style={{
-                fontSize: 15,
-                marginTop: 15,
-                marginLeft: 20,
-                textAlign: "left",
-              }}
-            >
+          <View className="w-full">
+            <Text className="text-base mt-5 ml-5 text-left">
               {video.Keyword}
             </Text>
           </View>
           <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
-              },
-              styles.startDesignBtn,
-            ]}
+            className="mt-5 w-4/5 justify-center items-center bg-cyan-50 rounded-xl h-12 p-2 shadow-xl shadow-neutral-950"
             onPress={startDesign}
           >
             <Text>Start Your Own Design</Text>

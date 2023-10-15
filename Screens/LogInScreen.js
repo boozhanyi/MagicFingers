@@ -1,7 +1,6 @@
 import {
   View,
   TextInput,
-  StyleSheet,
   Text,
   Pressable,
   StatusBar,
@@ -13,7 +12,7 @@ import {
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LogInAccount } from "../Backend/Firebase";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 export default function LogInScreen({ navigation }) {
   const [email, setEmail] = useState("boo@gmail.com");
@@ -28,12 +27,17 @@ export default function LogInScreen({ navigation }) {
       Alert.alert(logInStatus.error);
     }
   };
+
   const showPassword = () => {
     setPasswordVisible(!passwordVisible);
   };
 
   const forgotPassword = () => {
     navigation.navigate("ResetPassword", { state: 0 });
+  };
+
+  const back = () => {
+    navigation.navigate("MainScreen");
   };
 
   return (
@@ -46,56 +50,48 @@ export default function LogInScreen({ navigation }) {
       }}
       resizeMode="cover"
     >
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView className="flex-1">
         <KeyboardAvoidingView
-          style={{ flex: 1 }}
+          className="flex-1"
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <View style={styles.container}>
-            <Text style={styles.header}>Log In</Text>
-            <View style={styles.inputContainer}>
+          <View className="flex-1 items-center mt-10">
+            <Pressable onPress={back} className="w-11/12 justify-start mb-4">
+              <Ionicons name="arrow-back" size={24} color="black" />
+            </Pressable>
+            <Text className="text-4xl font-bold">Log In</Text>
+            <TextInput
+              className="h-12 w-11/12 border mt-10 p-2 rounded-xl"
+              placeholder="Email"
+              onChangeText={(text) => setEmail(text)}
+              value={email}
+            />
+            <View className="flex flex-row justify-center items-center border w-11/12 mt-5 rounded-xl h-12 p-2">
               <TextInput
-                style={styles.nameInput}
-                placeholder="Email"
-                onChangeText={(text) => setEmail(text)}
-                value={email}
+                className="flex-1"
+                placeholder="Password"
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+                secureTextEntry={passwordVisible}
               />
-              <View style={styles.passwordInput}>
-                <TextInput
-                  style={{ flex: 1 }}
-                  placeholder="Password"
-                  onChangeText={(text) => setPassword(text)}
-                  value={password}
-                  secureTextEntry={passwordVisible}
-                />
-                <Pressable
-                  style={{ marginLeft: 10 }}
-                  onPressIn={showPassword}
-                  onPressOut={showPassword}
-                >
-                  <AntDesign name="eyeo" size={24} color="black" />
-                </Pressable>
-              </View>
-              <Pressable
-                style={styles.forgotPasswordContainer}
-                onPress={() => {
-                  forgotPassword();
-                }}
-              >
-                <Text style={styles.forgotPassword}>Forgot Password ?</Text>
-              </Pressable>
-              <Pressable
-                style={({ pressed }) => [
-                  {
-                    backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
-                  },
-                  styles.LogInButton,
-                ]}
-                onPress={LogIn}
-              >
-                <Text style={styles.logInText}>Log In</Text>
+              <Pressable onPressIn={showPassword} onPressOut={showPassword}>
+                <AntDesign name="eyeo" size={24} color="black" />
               </Pressable>
             </View>
+            <Pressable
+              className="flex w-11/12 items-end mt-3 "
+              onPress={() => {
+                forgotPassword();
+              }}
+            >
+              <Text>Forgot Password ?</Text>
+            </Pressable>
+            <Pressable
+              className=" bg-cyan-50 active:bg-cyan-100 mt-4 w-11/12 h-12 border rounded-xl items-center justify-center p-2"
+              onPress={LogIn}
+            >
+              <Text className="text-md uppercase font-medium">Log In</Text>
+            </Pressable>
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -103,63 +99,3 @@ export default function LogInScreen({ navigation }) {
     </ImageBackground>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  header: {
-    fontSize: 36,
-    fontWeight: "bold",
-  },
-  inputContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 50,
-    width: "100%",
-  },
-  nameInput: {
-    height: 50,
-    width: "90%",
-    borderColor: "#000000",
-    marginBottom: 30,
-    borderRadius: 10,
-    borderWidth: 1,
-    padding: 10,
-  },
-  passwordInput: {
-    height: 50,
-    width: "90%",
-    borderColor: "#000000",
-    borderRadius: 10,
-    borderWidth: 1,
-    padding: 10,
-    flexDirection: "row",
-  },
-  forgotPasswordContainer: {
-    width: "94%",
-    justifyContent: "flex-end",
-    alignSelf: "stretch",
-    marginTop: 10,
-  },
-  forgotPassword: {
-    textAlign: "right",
-  },
-  LogInButton: {
-    marginTop: 30,
-    width: "90%",
-    height: 50,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 10,
-  },
-  logInText: {
-    color: "#fff",
-    fontSize: 16,
-    textTransform: "uppercase",
-    color: "black",
-    fontWeight: "500",
-  },
-});

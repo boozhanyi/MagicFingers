@@ -408,45 +408,35 @@ export default function A({ route, navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView className="flex-1">
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         enabled={false}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <View style={styles.container}>
+        <View className="flex-1 ">
           <View
-            style={styles.headerContainer}
+            className="flex flex-row bg-cyan-50 p-2 items-center border justify-center "
             onLayout={(event) => {
               const height = event.nativeEvent.layout.height;
               setHeaderHeight(height);
             }}
           >
-            <Pressable onPress={back} style={{ marginLeft: 10 }}>
+            <Pressable onPress={back} className="ml-1">
               <Ionicons name="arrow-back" size={20} color="black" />
             </Pressable>
-            <Text style={styles.projectName}>{drawingName}</Text>
+            <Text className="text-base ml-5 flex-1">{drawingName}</Text>
             <Pressable
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? "#A3FFFE" : "white",
-                },
-                styles.button,
-              ]}
+              className="bg-blue-50 rounded-2xl shadow-xl shadow-slate-950 p-3"
               onPress={onSaveImage}
             >
-              <Text style={styles.buttonName}>Save</Text>
+              <Text className="font-bold text-xs">Save</Text>
             </Pressable>
             <Pressable
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? "#A3FFFE" : "white",
-                },
-                styles.button,
-              ]}
+              className="bg-blue-50 rounded-2xl shadow-xl shadow-slate-950 p-3 ml-3"
               onPress={onDownloadImage}
             >
-              <Text style={styles.buttonName}>Download</Text>
+              <Text className="font-bold text-xs">Download</Text>
             </Pressable>
           </View>
           <Canvas
@@ -551,7 +541,7 @@ export default function A({ route, navigation }) {
             })}
           </Canvas>
           <View
-            style={styles.drawingTools}
+            className="flex flex-row bg-cyan-50 mt-1 border bottom-0 items-center justify-evenly p-3"
             onLayout={(event) => {
               const height = event.nativeEvent.layout.height;
               setFooterHeight(height);
@@ -559,50 +549,50 @@ export default function A({ route, navigation }) {
           >
             <Pressable onPress={onOpenPencil}>
               <Image
-                style={styles.image}
+                className="w-7 h-7"
                 source={require("../assets/Pencil.png")}
               />
             </Pressable>
             <Pressable onPress={onOpenLine}>
               <Image
-                style={styles.image}
+                className="w-7 h-7"
                 source={require("../assets/Line.png")}
               />
             </Pressable>
             <Pressable onPress={onOpenShape}>
               <Image
-                style={styles.image}
+                className="w-7 h-7"
                 source={require("../assets/Shapes.png")}
               />
             </Pressable>
             <Pressable onPress={onOpenText}>
               <Image
-                style={styles.image}
+                className="w-7 h-7"
                 source={require("../assets/Text.png")}
               />
             </Pressable>
             <Pressable onPress={undo}>
               <Image
-                style={styles.image}
+                className="w-7 h-7"
                 source={require("../assets/Undo.png")}
               />
             </Pressable>
             <Pressable onPress={redo}>
               <Image
-                style={styles.image}
+                className="w-7 h-7"
                 source={require("../assets/Redo.png")}
               />
             </Pressable>
             <Pressable onPress={deleteCanva}>
               <Image
-                style={styles.image}
+                className="w-7 h-7"
                 source={require("../assets/Delete.png")}
               />
             </Pressable>
           </View>
         </View>
         <StatusBar style="auto" />
-        <View style={{ alignItems: "center" }}>
+        <View>
           {isPencilModelVisible && (
             <Pencil onSetColor={onSetColor} onSetRadius={onSetRadius} />
           )}
@@ -635,38 +625,22 @@ export default function A({ route, navigation }) {
             transparent={true}
             visible={backModelVisible}
           >
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <View style={styles.deleteContainer}>
-                <Text style={{ textAlign: "center" }}>
+            <View className="flex-1 justify-center items-center">
+              <View className="p-10 bg-cyan-50 justify-center items-center border rounded-xl">
+                <Text className="text-center">
                   You havent save your image! Are you sure you want to go back?
                 </Text>
                 <Pressable
-                  style={({ pressed }) => [
-                    {
-                      backgroundColor: pressed ? "rgb(210, 230, 255)" : "black",
-                    },
-                    styles.confirmButton,
-                  ]}
+                  className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center"
                   onPress={confirmBack}
                 >
                   <Text style={{ color: "white" }}>Confirm</Text>
                 </Pressable>
                 <Pressable
-                  style={({ pressed }) => [
-                    {
-                      backgroundColor: pressed ? "rgb(210, 230, 255)" : "black",
-                    },
-                    styles.confirmButton,
-                  ]}
+                  className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center"
                   onPress={cancelBack}
                 >
-                  <Text style={{ color: "white" }}>Cancel</Text>
+                  <Text className="text-white">Cancel</Text>
                 </Pressable>
               </View>
             </View>
@@ -678,33 +652,17 @@ export default function A({ route, navigation }) {
             transparent={true}
             visible={isDeletePressed}
           >
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <View style={styles.deleteContainer}>
+            <View className="flex-1 justify-center items-center">
+              <View className="p-10 bg-cyan-50 justify-center items-center border rounded-xl">
                 <Text>Are you sure you want to delete?</Text>
                 <Pressable
-                  style={({ pressed }) => [
-                    {
-                      backgroundColor: pressed ? "rgb(210, 230, 255)" : "black",
-                    },
-                    styles.confirmButton,
-                  ]}
+                  className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center"
                   onPress={confirmDelete}
                 >
                   <Text style={{ color: "white" }}>Confirm</Text>
                 </Pressable>
                 <Pressable
-                  style={({ pressed }) => [
-                    {
-                      backgroundColor: pressed ? "rgb(210, 230, 255)" : "black",
-                    },
-                    styles.confirmButton,
-                  ]}
+                  className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center"
                   onPress={cancelDelete}
                 >
                   <Text style={{ color: "white" }}>Cancel</Text>
@@ -719,66 +677,8 @@ export default function A({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  headerContainer: {
-    backgroundColor: "#D2FEFF",
-    padding: 5,
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "center",
-    borderWidth: 1,
-  },
-  projectName: {
-    fontSize: 15,
-    marginLeft: 30,
-    marginRight: 30,
-    flex: 1,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    alignContent: "center",
-    elevation: 3,
-    marginLeft: 20,
-  },
-  buttonName: {
-    fontWeight: "bold",
-    fontSize: 10,
-  },
-  drawingTools: {
-    bottom: 0,
-    position: "absolute",
-    width: "100%",
-    backgroundColor: "#D2FEFF",
-    marginTop: 10,
-    borderWidth: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  image: {
-    width: 30,
-    height: 30,
-    margin: 10,
-  },
   drawingCanva: {
     marginTop: 5,
     backgroundColor: "white",
-  },
-  deleteContainer: {
-    padding: 50,
-    backgroundColor: "#F0FDFF",
-    borderRadius: 30,
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-    borderWidth: 1,
-  },
-  confirmButton: {
-    padding: 10,
-    marginTop: 20,
-    borderRadius: 10,
   },
 });

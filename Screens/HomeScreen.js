@@ -86,6 +86,7 @@ export default function HomeScreen() {
         });
       });
       setAllDrawings(drawings);
+      console.log(drawings);
       allDrawingRef.current = drawings;
     });
 
@@ -187,16 +188,7 @@ export default function HomeScreen() {
       resizeMode="cover"
     >
       <SafeAreaView style={{ flex: 1 }}>
-        <Text
-          style={{
-            fontSize: 25,
-            fontWeight: "bold",
-            textAlign: "center",
-            marginTop: 10,
-          }}
-        >
-          Your Project
-        </Text>
+        <Text style={styles.header}>Your Project</Text>
         <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View style={styles.container}>
             <View style={styles.searchContainer}>
@@ -225,7 +217,7 @@ export default function HomeScreen() {
                 ]}
                 onPress={pressedButtonAll}
               >
-                <Text style={{ fontSize: 10, fontWeight: "600" }}>All</Text>
+                <Text style={styles.filterText}>All</Text>
               </Pressable>
               <Pressable
                 style={[
@@ -238,23 +230,13 @@ export default function HomeScreen() {
                 ]}
                 onPress={pressedButtonFavourite}
               >
-                <Text style={{ fontSize: 10, fontWeight: "600" }}>
-                  Favourite
-                </Text>
+                <Text style={styles.filterText}>Favourite</Text>
               </Pressable>
             </View>
             <View
               style={{ marginTop: 5, alignSelf: "flex-start", marginLeft: 12 }}
             >
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "500",
-                  textAlign: "left",
-                }}
-              >
-                Recent Designs
-              </Text>
+              <Text style={styles.text}>Recent Designs</Text>
             </View>
             <View style={styles.Linecontainer}>
               <View style={styles.line} />
@@ -353,6 +335,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  header: {
+    fontSize: 25,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 10,
+  },
   searchContainer: {
     height: 40,
     width: "90%",
@@ -374,6 +362,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginLeft: 5,
   },
+  filterText: { fontSize: 10, fontWeight: "600" },
   filterButton: {
     width: "20%",
     height: 40,
@@ -382,6 +371,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     elevation: 3,
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: "500",
+    textAlign: "left",
   },
   Linecontainer: {
     flexDirection: "row",
@@ -414,3 +408,27 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 });
+
+if (Dimensions.get("window").width >= 900) {
+  styles.header = {
+    ...styles.header,
+    fontSize: 50,
+  };
+  styles.searchContainer = {
+    ...styles.searchContainer,
+    height: 50,
+  };
+  styles.filterButton = {
+    ...styles.filterButton,
+    height: 50,
+  };
+  styles.filterText = {
+    ...styles.filterText,
+    fontSize: 20,
+    fontWeight: "500",
+  };
+  styles.text = {
+    ...styles.text,
+    fontSize: 30,
+  };
+}

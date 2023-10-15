@@ -31,9 +31,9 @@ export default function FunctionScreen({ navigation }) {
 
   const fetchData = () => {
     const user = auth.currentUser;
-    const drawingRef = doc(db, "Users", user.uid);
+    const userRef = doc(db, "Users", user.uid);
 
-    const unsubscribe = onSnapshot(drawingRef, (docSnapshot) => {
+    const unsubscribe = onSnapshot(userRef, (docSnapshot) => {
       if (docSnapshot.exists()) {
         const data = docSnapshot.data();
 
@@ -88,77 +88,58 @@ export default function FunctionScreen({ navigation }) {
       }}
       resizeMode="cover"
     >
-      <SafeAreaView
-        style={{
-          flex: 1,
-        }}
-      >
+      <SafeAreaView className="flex-1">
         <KeyboardAvoidingView
-          style={{ flex: 1 }}
+          className="flex-1"
           enabled={false}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
           <View
             style={[styles.container, { opacity: nameModalVisible ? 0.1 : 1 }]}
           >
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>EXPLORE</Text>
-
+            <View className="flex flex-row items-center justify-center">
+              <Text className="flex-1 text-center text-3xl font-bold italic">
+                EXPLORE
+              </Text>
               <Pressable
-                style={styles.profileImageContainer}
+                className="mr-5 overflow-hidden border rounded-full"
                 onPress={onPressProfile}
               >
-                <Image
-                  source={{ uri: profileImage }}
-                  style={styles.profileImage}
-                />
+                <Image source={{ uri: profileImage }} className="w-14 h-14" />
               </Pressable>
             </View>
-            <View style={styles.mainContainer}>
-              <Pressable
-                style={({ pressed }) => [
-                  {
-                    backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
-                  },
-                  styles.subContainer,
-                ]}
-                onPress={onOpenDesign}
-              >
-                <Text style={styles.mainText}>Start Your Design</Text>
-                <Text style={styles.subText}>Various tools to help you</Text>
-              </Pressable>
-              <Pressable
-                style={({ pressed }) => [
-                  {
-                    backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
-                  },
-                  styles.subContainer,
-                ]}
-                onPress={onOpenVideo}
-              >
-                <Text style={styles.mainText}>Video</Text>
-                <Text style={styles.subText}>
-                  Step-by-step drawing instructions for kids of all ages. Large
-                  collection of drawing tutorials featuring various topics .
-                </Text>
-              </Pressable>
-              <Pressable
-                style={({ pressed }) => [
-                  {
-                    backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
-                  },
-                  styles.subContainer,
-                ]}
-                onPress={onOpenImportPicture}
-              >
-                <Text style={styles.mainText}>
-                  Import and edit your picture
-                </Text>
-                <Text style={styles.subText}>
-                  Import your picture and you can edit on it now
-                </Text>
-              </Pressable>
-            </View>
+            <Pressable
+              className="bg-cyan-50 w-11/12 h-24 rounded-2xl mt-10 p-2 justify-center items-center border"
+              onPress={onOpenDesign}
+            >
+              <Text className="font-medium text-xl mb-2">
+                Start Your Design
+              </Text>
+              <Text className="font-light text-center">
+                Various tools to help you
+              </Text>
+            </Pressable>
+            <Pressable
+              className="bg-cyan-50 w-11/12 h-26 rounded-2xl mt-5 p-4 justify-center items-center border"
+              onPress={onOpenVideo}
+            >
+              <Text className="font-medium text-xl mb-2">Video</Text>
+              <Text className="font-light text-center gap-2">
+                Step-by-step drawing instructions for kids of all ages. Large
+                collection of drawing tutorials featuring various topics .
+              </Text>
+            </Pressable>
+            <Pressable
+              className="bg-cyan-50 w-11/12 h-24 rounded-2xl mt-5 p-2 justify-center items-center border"
+              onPress={onOpenImportPicture}
+            >
+              <Text className="font-medium text-xl mb-2">
+                Import and edit your picture
+              </Text>
+              <Text className="font-light text-center">
+                Import your picture and you can edit on it now
+              </Text>
+            </Pressable>
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -177,51 +158,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    flex: 1,
-    textAlign: "center",
-    fontSize: 30,
-    fontWeight: "bold",
-    fontStyle: "italic",
-  },
-  profileImageContainer: {
-    marginRight: 10,
-    borderWidth: 1,
-    borderRadius: 25,
-    overflow: "hidden",
-  },
-  profileImage: {
-    width: 50,
-    height: 50,
-  },
-  mainContainer: {
-    marginTop: 50,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  subContainer: {
-    width: "90%",
-    padding: 20,
-    margin: 10,
-    alignItems: "center",
-    borderRadius: 30,
-    borderWidth: 1,
-  },
-  mainText: {
-    marginBottom: 10,
-    fontWeight: "600",
-    fontSize: 20,
-    textAlign: "center",
-  },
-  subText: {
-    textAlign: "center",
-    opacity: 0.4,
   },
 });

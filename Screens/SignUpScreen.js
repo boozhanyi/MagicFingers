@@ -13,7 +13,7 @@ import { ImageBackground } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SignUpAccount } from "../Backend/Firebase";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 export default function LogInScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -45,6 +45,10 @@ export default function LogInScreen({ navigation }) {
     }
   };
 
+  const back = () => {
+    navigation.navigate("MainScreen");
+  };
+
   return (
     <ImageBackground
       source={require("../assets/Background.png")}
@@ -55,67 +59,55 @@ export default function LogInScreen({ navigation }) {
       }}
       resizeMode="cover"
     >
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView className="flex-1">
         <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <View style={styles.container}>
-            <Text style={styles.header}>Sign Up</Text>
-            <View style={styles.inputContainer}>
+          <View className="flex-1 items-center mt-10">
+            <Pressable onPress={back} className="w-11/12 justify-start mb-4">
+              <Ionicons name="arrow-back" size={24} color="black" />
+            </Pressable>
+            <Text className="text-3xl font-medium">Sign Up</Text>
+            <TextInput
+              className="w-11/12 h-12 border rounded-xl p-2 mt-10"
+              placeholder="Email"
+              onChangeText={(text) => setEmail(text)}
+              value={email}
+            />
+            <TextInput
+              className="w-11/12 h-12 border rounded-xl p-2 mt-5"
+              placeholder="Username"
+              onChangeText={(text) => setUsername(text)}
+              value={username}
+            />
+            <View className="mt-5 flex-row w-11/12 border h-12 rounded-xl p-2 items-center">
               <TextInput
-                style={styles.nameInput}
-                placeholder="Email"
-                onChangeText={(text) => setEmail(text)}
-                value={email}
+                className="flex-1"
+                placeholder="Password"
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+                secureTextEntry={passwordVisible}
               />
-              <TextInput
-                style={styles.nameInput}
-                placeholder="Username"
-                onChangeText={(text) => setUsername(text)}
-                value={username}
-              />
-              <View style={styles.passwordInput}>
-                <TextInput
-                  style={{ flex: 1 }}
-                  placeholder="Password"
-                  onChangeText={(text) => setPassword(text)}
-                  value={password}
-                  secureTextEntry={passwordVisible}
-                />
-                <Pressable
-                  style={{ marginLeft: 10 }}
-                  onPressIn={showPassword}
-                  onPressOut={showPassword}
-                >
-                  <AntDesign name="eyeo" size={24} color="black" />
-                </Pressable>
-              </View>
-              <View style={[styles.passwordInput, { marginTop: 30 }]}>
-                <TextInput
-                  style={{ flex: 1 }}
-                  placeholder="Password"
-                  onChangeText={(text) => setConfirmPassword(text)}
-                  value={confirmPassword}
-                  secureTextEntry={passwordVisible}
-                />
-                <Pressable
-                  style={{ marginLeft: 10 }}
-                  onPressIn={showPassword}
-                  onPressOut={showPassword}
-                >
-                  <AntDesign name="eyeo" size={24} color="black" />
-                </Pressable>
-              </View>
-              <Pressable
-                style={({ pressed }) => [
-                  {
-                    backgroundColor: pressed ? "rgb(210, 230, 255)" : "#DDFFFF",
-                  },
-                  styles.signUpButton,
-                ]}
-                onPress={signUp}
-              >
-                <Text style={styles.signUpText}>Sign Up</Text>
+              <Pressable onPressIn={showPassword} onPressOut={showPassword}>
+                <AntDesign name="eyeo" size={24} color="black" />
               </Pressable>
             </View>
+            <View className="mt-5 flex-row w-11/12 border h-12 rounded-xl p-2 items-center">
+              <TextInput
+                className="flex-1"
+                placeholder="Password"
+                onChangeText={(text) => setConfirmPassword(text)}
+                value={confirmPassword}
+                secureTextEntry={passwordVisible}
+              />
+              <Pressable onPressIn={showPassword} onPressOut={showPassword}>
+                <AntDesign name="eyeo" size={24} color="black" />
+              </Pressable>
+            </View>
+            <Pressable
+              className="h-12 w-4/5 mt-8 border rounded-xl justify-center items-center bg-cyan-50 active:bg-cyan-100"
+              onPress={signUp}
+            >
+              <Text className="text-lg font-medium">Sign Up</Text>
+            </Pressable>
           </View>
         </KeyboardAwareScrollView>
       </SafeAreaView>
@@ -123,54 +115,3 @@ export default function LogInScreen({ navigation }) {
     </ImageBackground>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  header: {
-    fontSize: 36,
-    fontWeight: "bold",
-  },
-  inputContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 50,
-    width: "100%",
-  },
-  nameInput: {
-    height: 50,
-    width: "90%",
-    borderColor: "#000000",
-    marginBottom: 30,
-    borderRadius: 10,
-    borderWidth: 1,
-    padding: 10,
-  },
-  passwordInput: {
-    height: 50,
-    width: "90%",
-    borderColor: "#000000",
-    borderRadius: 10,
-    borderWidth: 1,
-    padding: 10,
-    flexDirection: "row",
-  },
-  signUpButton: {
-    marginTop: 30,
-    width: "80%",
-    height: 50,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 10,
-  },
-  signUpText: {
-    color: "#fff",
-    fontSize: 16,
-    textTransform: "uppercase",
-    color: "black",
-    fontWeight: "500",
-  },
-});
