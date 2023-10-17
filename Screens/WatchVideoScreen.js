@@ -20,7 +20,7 @@ export default function WatchVideoScreen({ navigation, route }) {
     const setHistory = async () => {
       await setWatchHistory(video);
     };
-    //   setHistory();
+    //setHistory();
   }, []);
 
   const saveVideo = async () => {
@@ -76,10 +76,10 @@ export default function WatchVideoScreen({ navigation, route }) {
           />
 
           <View className="flex flex-row items-center justify-between mt-4">
-            <Text className="font-bold flex-1 ml-5 text-xl">
+            <Text className="font-bold flex-1 ml-5 text-xl sm:text-4xl">
               {video.VideoName}
             </Text>
-            <View className="flex flex-row gap-x-2 mr-2">
+            <View className="flex flex-row gap-x-2 mr-2 sm:gap-x-10">
               <Pressable onPress={saveVideo}>
                 <Entypo className="mr-5" name="save" size={24} color="blue" />
               </Pressable>
@@ -89,15 +89,15 @@ export default function WatchVideoScreen({ navigation, route }) {
             </View>
           </View>
           <View className="w-full">
-            <Text className="text-base mt-5 ml-5 text-left">
+            <Text className="text-base mt-5 ml-5 text-left sm:text-3xl">
               {video.Keyword}
             </Text>
           </View>
           <Pressable
-            className="mt-5 w-4/5 justify-center items-center bg-cyan-50 rounded-xl h-12 p-2 shadow-xl shadow-neutral-950"
+            className="mt-5 w-4/5 justify-center items-center bg-cyan-50 rounded-xl h-12 p-2 shadow-xl shadow-neutral-950 sm:h-20"
             onPress={startDesign}
           >
-            <Text>Start Your Own Design</Text>
+            <Text className="sm:text-xl">Start Your Own Design</Text>
           </Pressable>
         </View>
       </KeyboardAwareScrollView>

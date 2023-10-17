@@ -69,6 +69,7 @@ export default function A({ route, navigation }) {
   const [headerHeight, setHeaderHeight] = useState(0);
   const drawingName = route.params?.Name;
   const [backModelVisible, setBackModelVisible] = useState(false);
+  const additionalHeight = 100;
 
   useEffect(() => {
     if (route.params?.image) {
@@ -410,13 +411,13 @@ export default function A({ route, navigation }) {
   return (
     <SafeAreaView className="flex-1">
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
+        className="flex-1"
         enabled={false}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View className="flex-1 ">
           <View
-            className="flex flex-row bg-cyan-50 p-2 items-center border justify-center "
+            className="flex flex-row bg-cyan-50 p-2 items-center border justify-center sm:p-3"
             onLayout={(event) => {
               const height = event.nativeEvent.layout.height;
               setHeaderHeight(height);
@@ -425,18 +426,20 @@ export default function A({ route, navigation }) {
             <Pressable onPress={back} className="ml-1">
               <Ionicons name="arrow-back" size={20} color="black" />
             </Pressable>
-            <Text className="text-base ml-5 flex-1">{drawingName}</Text>
+            <Text className="text-base ml-5 flex-1 sm:text-2xl">
+              {drawingName}
+            </Text>
             <Pressable
               className="bg-blue-50 rounded-2xl shadow-xl shadow-slate-950 p-3"
               onPress={onSaveImage}
             >
-              <Text className="font-bold text-xs">Save</Text>
+              <Text className="font-bold text-xs sm:text-xl">Save</Text>
             </Pressable>
             <Pressable
-              className="bg-blue-50 rounded-2xl shadow-xl shadow-slate-950 p-3 ml-3"
+              className="bg-blue-50 rounded-2xl shadow-xl shadow-slate-950 p-3 ml-3 "
               onPress={onDownloadImage}
             >
-              <Text className="font-bold text-xs">Download</Text>
+              <Text className="font-bold text-xs sm:text-xl">Download</Text>
             </Pressable>
           </View>
           <Canvas
@@ -450,7 +453,9 @@ export default function A({ route, navigation }) {
                   Dimensions.get("window").height -
                   footerHeight -
                   headerHeight -
-                  35,
+                  (Dimensions.get("window").height > 1000
+                    ? additionalHeight
+                    : 40),
               },
             ]}
             onTouch={onTouch}
@@ -541,7 +546,7 @@ export default function A({ route, navigation }) {
             })}
           </Canvas>
           <View
-            className="flex flex-row bg-cyan-50 mt-1 border bottom-0 items-center justify-evenly p-3"
+            className="flex flex-row bg-cyan-50 mt-1 border bottom-0 items-center justify-evenly p-3 sm:bottom-0"
             onLayout={(event) => {
               const height = event.nativeEvent.layout.height;
               setFooterHeight(height);
@@ -627,20 +632,20 @@ export default function A({ route, navigation }) {
           >
             <View className="flex-1 justify-center items-center">
               <View className="p-10 bg-cyan-50 justify-center items-center border rounded-xl">
-                <Text className="text-center">
+                <Text className="text-center sm:text-2xl">
                   You havent save your image! Are you sure you want to go back?
                 </Text>
                 <Pressable
-                  className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center"
+                  className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center sm:w-32"
                   onPress={confirmBack}
                 >
-                  <Text style={{ color: "white" }}>Confirm</Text>
+                  <Text className="text-white sm:text-xl">Confirm</Text>
                 </Pressable>
                 <Pressable
-                  className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center"
+                  className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center sm:w-32"
                   onPress={cancelBack}
                 >
-                  <Text className="text-white">Cancel</Text>
+                  <Text className="text-white sm:text-xl">Cancel</Text>
                 </Pressable>
               </View>
             </View>
@@ -654,18 +659,20 @@ export default function A({ route, navigation }) {
           >
             <View className="flex-1 justify-center items-center">
               <View className="p-10 bg-cyan-50 justify-center items-center border rounded-xl">
-                <Text>Are you sure you want to delete?</Text>
+                <Text className="sm:text-2xl">
+                  Are you sure you want to delete?
+                </Text>
                 <Pressable
-                  className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center"
+                  className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center sm:w-32"
                   onPress={confirmDelete}
                 >
-                  <Text style={{ color: "white" }}>Confirm</Text>
+                  <Text className="text-white sm:text-xl">Confirm</Text>
                 </Pressable>
                 <Pressable
-                  className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center"
+                  className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center sm:w-32"
                   onPress={cancelDelete}
                 >
-                  <Text style={{ color: "white" }}>Cancel</Text>
+                  <Text className="text-white sm:text-xl">Cancel</Text>
                 </Pressable>
               </View>
             </View>

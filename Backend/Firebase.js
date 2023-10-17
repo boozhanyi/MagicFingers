@@ -157,7 +157,7 @@ const updateProfile = async (imageUri, newUsername, newEmail, newPassword) => {
   }
 };
 
-const uploadVideo = async (videoName, keyword, videoSource) => {
+const uploadVideo = async (videoName, description, videoSource) => {
   try {
     Alert.alert(
       "Uploading Video",
@@ -187,7 +187,7 @@ const uploadVideo = async (videoName, keyword, videoSource) => {
 
     await addDoc(videoCollection, {
       VideoName: videoName,
-      Keyword: keyword,
+      Keyword: description,
       VideoUrl: downloadUrl,
       TimeStamp: serverTimestamp(),
     });

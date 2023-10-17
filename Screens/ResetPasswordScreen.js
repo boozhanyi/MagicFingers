@@ -49,17 +49,17 @@ export default function ResetPassword({ navigation, route }) {
       resizeMode="cover"
     >
       <SafeAreaView className="flex-1">
-        <View className="flex-1 justify-center items-center ">
-          <Text className="text-3xl font-bold">Reset Password</Text>
+        <View className="flex-1 items-center mt-10 sm:mt-20">
+          <Text className="text-3xl font-bold sm:text-6xl">Reset Password</Text>
           <View className="justify-center items-center w-full mt-10">
             <TextInput
-              className="w-11/12 h-14 border rounded-xl p-3"
+              className="w-11/12 h-14 border rounded-xl p-3 sm:text-2xl sm:h-20"
               placeholder="Your Email"
               onChangeText={(text) => setEmail(text)}
               value={email}
             />
             <Pressable
-              className="w-3/5 h-10 rounded-xl mt-5 justify-center items-center bg-cyan-50 shadow-xl shadow-neutral-950"
+              className="w-3/5 h-10 rounded-xl mt-5 justify-center items-center bg-cyan-50 shadow-xl shadow-neutral-950 sm:h-20"
               onPress={setNewPassword}
             >
               <Text className="text-base uppercase text-black font-semibold">
@@ -67,7 +67,7 @@ export default function ResetPassword({ navigation, route }) {
               </Text>
             </Pressable>
             <Pressable
-              className="w-3/5 h-10 rounded-xl mt-5 justify-center items-center bg-cyan-50 shadow-xl shadow-neutral-950"
+              className="w-3/5 h-10 rounded-xl mt-5 justify-center items-center bg-cyan-50 shadow-xl shadow-neutral-950 sm:h-20"
               onPress={back}
             >
               <Text className="text-base uppercase text-black font-semibold">

@@ -65,22 +65,22 @@ export default function LogInScreen({ navigation }) {
             <Pressable onPress={back} className="w-11/12 justify-start mb-4">
               <Ionicons name="arrow-back" size={24} color="black" />
             </Pressable>
-            <Text className="text-3xl font-medium">Sign Up</Text>
+            <Text className="text-3xl font-medium sm:text-5xl">Sign Up</Text>
             <TextInput
-              className="w-11/12 h-12 border rounded-xl p-2 mt-10"
+              className="w-11/12 h-12 border rounded-xl p-2 mt-10 sm:h-20 sm:text-2xl"
               placeholder="Email"
               onChangeText={(text) => setEmail(text)}
               value={email}
             />
             <TextInput
-              className="w-11/12 h-12 border rounded-xl p-2 mt-5"
+              className="w-11/12 h-12 border rounded-xl p-2 mt-5 sm:h-20 sm:text-2xl"
               placeholder="Username"
               onChangeText={(text) => setUsername(text)}
               value={username}
             />
-            <View className="mt-5 flex-row w-11/12 border h-12 rounded-xl p-2 items-center">
+            <View className="mt-5 flex-row w-11/12 border h-12 rounded-xl p-2 items-center sm:h-20 ">
               <TextInput
-                className="flex-1"
+                className="flex-1 sm:text-2xl"
                 placeholder="Password"
                 onChangeText={(text) => setPassword(text)}
                 value={password}
@@ -90,9 +90,9 @@ export default function LogInScreen({ navigation }) {
                 <AntDesign name="eyeo" size={24} color="black" />
               </Pressable>
             </View>
-            <View className="mt-5 flex-row w-11/12 border h-12 rounded-xl p-2 items-center">
+            <View className="mt-5 flex-row w-11/12 border h-12 rounded-xl p-2 items-center sm:h-20">
               <TextInput
-                className="flex-1"
+                className="flex-1 sm:text-2xl"
                 placeholder="Password"
                 onChangeText={(text) => setConfirmPassword(text)}
                 value={confirmPassword}
@@ -103,10 +103,10 @@ export default function LogInScreen({ navigation }) {
               </Pressable>
             </View>
             <Pressable
-              className="h-12 w-4/5 mt-8 border rounded-xl justify-center items-center bg-cyan-50 active:bg-cyan-100"
+              className="h-12 w-4/5 mt-8 border rounded-xl justify-center items-center bg-cyan-50 active:bg-cyan-100 sm:h-20 sm:mt-10"
               onPress={signUp}
             >
-              <Text className="text-lg font-medium">Sign Up</Text>
+              <Text className="text-lg font-medium sm:text-xl">Sign Up</Text>
             </Pressable>
           </View>
         </KeyboardAwareScrollView>

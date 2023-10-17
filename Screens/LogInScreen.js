@@ -59,16 +59,16 @@ export default function LogInScreen({ navigation }) {
             <Pressable onPress={back} className="w-11/12 justify-start mb-4">
               <Ionicons name="arrow-back" size={24} color="black" />
             </Pressable>
-            <Text className="text-4xl font-bold">Log In</Text>
+            <Text className="text-4xl font-bold sm:text-5xl">Log In</Text>
             <TextInput
-              className="h-12 w-11/12 border mt-10 p-2 rounded-xl"
+              className="h-12 w-11/12 border mt-10 p-2 rounded-xl sm:h-20 sm:text-2xl"
               placeholder="Email"
               onChangeText={(text) => setEmail(text)}
               value={email}
             />
-            <View className="flex flex-row justify-center items-center border w-11/12 mt-5 rounded-xl h-12 p-2">
+            <View className="flex flex-row justify-center items-center border w-11/12 mt-5 rounded-xl h-12 p-2 sm:h-20">
               <TextInput
-                className="flex-1"
+                className="flex-1 sm:text-2xl"
                 placeholder="Password"
                 onChangeText={(text) => setPassword(text)}
                 value={password}
@@ -84,13 +84,15 @@ export default function LogInScreen({ navigation }) {
                 forgotPassword();
               }}
             >
-              <Text>Forgot Password ?</Text>
+              <Text className="sm:text-xl">Forgot Password ?</Text>
             </Pressable>
             <Pressable
-              className=" bg-cyan-50 active:bg-cyan-100 mt-4 w-11/12 h-12 border rounded-xl items-center justify-center p-2"
+              className=" bg-cyan-50 active:bg-cyan-100 mt-4 w-11/12 h-12 border rounded-xl items-center justify-center p-2 sm:mt-8 sm:h-20"
               onPress={LogIn}
             >
-              <Text className="text-md uppercase font-medium">Log In</Text>
+              <Text className="text-md uppercase font-medium sm:text-xl">
+                Log In
+              </Text>
             </Pressable>
           </View>
         </KeyboardAvoidingView>

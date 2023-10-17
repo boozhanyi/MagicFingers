@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, View, Pressable, TextInput } from "react-native";
+import { Text, View, Pressable, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Video } from "expo-av";
@@ -164,22 +164,22 @@ export default function VideoScreen({ navigation }) {
   return (
     <SafeAreaView className="flex-1">
       <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View className="flex-1 items-center">
+        <View className="flex-1 items-center sm:mt-10">
           <Pressable className="w-11/12 justify-start mt-5" onPress={back}>
             <Ionicons name="arrow-back" size={24} color="black" />
           </Pressable>
-          <Text className="font-bold">How To Draw For Kids</Text>
-          <Text className="text-center mt-3 font-extralight mr-2 ml-2">
+          <Text className="font-bold sm:text-3xl">How To Draw For Kids</Text>
+          <Text className="text-center mt-3 font-extralight mr-2 ml-2 sm:text-lg">
             Here is where you'll find every single on of our how to draw
             lessons! It's a massive drawing library! You'll find lessons for
             young and old kids. You'll find everything from how to draw cupcakes
             to how to draw sharks. So, what are you waiting for? Grab a marker
             and follow along with us.
           </Text>
-          <View className="flex flex-row items-center w-11/12 border mt-5 rounded-xl p-2">
+          <View className="flex flex-row items-center w-11/12 border mt-5 rounded-xl p-2 sm:h-16">
             <Ionicons name="md-search-sharp" size={24} color="black" />
             <TextInput
-              className="flex-1 ml-2 text-sm"
+              className="flex-1 ml-2 text-sm sm:text-lg"
               placeholder="Search your video name here"
               onChangeText={(text) => search(text)}
               value={videoName}
@@ -187,22 +187,24 @@ export default function VideoScreen({ navigation }) {
           </View>
           <View className="flex flex-row mt-2 self-start ml-3">
             <Pressable
-              className="bg-cyan-50 active:bg-cyan-100 w-1/5 rounded-xl justify-center items-center h-10 "
+              className="bg-cyan-50 active:bg-cyan-100 w-1/5 rounded-xl justify-center items-center h-10 sm:h-14 "
               onPress={pressedButtonAll}
             >
-              <Text className="font-semibold text-xs">All</Text>
+              <Text className="font-semibold text-xs sm:text-lg">All</Text>
             </Pressable>
             <Pressable
-              className="bg-cyan-50 active:bg-cyan-100 w-1/5 rounded-xl justify-center items-center h-10 ml-2"
+              className="bg-cyan-50 active:bg-cyan-100 w-1/5 rounded-xl justify-center items-center h-10 ml-2 sm:h-14"
               onPress={pressedButtonHistory}
             >
-              <Text className="font-semibold text-xs">History</Text>
+              <Text className="font-semibold text-xs sm:text-lg">History</Text>
             </Pressable>
             <Pressable
-              className="bg-cyan-50 active:bg-cyan-100 w-auto p-2 rounded-xl justify-center items-center h-10 ml-2"
+              className="bg-cyan-50 active:bg-cyan-100 w-2/5 rounded-xl justify-center items-center h-10 ml-2 sm:h-14"
               onPress={pressedButtonStar}
             >
-              <Text className="font-semibold text-xs">Stared Video</Text>
+              <Text className="font-semibold text-xs sm:text-lg">
+                Stared Video
+              </Text>
             </Pressable>
           </View>
           <View className="w-full mt-5">
@@ -212,7 +214,7 @@ export default function VideoScreen({ navigation }) {
                 key={item.id}
               >
                 <Pressable
-                  className="w-11/12 h-20 bg-black rounded-lg mt-3"
+                  className="w-11/12 h-20 bg-black rounded-lg mt-3 sm:h-32"
                   onPress={() => selectedVideo(item)}
                 >
                   <Video
@@ -225,7 +227,7 @@ export default function VideoScreen({ navigation }) {
                     isLooping
                   />
                 </Pressable>
-                <Text className="font-medium text-base mt-5 text-center">
+                <Text className="font-medium text-base mt-5 text-center sm:text-2xl">
                   {item.VideoName}
                 </Text>
               </View>

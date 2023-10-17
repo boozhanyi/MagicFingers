@@ -98,45 +98,50 @@ export default function FunctionScreen({ navigation }) {
             style={[styles.container, { opacity: nameModalVisible ? 0.1 : 1 }]}
           >
             <View className="flex flex-row items-center justify-center">
-              <Text className="flex-1 text-center text-3xl font-bold italic">
+              <Text className="flex-1 text-center text-3xl font-bold italic sm:text-6xl">
                 EXPLORE
               </Text>
               <Pressable
                 className="mr-5 overflow-hidden border rounded-full"
                 onPress={onPressProfile}
               >
-                <Image source={{ uri: profileImage }} className="w-14 h-14" />
+                <Image
+                  source={{ uri: profileImage }}
+                  className="w-14 h-14 sm:w-20 sm:h-20"
+                />
               </Pressable>
             </View>
             <Pressable
-              className="bg-cyan-50 w-11/12 h-24 rounded-2xl mt-10 p-2 justify-center items-center border"
+              className="bg-cyan-50 w-11/12 h-24 rounded-2xl mt-10 p-2 justify-center items-center border sm:h-32"
               onPress={onOpenDesign}
             >
-              <Text className="font-medium text-xl mb-2">
+              <Text className="font-medium text-xl mb-2 sm:text-3xl">
                 Start Your Design
               </Text>
-              <Text className="font-light text-center">
+              <Text className="font-light text-center sm:text-lg">
                 Various tools to help you
               </Text>
             </Pressable>
             <Pressable
-              className="bg-cyan-50 w-11/12 h-26 rounded-2xl mt-5 p-4 justify-center items-center border"
+              className="bg-cyan-50 w-11/12 h-26 rounded-2xl mt-5 p-4 justify-center items-center border sm:h-32"
               onPress={onOpenVideo}
             >
-              <Text className="font-medium text-xl mb-2">Video</Text>
-              <Text className="font-light text-center gap-2">
+              <Text className="font-medium text-xl mb-2 sm:text-3xl">
+                Video
+              </Text>
+              <Text className="font-light text-center gap-2 sm:text-lg">
                 Step-by-step drawing instructions for kids of all ages. Large
                 collection of drawing tutorials featuring various topics .
               </Text>
             </Pressable>
             <Pressable
-              className="bg-cyan-50 w-11/12 h-24 rounded-2xl mt-5 p-2 justify-center items-center border"
+              className="bg-cyan-50 w-11/12 h-24 rounded-2xl mt-5 p-2 justify-center items-center border sm:h-32"
               onPress={onOpenImportPicture}
             >
-              <Text className="font-medium text-xl mb-2">
+              <Text className="font-medium text-xl mb-2 sm:text-3xl">
                 Import and edit your picture
               </Text>
-              <Text className="font-light text-center">
+              <Text className="font-light text-center sm:text-lg">
                 Import your picture and you can edit on it now
               </Text>
             </Pressable>

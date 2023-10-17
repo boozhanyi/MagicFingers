@@ -32,9 +32,9 @@ export default function SetProjectName({
     <Modal animationType="fade" transparent={true} visible={isVisible}>
       <View className="flex-1 justify-center items-center">
         <View className="flex-1 p-10 bg-cyan-50 border rounded-2xl items-center justify-center absolute">
-          <Text>Give Your Project a Name</Text>
+          <Text className="sm:text-2xl">Give Your Project a Name</Text>
           <TextInput
-            className="h-10 w-full border rounded-md mt-6 p-2"
+            className=" w-full border rounded-md mt-6 p-2 sm:text-2xl sm:p-4"
             placeholder="Your project name"
             onChangeText={(text) => setProjectName(text)}
             value={projectName}
@@ -43,13 +43,13 @@ export default function SetProjectName({
             className="mt-5 border rounded-xl bg-black p-2 w-1/2 items-center justify-center "
             onPress={confirmName}
           >
-            <Text className="text-white">Confirm</Text>
+            <Text className="text-white sm:text-xl">Confirm</Text>
           </Pressable>
           <Pressable
             className="mt-5 border rounded-xl bg-black p-2 w-1/2 items-center justify-center "
             onPress={cancel}
           >
-            <Text className="text-white">Cancel</Text>
+            <Text className="text-white sm:text-xl">Cancel</Text>
           </Pressable>
         </View>
       </View>

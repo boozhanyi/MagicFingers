@@ -86,7 +86,6 @@ export default function HomeScreen() {
         });
       });
       setAllDrawings(drawings);
-      console.log(drawings);
       allDrawingRef.current = drawings;
     });
 
@@ -187,69 +186,48 @@ export default function HomeScreen() {
       }}
       resizeMode="cover"
     >
-      <SafeAreaView style={{ flex: 1 }}>
-        <Text style={styles.header}>Your Project</Text>
+      <SafeAreaView className="flex-1">
+        <Text className="text-2xl font-bold mt-5 text-center sm:text-4xl sm:mt-10">
+          Your Project
+        </Text>
         <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <View style={styles.container}>
-            <View style={styles.searchContainer}>
-              <Ionicons
-                style={{ marginLeft: 10 }}
-                name="md-search-sharp"
-                size={24}
-                color="black"
-              />
+          <View className="flex-1 justify-center items-center">
+            <View className="flex flex-row w-11/12 mt-5 border-2 rounded-xl p-2 sm:pt-5 sm:pb-5">
+              <Ionicons name="md-search-sharp" size={24} color="black" />
               <TextInput
-                style={styles.projectNameInput}
+                className="ml-3 w-4/5 sm:text-xl"
                 placeholder="Enter your project name"
                 onChangeText={(text) => searchProject(text)}
                 value={projectName}
               ></TextInput>
             </View>
-            <View style={styles.filterContainer}>
+            <View className="flex flex-row mt-3 self-start ml-3 sm:ml-8">
               <Pressable
-                style={[
-                  styles.filterButton,
-                  {
-                    backgroundColor: isPressedButtonAll
-                      ? "rgb(210, 230, 255)"
-                      : "#DDFFFF",
-                  },
-                ]}
+                className="w-1/5 h-10 rounded-full justify-center items-center border bg-cyan-100 active:bg-cyan-200"
                 onPress={pressedButtonAll}
               >
-                <Text style={styles.filterText}>All</Text>
+                <Text className="text-xs sm:text-lg">All</Text>
               </Pressable>
               <Pressable
-                style={[
-                  styles.filterButton,
-                  {
-                    backgroundColor: isPressedButtonFavourite
-                      ? "rgb(210, 230, 255)"
-                      : "#DDFFFF",
-                  },
-                ]}
+                className="w-2/6 h-10 rounded-full justify-center items-center border bg-cyan-100 ml-3 active:bg-cyan-200"
                 onPress={pressedButtonFavourite}
               >
-                <Text style={styles.filterText}>Favourite</Text>
+                <Text className="text-zs sm:text-lg">Favourite</Text>
               </Pressable>
             </View>
-            <View
-              style={{ marginTop: 5, alignSelf: "flex-start", marginLeft: 12 }}
-            >
-              <Text style={styles.text}>Recent Designs</Text>
+            <View className="mt-2 self-start ml-4 sm:ml-10">
+              {isPressedButtonAll ? (
+                <Text className="text-lg sm:text-2xl">All Designs</Text>
+              ) : (
+                <Text className="text-lg sm:text-2xl">Favourite Designs</Text>
+              )}
             </View>
-            <View style={styles.Linecontainer}>
-              <View style={styles.line} />
+            <View className="flex flex-row w-11/12">
+              <View className="flex-1 h-1 opacity-100 bg-black" />
             </View>
-            <View style={styles.projectContainer}>
+            <View className="flex-1 flex-row flex-wrap">
               {imageProject.map((item) => (
-                <View
-                  key={item.DrawingId}
-                  style={{
-                    width: "50%",
-                    alignItems: "center",
-                  }}
-                >
+                <View key={item.DrawingId} className="w-1/2 items-center">
                   <View
                     style={[
                       styles.project,
@@ -263,15 +241,11 @@ export default function HomeScreen() {
                       },
                     ]}
                   >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                      }}
-                    >
-                      <View style={{ width: 120, height: 120 }}>
+                    <View className="flex flex-row">
+                      <View className="w-28 h-28 sm:w-56 sm:h-56">
                         <Image
                           source={{ uri: item.DrawingUrl }}
-                          style={{ width: "100%", height: "100%" }}
+                          className="w-full h-full"
                           resizeMode="contain"
                         />
                       </View>
@@ -291,14 +265,8 @@ export default function HomeScreen() {
                         />
                       </Pressable>
                     </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        marginTop: 5,
-                      }}
-                    >
-                      <Text style={{ fontSize: 18, marginRight: 10 }}>
+                    <View className="flex flex-row items-center mt-2">
+                      <Text className="text-base mr-3 sm:text-2xl">
                         {item.DrawingName}
                       </Text>
                       <Pressable onPress={() => onModalAction(item)}>
@@ -330,68 +298,6 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  header: {
-    fontSize: 25,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginTop: 10,
-  },
-  searchContainer: {
-    height: 40,
-    width: "90%",
-    marginTop: 30,
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "black",
-    backgroundColor: "#F1F1F1",
-  },
-  projectNameInput: {
-    marginLeft: 10,
-    width: "80%",
-  },
-  filterContainer: {
-    flexDirection: "row",
-    marginTop: 5,
-    alignSelf: "flex-start",
-    marginLeft: 5,
-  },
-  filterText: { fontSize: 10, fontWeight: "600" },
-  filterButton: {
-    width: "20%",
-    height: 40,
-    margin: 5,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 3,
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: "500",
-    textAlign: "left",
-  },
-  Linecontainer: {
-    flexDirection: "row",
-    width: "95%",
-  },
-  line: {
-    flex: 1,
-    height: 2,
-    backgroundColor: "black",
-    opacity: 1,
-  },
-  projectContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    flex: 1,
-  },
   project: {
     borderRadius: 10,
     marginTop: 10,
@@ -408,27 +314,3 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 });
-
-if (Dimensions.get("window").width >= 900) {
-  styles.header = {
-    ...styles.header,
-    fontSize: 50,
-  };
-  styles.searchContainer = {
-    ...styles.searchContainer,
-    height: 50,
-  };
-  styles.filterButton = {
-    ...styles.filterButton,
-    height: 50,
-  };
-  styles.filterText = {
-    ...styles.filterText,
-    fontSize: 20,
-    fontWeight: "500",
-  };
-  styles.text = {
-    ...styles.text,
-    fontSize: 30,
-  };
-}

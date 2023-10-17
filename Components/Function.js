@@ -77,19 +77,21 @@ export default function ProjectFucntion({ isVisible, onClose, projects }) {
         {deleteButton && (
           <Modal animationType="fade" transparent={true}>
             <View className="flex-1 justify-center items-center">
-              <View className="w-11/12 p-10 bg-cyan-50 items-center rounded-xl border">
-                <Text className="font-bold">Confirm your deletion!</Text>
+              <View className="w-11/12 p-10 bg-cyan-50 items-center rounded-xl border sm:w-1/2">
+                <Text className="font-bold sm:text-2xl">
+                  Confirm your deletion!
+                </Text>
                 <Pressable
                   className="bg-slate-200 rounded-xl justify-center items-center p-2 mt-5 w-2/4"
                   onPress={confirmDelete}
                 >
-                  <Text className="font-bold">Confirm</Text>
+                  <Text className="font-bold sm:text-xl">Confirm</Text>
                 </Pressable>
                 <Pressable
                   className="bg-slate-200 rounded-xl justify-center items-center p-2 mt-5 w-2/4"
                   onPress={cancelDelete}
                 >
-                  <Text className="font-bold">Cancel</Text>
+                  <Text className="font-bold sm:text-xl">Cancel</Text>
                 </Pressable>
               </View>
             </View>

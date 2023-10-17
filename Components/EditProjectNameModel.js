@@ -26,10 +26,12 @@ export default function EditProjectName({ isVisible, onClose, project }) {
   return (
     <Modal animationType="fade" transparent={true} visible={isVisible}>
       <View className="flex-1 justify-center items-center">
-        <View className="w-11/12 p-10 bg-cyan-50 shadow-xl shadow-slate-950 items-center rounded-xl">
-          <Text className="text-base font-bold">Enter New Project Name</Text>
+        <View className="w-11/12 p-10 bg-cyan-50 shadow-xl shadow-slate-950 items-center rounded-xl sm:w-1/2">
+          <Text className="text-base font-bold sm:text-2xl">
+            Enter New Project Name
+          </Text>
           <TextInput
-            className="w-11/12 border rounded-xl mt-5 p-2 "
+            className="w-11/12 border rounded-xl mt-5 p-2 sm:text-2xl sm:p-3"
             onChangeText={(text) => setProjectName(text)}
             value={projectName}
           />
@@ -37,13 +39,13 @@ export default function EditProjectName({ isVisible, onClose, project }) {
             className="bg-slate-200 w-2/4 p-2 mt-5 justify-center items-center rounded-xl"
             onPress={updateProjectName}
           >
-            <Text className="font-bold text-sm">Confirm</Text>
+            <Text className="font-bold text-sm sm:text-xl">Confirm</Text>
           </Pressable>
           <Pressable
             className="bg-slate-200 w-2/4 p-2 mt-5 justify-center items-center rounded-xl"
             onPress={onClose}
           >
-            <Text className="font-bold text-sm">Cancel</Text>
+            <Text className="font-bold text-sm sm:text-xl">Cancel</Text>
           </Pressable>
         </View>
       </View>
