@@ -79,16 +79,27 @@ export default function HomeScreen() {
       const drawings = [];
       snapshot.forEach((doc) => {
         const data = doc.data();
+        const TimeStamp = doc.data().TimeStamp.toDate();
+        const dateObject = new Date(TimeStamp);
+
+        const year = dateObject.getUTCFullYear();
+        const month = dateObject.getUTCMonth() + 1; // Months are zero-indexed, so add 1
+        const day = dateObject.getUTCDate();
+
+        const formattedDate = `${year}-${month
+          .toString()
+          .padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+
         drawings.push({
           DrawingId: doc.id,
           DrawingName: data.DrawingName,
           DrawingUrl: data.DrawingUrl,
+          TimeStamp: formattedDate,
         });
       });
       setAllDrawings(drawings);
       allDrawingRef.current = drawings;
     });
-
     return () => {
       unsubscribe(); // Unsubscribe when the cleanup function is called
     };
@@ -223,7 +234,7 @@ export default function HomeScreen() {
               )}
             </View>
             <View className="flex flex-row w-11/12">
-              <View className="flex-1 h-1 opacity-100 bg-black" />
+              <View className="flex-1 h-px opacity-100 bg-black" />
             </View>
             <View className="flex-1 flex-row flex-wrap">
               {imageProject.map((item) => (
@@ -241,14 +252,7 @@ export default function HomeScreen() {
                       },
                     ]}
                   >
-                    <View className="flex flex-row">
-                      <View className="w-28 h-28 sm:w-56 sm:h-56">
-                        <Image
-                          source={{ uri: item.DrawingUrl }}
-                          className="w-full h-full"
-                          resizeMode="contain"
-                        />
-                      </View>
+                    <View className=" w-full items-end">
                       <Pressable onPress={() => selectProject(item)}>
                         <View
                           style={[
@@ -265,6 +269,15 @@ export default function HomeScreen() {
                         />
                       </Pressable>
                     </View>
+                    <View className="flex flex-row">
+                      <View className="w-28 h-28 sm:w-56 sm:h-56">
+                        <Image
+                          source={{ uri: item.DrawingUrl }}
+                          className="w-full h-full"
+                          resizeMode="contain"
+                        />
+                      </View>
+                    </View>
                     <View className="flex flex-row items-center mt-2">
                       <Text className="text-base mr-3 sm:text-2xl">
                         {item.DrawingName}
@@ -273,6 +286,7 @@ export default function HomeScreen() {
                         <Feather name="edit" size={18} color="black" />
                       </Pressable>
                     </View>
+                    <Text className="mt-2 font-normal">{item.TimeStamp}</Text>
                   </View>
                 </View>
               ))}
@@ -299,12 +313,13 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   project: {
+    width: "90%",
     borderRadius: 10,
     marginTop: 10,
     alignItems: "center",
     elevation: 3,
     borderWidth: 1,
-    padding: 10,
+    padding: 5,
   },
   squareBox: {
     width: 18,

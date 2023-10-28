@@ -9,6 +9,10 @@ import {
   serverTimestamp,
   updateDoc,
   addDoc,
+  arrayUnion,
+  where,
+  query,
+  getDocs,
 } from "@firebase/firestore";
 import {
   getStorage,
@@ -27,6 +31,7 @@ import {
   sendPasswordResetEmail,
   getReactNativePersistence,
   getAuth,
+  GoogleAuthProvider,
 } from "firebase/auth";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -44,6 +49,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
+const provider = new GoogleAuthProvider(app);
 // const auth = initializeAuth(app, {
 //   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
 // });
@@ -379,6 +385,77 @@ const favouriteDrawings = async (drawing) => {
   }
 };
 
+const createFolder = async (folderName) => {
+  try {
+    const user = auth.currentUser;
+    const folderRef = collection(db, "Users", user.uid, "Folder");
+
+    const folderNameRef = query(
+      folderRef,
+      where("FolderName", "==", folderName)
+    );
+
+    const querySnapshot = await getDocs(folderNameRef);
+
+    if (!querySnapshot.empty) {
+      Alert.alert("Folder with same name exists !");
+    } else {
+      await addDoc(folderRef, {
+        FolderName: folderName,
+        TimeStamp: serverTimestamp(),
+        Drawings: arrayUnion({}),
+      });
+    }
+  } catch (error) {
+    console.error("Error create folder:", error);
+  }
+};
+
+const uploadDrawingtoFolder = async (drawing) => {
+  try {
+    const user = auth.currentUser;
+    const folderRef = collection(db, "Users", user.uid, "Folder");
+
+    await addDoc(folderRef, {
+      FolderName: drawing,
+      TimeStamp: serverTimestamp(),
+      DrawingArray: arrayUnion({
+        DrawingName: drawing,
+        DrawingUrl: drawing,
+        TimeStamp: serverTimestamp(),
+      }),
+    });
+  } catch (error) {
+    console.error("Error starring drawings:", error);
+  }
+};
+
+const deleteFolder = async (folderID) => {
+  try {
+    const user = auth.currentUser;
+    const folderRef = doc(db, "Users", user.uid, "Folder", folderID);
+    await deleteDoc(folderRef);
+  } catch (error) {
+    console.error("Error starring drawings:", error);
+  }
+};
+
+const addDrawing = async (drawing, folder) => {
+  try {
+    const user = auth.currentUser;
+    const folderRef = doc(db, "Users", user.uid, "Folder", folder.FolderID);
+
+    await updateDoc(folderRef, {
+      Drawings: arrayUnion({
+        DrawingName: drawing.DrawingName,
+        DrawingUrl: drawing.DrawingUrl,
+      }),
+    });
+  } catch (error) {
+    console.error("Error starring drawings:", error);
+  }
+};
+
 export {
   db,
   auth,
@@ -395,4 +472,8 @@ export {
   deleteDrawing,
   favouriteDrawings,
   resetPassword,
+  createFolder,
+  uploadDrawingtoFolder,
+  deleteFolder,
+  addDrawing,
 };

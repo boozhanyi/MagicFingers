@@ -20,10 +20,15 @@ export default function LogInScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const [password1Visible, setPassword1Visible] = useState(true);
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const showPassword = () => {
     setPasswordVisible(!passwordVisible);
+  };
+
+  const showPassword1 = () => {
+    setPassword1Visible(!password1Visible);
   };
 
   const signUp = async () => {
@@ -96,9 +101,9 @@ export default function LogInScreen({ navigation }) {
                 placeholder="Password"
                 onChangeText={(text) => setConfirmPassword(text)}
                 value={confirmPassword}
-                secureTextEntry={passwordVisible}
+                secureTextEntry={password1Visible}
               />
-              <Pressable onPressIn={showPassword} onPressOut={showPassword}>
+              <Pressable onPressIn={showPassword1} onPressOut={showPassword}>
                 <AntDesign name="eyeo" size={24} color="black" />
               </Pressable>
             </View>

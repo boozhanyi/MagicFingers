@@ -11,6 +11,8 @@ import MoreAboutUsScreen from "./Screens/MoreAboutUsScreen";
 import VideoScreen from "./Screens/VideoScreen";
 import WatchVideoScreen from "./Screens/WatchVideoScreen";
 import DrawingScreen from "./Screens/DrawingScreen";
+import FolderScreen from "./Screens/FolderScreen";
+import FolderDrawingsScreen from "./Screens/FolderDrawingsScreen";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -71,6 +73,16 @@ export default function App() {
         <Stack.Screen
           name="DrawingScreen"
           component={DrawingScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FolderScreen"
+          component={FolderScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FolderDrawingsScreen"
+          component={FolderDrawingsScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

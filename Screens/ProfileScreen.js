@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, View, Image, Pressable, ImageBackground } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  MaterialIcons,
+  Entypo,
+  MaterialCommunityIcons,
+  Ionicons,
+} from "@expo/vector-icons";
 import { db, logOut, auth } from "../Backend/Firebase";
 import { onSnapshot, doc } from "firebase/firestore";
 import { useFocusEffect } from "@react-navigation/native";
@@ -58,6 +61,10 @@ export default function ProfileScreen({ navigation }) {
     navigation.navigate("UploadVideoScreen");
   };
 
+  const folder = () => {
+    navigation.navigate("FolderScreen");
+  };
+
   const LogOut = () => {
     logOut();
     navigation.navigate("LogInScreen");
@@ -75,7 +82,12 @@ export default function ProfileScreen({ navigation }) {
             className="w-24 h-24 sm:h-40 sm:w-40"
           />
         </View>
-        <Text className="font-bold text-lg mt-5 sm:text-3xl">{username}</Text>
+        <Text
+          className="font-bold text-lg mt-5 sm:text-3
+        xl"
+        >
+          {username}
+        </Text>
         <Pressable
           className="items-center justify-center border rounded-xl p-1 w-2/5 bg-black mt-5"
           onPress={editProfile}
@@ -93,6 +105,15 @@ export default function ProfileScreen({ navigation }) {
             Your Project
           </Text>
           <Pressable onPress={yourProject}>
+            <MaterialIcons name="navigate-next" size={27} color="black" />
+          </Pressable>
+        </View>
+        <View className="flex flex-row mt-6 w-11/12 justify-between items-center">
+          <Ionicons name="folder" size={24} color="black" />
+          <Text className="flex-1 text-base font-medium ml-4 sm:text-2xl">
+            Folder
+          </Text>
+          <Pressable onPress={folder}>
             <MaterialIcons name="navigate-next" size={27} color="black" />
           </Pressable>
         </View>

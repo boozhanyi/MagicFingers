@@ -104,6 +104,7 @@ export default function VideoScreen({ navigation }) {
           id: video.id,
           VideoName: video.data().VideoName,
           Keyword: video.data().Keyword,
+
           VideoUrl: video.data().VideoUrl,
         });
       });
