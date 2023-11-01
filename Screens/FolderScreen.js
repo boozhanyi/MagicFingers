@@ -61,10 +61,25 @@ const FolderScreen = ({ navigation }) => {
       const folder = [];
       snapshot.forEach((doc) => {
         const data = doc.data();
-        folder.push({
-          FolderName: data.FolderName,
-          FolderID: doc.id,
-        });
+
+        if (data.TimeStamp) {
+          const TimeStamp = doc.data().TimeStamp.toDate();
+          const dateObject = new Date(TimeStamp);
+
+          const year = dateObject.getUTCFullYear();
+          const month = dateObject.getUTCMonth() + 1; // Months are zero-indexed, so add 1
+          const day = dateObject.getUTCDate();
+
+          const formattedDate = `${year}-${month
+            .toString()
+            .padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+
+          folder.push({
+            FolderName: data.FolderName,
+            FolderID: doc.id,
+            FolderDate: formattedDate,
+          });
+        }
       });
       setFolder(folder);
     });
@@ -97,9 +112,14 @@ const FolderScreen = ({ navigation }) => {
             {folder.map((folder, index) => (
               <View
                 key={index}
-                className="flex flex-row bg-slate-100 border rounded-2xl w-11/12 h-14 justify-between items-center pr-5  mt-5"
+                className="flex flex-row bg-slate-100 border rounded-2xl w-11/12 h-16 justify-between items-center pr-5  mt-5"
               >
-                <Text className="font-bold ml-4">{folder.FolderName}</Text>
+                <View className="flex flex-col">
+                  <Text className="font-bold ml-4">{folder.FolderName}</Text>
+                  <Text className="font-normal ml-4 mt-2">
+                    {folder.FolderDate}
+                  </Text>
+                </View>
                 <Pressable
                   onPress={() => openFolder(folder)}
                   onLongPress={() => openDeleteModel(folder.FolderID)}

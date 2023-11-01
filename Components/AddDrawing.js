@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Modal,
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  ScrollView,
-} from "react-native";
+import { Modal, View, Text, Pressable, ScrollView } from "react-native";
 import { auth, db } from "../Backend/Firebase";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { addDrawing } from "../Backend/Firebase";
@@ -39,8 +32,8 @@ export default function AddDrawing({ isVisible, onClose, folder }) {
     };
   };
 
-  const add = async (drawing) => {
-    await addDrawing(drawing, folder);
+  const add = (drawing) => {
+    addDrawing(drawing, folder);
     onClose();
   };
 
@@ -55,8 +48,8 @@ export default function AddDrawing({ isVisible, onClose, folder }) {
             showsHorizontalScrollIndicator={false}
           >
             <View className="flex flex-row flex-wrap">
-              {drawings.map((drawing) => (
-                <View className="w-1/2 justify-center items-center">
+              {drawings.map((drawing, index) => (
+                <View key={index} className="w-1/2 justify-center items-center">
                   <Pressable
                     onPress={() => add(drawing)}
                     className="mt-5 border rounded-2xl w-11/12 h-10 justify-center items-center bg-white active:bg-slate-500"

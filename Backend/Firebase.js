@@ -13,6 +13,8 @@ import {
   where,
   query,
   getDocs,
+  Timestamp,
+  arrayRemove,
 } from "@firebase/firestore";
 import {
   getStorage,
@@ -403,30 +405,11 @@ const createFolder = async (folderName) => {
       await addDoc(folderRef, {
         FolderName: folderName,
         TimeStamp: serverTimestamp(),
-        Drawings: arrayUnion({}),
+        Drawings: [],
       });
     }
   } catch (error) {
     console.error("Error create folder:", error);
-  }
-};
-
-const uploadDrawingtoFolder = async (drawing) => {
-  try {
-    const user = auth.currentUser;
-    const folderRef = collection(db, "Users", user.uid, "Folder");
-
-    await addDoc(folderRef, {
-      FolderName: drawing,
-      TimeStamp: serverTimestamp(),
-      DrawingArray: arrayUnion({
-        DrawingName: drawing,
-        DrawingUrl: drawing,
-        TimeStamp: serverTimestamp(),
-      }),
-    });
-  } catch (error) {
-    console.error("Error starring drawings:", error);
   }
 };
 
@@ -436,7 +419,7 @@ const deleteFolder = async (folderID) => {
     const folderRef = doc(db, "Users", user.uid, "Folder", folderID);
     await deleteDoc(folderRef);
   } catch (error) {
-    console.error("Error starring drawings:", error);
+    console.error("Error delete folder:", error);
   }
 };
 
@@ -449,10 +432,35 @@ const addDrawing = async (drawing, folder) => {
       Drawings: arrayUnion({
         DrawingName: drawing.DrawingName,
         DrawingUrl: drawing.DrawingUrl,
+        TimeStamp: Timestamp.now(),
       }),
     });
   } catch (error) {
-    console.error("Error starring drawings:", error);
+    console.error("Error add drawings:", error);
+  }
+};
+
+const deleteDrawingfromFolder = async (drawing, folder) => {
+  try {
+    const user = auth.currentUser;
+    const folderRef = doc(db, "Users", user.uid, "Folder", folder.FolderID);
+
+    const docSnap = await getDoc(folderRef);
+    const documentData = docSnap.data().Drawings;
+
+    const itemIndex = documentData.findIndex(
+      (item) => item.DrawingUrl === drawing.DrawingUrl
+    );
+
+    if (itemIndex !== -1) {
+      documentData.splice(itemIndex, 1); // Remove the item
+    }
+
+    await updateDoc(folderRef, {
+      Drawings: documentData,
+    });
+  } catch (error) {
+    console.error("Error add drawings:", error);
   }
 };
 
@@ -473,7 +481,7 @@ export {
   favouriteDrawings,
   resetPassword,
   createFolder,
-  uploadDrawingtoFolder,
   deleteFolder,
   addDrawing,
+  deleteDrawingfromFolder,
 };

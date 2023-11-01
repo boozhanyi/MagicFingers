@@ -79,23 +79,26 @@ export default function HomeScreen() {
       const drawings = [];
       snapshot.forEach((doc) => {
         const data = doc.data();
-        const TimeStamp = doc.data().TimeStamp.toDate();
-        const dateObject = new Date(TimeStamp);
 
-        const year = dateObject.getUTCFullYear();
-        const month = dateObject.getUTCMonth() + 1; // Months are zero-indexed, so add 1
-        const day = dateObject.getUTCDate();
+        if (data.TimeStamp) {
+          const TimeStamp = doc.data().TimeStamp.toDate();
+          const dateObject = new Date(TimeStamp);
 
-        const formattedDate = `${year}-${month
-          .toString()
-          .padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+          const year = dateObject.getUTCFullYear();
+          const month = dateObject.getUTCMonth() + 1; // Months are zero-indexed, so add 1
+          const day = dateObject.getUTCDate();
 
-        drawings.push({
-          DrawingId: doc.id,
-          DrawingName: data.DrawingName,
-          DrawingUrl: data.DrawingUrl,
-          TimeStamp: formattedDate,
-        });
+          const formattedDate = `${year}-${month
+            .toString()
+            .padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+
+          drawings.push({
+            DrawingId: doc.id,
+            DrawingName: data.DrawingName,
+            DrawingUrl: data.DrawingUrl,
+            TimeStamp: formattedDate,
+          });
+        }
       });
       setAllDrawings(drawings);
       allDrawingRef.current = drawings;
