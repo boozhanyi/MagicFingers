@@ -88,6 +88,10 @@ const FolderScreen = ({ navigation }) => {
     };
   };
 
+  const back = () => {
+    navigation.navigate("Profile");
+  };
+
   return (
     <ImageBackground
       source={require("../assets/Background.png")}
@@ -108,7 +112,14 @@ const FolderScreen = ({ navigation }) => {
               opacity: addFolderModel ? 0.1 : 1,
             }}
           >
-            <Text className="font-bold text-2xl">Folder</Text>
+            <View className="flex flex-row mt-5 items-center justify-center">
+              <Pressable onPress={back} className="w-1/3 justify-start ">
+                <Ionicons name="arrow-back" size={24} color="black" />
+              </Pressable>
+              <Text className="w-1/2 justify-start text-xl font-bold ml-5">
+                Folder
+              </Text>
+            </View>
             {folder.map((folder, index) => (
               <View
                 key={index}

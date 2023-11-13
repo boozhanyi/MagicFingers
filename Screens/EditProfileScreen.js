@@ -63,66 +63,70 @@ export default function EditProfileScreen({ navigation }) {
   };
 
   return (
-    <ImageBackground
-      source={require("../assets/Background.png")}
-      style={{
-        flex: 1,
-        height: Dimensions.get("window").height,
-        width: Dimensions.get("window").width,
-      }}
-      resizeMode="cover"
-    >
-      <SafeAreaView className="flex-1">
-        <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <View className="flex-1 items-center mt-10">
-            <Pressable className="w-11/12 justify-start" onPress={back}>
-              <Ionicons name="arrow-back" size={24} color="black" />
-            </Pressable>
-            <View className="overflow-hidden border rounded-full mt-10">
-              <Image
-                source={{ uri: profileImage }}
-                className="w-24 h-24 sm:w-32 sm:h-32"
-              />
-            </View>
-            <Pressable
-              className="flex flex-row mt-5 border rounded-lg p-2 gap-x-2 bg-black justify-center items-center"
-              onPress={uploadPhoto}
-            >
-              <Text className="text-white sm:text-xl sm:mr-5">
-                Upload Photo
-              </Text>
-              <FontAwesome name="upload" size={24} color="white" />
-            </Pressable>
-            <View className="w-11/12 justify-start mt-5">
-              <Text className="text-sm sm:text-xl">Username</Text>
-              <TextInput
-                className="border rounded-lg mt-2 h-10 p-2 sm:text-2xl sm:h-20"
-                onChangeText={(text) => setUsername(text)}
-                value={username}
-              ></TextInput>
-              <Text className="text-sm mt-5 sm:text-xl">Email</Text>
-              <TextInput
-                className="border rounded-lg mt-2 h-10 p-2 sm:text-2xl sm:h-20"
-                onChangeText={(text) => setEmail(text)}
-                value={email}
-              ></TextInput>
-            </View>
-            <Pressable
-              className="w-3/5 h-12 rounded-full bg-cyan-50  mt-5 justify-center items-center shadow-lg shadow-neutral-950 sm:h-20"
-              onPress={update}
-            >
-              <Text className="font-bold text-base">Update</Text>
-            </Pressable>
-            <Pressable
-              className="w-3/5 h-12 rounded-full bg-cyan-50  mt-5 justify-center items-center shadow-lg shadow-neutral-950 sm:h-20"
-              onPress={resetPass}
-            >
-              <Text className="font-bold text-base">Reset Password</Text>
-            </Pressable>
-          </View>
-        </KeyboardAwareScrollView>
-      </SafeAreaView>
-      <StatusBar style="auto" />
-    </ImageBackground>
+    <>
+      {profileImage && (
+        <ImageBackground
+          source={require("../assets/Background.png")}
+          style={{
+            flex: 1,
+            height: Dimensions.get("window").height,
+            width: Dimensions.get("window").width,
+          }}
+          resizeMode="cover"
+        >
+          <SafeAreaView className="flex-1">
+            <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
+              <View className="flex-1 items-center mt-10">
+                <Pressable className="w-11/12 justify-start" onPress={back}>
+                  <Ionicons name="arrow-back" size={24} color="black" />
+                </Pressable>
+                <View className="overflow-hidden border rounded-full mt-10">
+                  <Image
+                    source={{ uri: profileImage }}
+                    className="w-24 h-24 sm:w-32 sm:h-32"
+                  />
+                </View>
+                <Pressable
+                  className="flex flex-row mt-5 border rounded-lg p-2 gap-x-2 bg-black justify-center items-center"
+                  onPress={uploadPhoto}
+                >
+                  <Text className="text-white sm:text-xl sm:mr-5">
+                    Upload Photo
+                  </Text>
+                  <FontAwesome name="upload" size={24} color="white" />
+                </Pressable>
+                <View className="w-11/12 justify-start mt-5">
+                  <Text className="text-sm sm:text-xl">Username</Text>
+                  <TextInput
+                    className="border rounded-lg mt-2 h-10 p-2 sm:text-2xl sm:h-20"
+                    onChangeText={(text) => setUsername(text)}
+                    value={username}
+                  ></TextInput>
+                  <Text className="text-sm mt-5 sm:text-xl">Email</Text>
+                  <TextInput
+                    className="border rounded-lg mt-2 h-10 p-2 sm:text-2xl sm:h-20"
+                    onChangeText={(text) => setEmail(text)}
+                    value={email}
+                  ></TextInput>
+                </View>
+                <Pressable
+                  className="w-3/5 h-12 rounded-full bg-cyan-50  mt-5 justify-center items-center shadow-lg shadow-neutral-950 sm:h-20"
+                  onPress={update}
+                >
+                  <Text className="font-bold text-base">Update</Text>
+                </Pressable>
+                <Pressable
+                  className="w-3/5 h-12 rounded-full bg-cyan-50  mt-5 justify-center items-center shadow-lg shadow-neutral-950 sm:h-20"
+                  onPress={resetPass}
+                >
+                  <Text className="font-bold text-base">Reset Password</Text>
+                </Pressable>
+              </View>
+            </KeyboardAwareScrollView>
+          </SafeAreaView>
+          <StatusBar style="auto" />
+        </ImageBackground>
+      )}
+    </>
   );
 }

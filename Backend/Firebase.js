@@ -432,7 +432,7 @@ const addDrawing = async (drawing, folder) => {
       Drawings: arrayUnion({
         DrawingName: drawing.DrawingName,
         DrawingUrl: drawing.DrawingUrl,
-        TimeStamp: Timestamp.now(),
+        TimeStamp: drawing.Time,
       }),
     });
   } catch (error) {

@@ -23,6 +23,7 @@ export default function AddDrawing({ isVisible, onClose, folder }) {
         drawings.push({
           DrawingName: data.DrawingName,
           DrawingUrl: data.DrawingUrl,
+          Time: data.TimeStamp,
         });
       });
       setDrawings(drawings);
