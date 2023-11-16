@@ -102,10 +102,7 @@ export default function FunctionScreen({ navigation }) {
                   { opacity: nameModalVisible ? 0.1 : 1 },
                 ]}
               >
-                <View className="flex flex-row items-center justify-center">
-                  <Text className="flex-1 text-center text-3xl font-bold italic sm:text-6xl">
-                    EXPLORE
-                  </Text>
+                <View className="flex flex-row w-full items-center justify-end mb-5">
                   <Pressable
                     className="mr-5 overflow-hidden border rounded-full"
                     onPress={onPressProfile}
@@ -116,6 +113,9 @@ export default function FunctionScreen({ navigation }) {
                     />
                   </Pressable>
                 </View>
+                <Text className="text-center text-3xl font-bold italic sm:text-6xl">
+                  EXPLORE
+                </Text>
                 <Pressable
                   className="bg-cyan-50 w-11/12 h-24 rounded-2xl mt-10 p-2 justify-center items-center border sm:h-32"
                   onPress={onOpenDesign}

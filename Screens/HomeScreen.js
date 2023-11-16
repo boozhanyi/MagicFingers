@@ -117,11 +117,26 @@ export default function HomeScreen() {
       const drawings = [];
       snapshot.forEach((doc) => {
         const data = doc.data();
-        drawings.push({
-          DrawingId: doc.id,
-          DrawingName: data.DrawingName,
-          DrawingUrl: data.DrawingUrl,
-        });
+
+        if (data.TimeStamp) {
+          const TimeStamp = doc.data().TimeStamp.toDate();
+          const dateObject = new Date(TimeStamp);
+
+          const year = dateObject.getUTCFullYear();
+          const month = dateObject.getUTCMonth() + 1; // Months are zero-indexed, so add 1
+          const day = dateObject.getUTCDate();
+
+          const formattedDate = `${year}-${month
+            .toString()
+            .padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+
+          drawings.push({
+            DrawingId: doc.id,
+            DrawingName: data.DrawingName,
+            DrawingUrl: data.DrawingUrl,
+            TimeStamp: formattedDate,
+          });
+        }
       });
       setStarDrawing(drawings);
     });
@@ -217,13 +232,13 @@ export default function HomeScreen() {
             </View>
             <View className="flex flex-row mt-3 self-start ml-3 sm:ml-8">
               <Pressable
-                className="w-1/5 h-10 rounded-full justify-center items-center border bg-cyan-100 active:bg-cyan-200"
+                className="w-1/5 h-10 rounded-full justify-center items-center border bg-cyan-100 active:bg-white"
                 onPress={pressedButtonAll}
               >
                 <Text className="text-xs sm:text-lg">All</Text>
               </Pressable>
               <Pressable
-                className="w-2/6 h-10 rounded-full justify-center items-center border bg-cyan-100 ml-3 active:bg-cyan-200"
+                className="w-2/6 h-10 rounded-full justify-center items-center border bg-cyan-100 ml-3 active:bg-white"
                 onPress={pressedButtonFavourite}
               >
                 <Text className="text-zs sm:text-lg">Favourite</Text>

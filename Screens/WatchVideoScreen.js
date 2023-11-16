@@ -1,5 +1,12 @@
 import { useEffect } from "react";
-import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Alert,
+  ScrollView,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Video } from "expo-av";
@@ -13,7 +20,7 @@ export default function WatchVideoScreen({ navigation, route }) {
   const video = route.params?.video;
 
   const startDesign = () => {
-    navigation.navigate("DrawingScreen");
+    navigation.navigate("Function");
   };
 
   useEffect(() => {
@@ -62,12 +69,12 @@ export default function WatchVideoScreen({ navigation, route }) {
   return (
     <SafeAreaView className="flex-1">
       <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View className="flex-1 justify-center items-center">
-          <Pressable className="w-11/12 justify-start" onPress={back}>
+        <View className="flex-1 items-center">
+          <Pressable className="w-11/12 justify-start mt-10" onPress={back}>
             <Ionicons name="arrow-back" size={24} color="black" />
           </Pressable>
           <Video
-            className="w-full h-1/2"
+            className="w-full h-[300px] bg-black mt-2"
             useNativeControls
             resizeMode="contain"
             source={{ uri: video.VideoUrl }}
@@ -76,7 +83,7 @@ export default function WatchVideoScreen({ navigation, route }) {
           />
 
           <View className="flex flex-row items-center justify-between mt-4">
-            <Text className="font-bold flex-1 ml-5 text-xl sm:text-4xl">
+            <Text className="font-bold flex-1 text-xl ml-3 sm:text-4xl">
               {video.VideoName}
             </Text>
             <View className="flex flex-row gap-x-2 mr-2 sm:gap-x-10">
@@ -88,8 +95,8 @@ export default function WatchVideoScreen({ navigation, route }) {
               </Pressable>
             </View>
           </View>
-          <View className="w-full">
-            <Text className="text-base mt-5 ml-5 text-left sm:text-3xl">
+          <View className="w-11/12">
+            <Text className="text-base mt-5 text-left sm:text-3xl">
               {video.Keyword}
             </Text>
           </View>

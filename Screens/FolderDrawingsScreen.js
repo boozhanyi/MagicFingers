@@ -51,7 +51,6 @@ export default function FolderDrawingsScreen({ route, navigation }) {
               DrawingName: drawing.DrawingName,
               DrawingUrl: drawing.DrawingUrl,
               TimeStamp: formattedDate,
-              Date: drawing.TimeStamp,
             });
           }
         });
@@ -83,7 +82,7 @@ export default function FolderDrawingsScreen({ route, navigation }) {
   };
 
   const confirmDelete = async () => {
-    await deleteDrawingfromFolder(deleteDrawing, folder);
+    deleteDrawingfromFolder(deleteDrawing, folder);
     setDeleteModel(false);
   };
 
@@ -110,7 +109,7 @@ export default function FolderDrawingsScreen({ route, navigation }) {
             </View>
 
             <View className="flex flex-row flex-wrap mt-5">
-              {drawings.map((drawing, index) => (
+              {drawings.reverse().map((drawing, index) => (
                 <Pressable
                   onLongPress={() => openDeleteModel(drawing)}
                   key={index}
