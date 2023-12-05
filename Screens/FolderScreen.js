@@ -116,18 +116,20 @@ const FolderScreen = ({ navigation }) => {
               <Pressable onPress={back} className="w-1/3 justify-start ">
                 <Ionicons name="arrow-back" size={24} color="black" />
               </Pressable>
-              <Text className="w-1/2 justify-start text-xl font-bold ml-5">
+              <Text className="w-1/2 justify-start text-xl font-bold ml-5 sm:text-3xl">
                 Folder
               </Text>
             </View>
             {folder.map((folder, index) => (
               <View
                 key={index}
-                className="flex flex-row bg-slate-100 border rounded-2xl w-11/12 h-16 justify-between items-center pr-5  mt-5"
+                className="flex flex-row bg-slate-100 border rounded-2xl w-11/12 h-16 justify-between items-center pr-5 mt-5 sm:h-20"
               >
                 <View className="flex flex-col">
-                  <Text className="font-bold ml-4">{folder.FolderName}</Text>
-                  <Text className="font-normal ml-4 mt-2">
+                  <Text className="font-bold ml-4 sm:text-xl">
+                    {folder.FolderName}
+                  </Text>
+                  <Text className="font-normal ml-4 mt-2 sm:text-md">
                     {folder.FolderDate}
                   </Text>
                 </View>

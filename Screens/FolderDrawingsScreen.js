@@ -103,7 +103,7 @@ export default function FolderDrawingsScreen({ route, navigation }) {
               <Pressable onPress={back} className="w-1/3 justify-start ">
                 <Ionicons name="arrow-back" size={24} color="black" />
               </Pressable>
-              <Text className="w-1/2 justify-start text-xl font-bold ml-5">
+              <Text className="w-1/2 justify-start text-xl font-bold ml-5 sm:text-3xl">
                 {folder.FolderName}
               </Text>
             </View>
@@ -124,10 +124,10 @@ export default function FolderDrawingsScreen({ route, navigation }) {
                       />
                     </View>
                     <View className="justify-center items-center">
-                      <Text className="mt-1 text-base font-semibold">
+                      <Text className="mt-1 text-base font-semibold sm:text-xl">
                         {drawing.DrawingName}
                       </Text>
-                      <Text className="mt-1 text-base font-semibold">
+                      <Text className="mt-1 text-base font-semibold sm:text-md">
                         {drawing.TimeStamp}
                       </Text>
                     </View>
