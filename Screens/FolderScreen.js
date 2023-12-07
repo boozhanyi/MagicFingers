@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   ImageBackground,
@@ -6,6 +6,7 @@ import {
   Text,
   Pressable,
   Modal,
+  TextInput,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -19,12 +20,15 @@ const FolderScreen = ({ navigation }) => {
   useEffect(() => {
     fetchAllFolder();
     setAddFolderModel(false);
+    setFolderName("");
   }, []);
 
   const [folder, setFolder] = useState([]);
   const [addFolderModel, setAddFolderModel] = useState(false);
   const [deleteModel, setDeleteModel] = useState(false);
   const [selectedFolder, setSelectedFolder] = useState("");
+  const [folderName, setFolderName] = useState("");
+  const originalFolder = useRef();
 
   const closeModel = () => {
     setAddFolderModel(false);
@@ -82,10 +86,24 @@ const FolderScreen = ({ navigation }) => {
         }
       });
       setFolder(folder);
+      originalFolder.current = folder;
     });
     return () => {
       unsubscribe(); // Unsubscribe when the cleanup function is called
     };
+  };
+
+  const searchFolder = (text) => {
+    setFolderName(text);
+
+    if (text) {
+      const filtered = originalFolder.current.filter((item) =>
+        item.FolderName.toLowerCase().includes(text.toLowerCase())
+      );
+      setFolder(filtered);
+    } else {
+      setFolder(originalFolder.current);
+    }
   };
 
   const back = () => {
@@ -119,6 +137,15 @@ const FolderScreen = ({ navigation }) => {
               <Text className="w-1/2 justify-start text-xl font-bold ml-5 sm:text-3xl">
                 Folder
               </Text>
+            </View>
+            <View className="flex flex-row w-11/12 mt-5 border-2 rounded-xl p-2 sm:pt-5 sm:pb-5">
+              <Ionicons name="md-search-sharp" size={24} color="black" />
+              <TextInput
+                className="ml-3 w-4/5 sm:text-xl"
+                placeholder="Enter your project name"
+                onChangeText={(text) => searchFolder(text)}
+                value={folderName}
+              ></TextInput>
             </View>
             {folder.map((folder, index) => (
               <View
