@@ -34,8 +34,15 @@ export default function LogInScreen({ navigation }) {
   const signUp = async () => {
     try {
       if (confirmPassword == password) {
-        await SignUpAccount(email, password, username);
-        navigation.navigate("HomeScreen");
+        const status = await SignUpAccount(email, password, username);
+        if (status) {
+          navigation.navigate("HomeScreen");
+        } else {
+          setConfirmPassword("");
+          setPassword("");
+          setEmail("");
+          setUsername("");
+        }
       } else {
         setConfirmPassword("");
         setPassword("");
@@ -46,7 +53,7 @@ export default function LogInScreen({ navigation }) {
       setPassword("");
       setEmail("");
       setUsername("");
-      console.error("Error signing up:", error);
+      Alert.alert("Error creating usre : ", error);
     }
   };
 

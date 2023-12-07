@@ -86,8 +86,11 @@ const SignUpAccount = async (email, password, username) => {
     });
 
     console.log("New user created");
+    return true;
   } catch (error) {
-    console.error("Error creating user:", error);
+    console.log("Error creating user:", error);
+    Alert.alert("Error creating user :", error.message);
+    return false;
   }
 };
 
