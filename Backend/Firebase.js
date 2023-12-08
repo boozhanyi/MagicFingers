@@ -78,11 +78,15 @@ const SignUpAccount = async (email, password, username) => {
 
     user = userCredential.user;
 
+    const imageRef = ref(storage, `images/profile_picture/Default Profile.png`);
+
+    const downloadUrl = await getDownloadURL(imageRef);
+
     const usersCollection = doc(db, "Users", user.uid);
     await setDoc(usersCollection, {
       Username: username,
       Email: email,
-      ProfileImage: user.photoURL,
+      ProfileImage: downloadUrl,
     });
 
     console.log("New user created");
@@ -118,7 +122,7 @@ const logOut = () => {
     });
 };
 
-const updateProfile = async (imageUri, newUsername, newEmail, newPassword) => {
+const updateProfile = async (imageUri, newUsername, newEmail) => {
   try {
     Alert.alert("Updating Profile!");
 

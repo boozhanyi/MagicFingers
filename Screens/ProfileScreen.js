@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, View, Image, Pressable, ImageBackground } from "react-native";
 import {
@@ -16,6 +16,7 @@ export default function ProfileScreen({ navigation }) {
   const [profileImage, setProfileImage] = useState(null);
   const [username, setUsername] = useState("");
   const [userID, setUserId] = useState("");
+  const defaultProfile = useRef(require("../assets/DefaultProfile.png"));
 
   useFocusEffect(
     React.useCallback(() => {
@@ -128,7 +129,7 @@ export default function ProfileScreen({ navigation }) {
                 <MaterialIcons name="navigate-next" size={27} color="black" />
               </Pressable>
             </View>
-            {userID === "LE5gtcFiv8feSDeYqnpBhjrA9f42" && (
+            {userID === "lwzwq2bOLRfePHVWzxiMPnm20H93" && (
               <View className="flex flex-row mt-6 w-11/12 justify-between items-center">
                 <Entypo name="upload-to-cloud" size={24} color="black" />
                 <Text className="flex-1 text-base font-medium ml-4 sm:text-2xl">

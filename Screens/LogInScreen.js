@@ -15,7 +15,7 @@ import { LogInAccount } from "../Backend/Firebase";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 export default function LogInScreen({ navigation }) {
-  const [email, setEmail] = useState("boo@gmail.com");
+  const [email, setEmail] = useState("boozhanyi@gmail.com");
   const [password, setPassword] = useState("zhanyi821");
   const [passwordVisible, setPasswordVisible] = useState(true);
 
