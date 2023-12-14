@@ -29,7 +29,7 @@ export default function HomeScreen() {
   const [isPressedButtonFavourite, setIsPressedButtonFavourite] =
     useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [selectedProject, setSelectedProject] = useState();
+  const [selectedProject, setSelectedProject] = useState("");
   const [imageProject, setImageProject] = useState([]);
   const [allDrawing, setAllDrawings] = useState([]);
   const [starDrawing, setStarDrawing] = useState([]);

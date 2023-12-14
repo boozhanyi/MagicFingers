@@ -10,13 +10,7 @@ import {
 import { updateDrawingName } from "../Backend/Firebase";
 
 export default function EditProjectName({ isVisible, onClose, project }) {
-  const [projectName, setProjectName] = useState("");
-
-  useEffect(() => {
-    if (project) {
-      setProjectName(project.DrawingName);
-    }
-  });
+  const [projectName, setProjectName] = useState(project.DrawingName || "");
 
   const updateProjectName = async () => {
     await updateDrawingName(project, projectName);

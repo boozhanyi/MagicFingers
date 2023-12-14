@@ -208,7 +208,7 @@ export default function VideoScreen({ navigation }) {
               </Text>
             </Pressable>
           </View>
-          {/* <View className="w-full mt-5">
+          <View className="w-full mt-5">
             {video.map((item) => (
               <View
                 className="w-full justify-center items-center"
@@ -233,7 +233,7 @@ export default function VideoScreen({ navigation }) {
                 </Text>
               </View>
             ))}
-          </View> */}
+          </View>
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
