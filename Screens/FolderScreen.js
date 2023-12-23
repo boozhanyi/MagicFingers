@@ -148,9 +148,10 @@ const FolderScreen = ({ navigation }) => {
               ></TextInput>
             </View>
             {folder.map((folder, index) => (
-              <View
+              <Pressable
                 key={index}
-                className="flex flex-row bg-slate-100 border rounded-2xl w-11/12 h-16 justify-between items-center pr-5 mt-5 sm:h-20"
+                className="flex flex-row bg-slate-100 border rounded-2xl w-11/12 h-16 justify-between items-center pr-5 mt-5 sm:h-20 active:bg-white"
+                onLongPress={() => openDeleteModel(folder.FolderID)}
               >
                 <View className="flex flex-col">
                   <Text className="font-bold ml-4 sm:text-xl">
@@ -160,18 +161,15 @@ const FolderScreen = ({ navigation }) => {
                     {folder.FolderDate}
                   </Text>
                 </View>
-                <Pressable
-                  onPress={() => openFolder(folder)}
-                  onLongPress={() => openDeleteModel(folder.FolderID)}
-                >
+                <Pressable onPress={() => openFolder(folder)}>
                   <MaterialIcons name="navigate-next" size={27} color="black" />
                 </Pressable>
-              </View>
+              </Pressable>
             ))}
             <View className="justify-center items-center mt-5 w-full">
               <Pressable
                 onPress={openModel}
-                className="bg-slate-200 border rounded-2xl w-1/2 h-12 justify-center items-center"
+                className="bg-slate-200 border rounded-2xl w-1/2 h-12 justify-center items-center active:bg-white"
               >
                 <Ionicons name="add" size={24} color="black" />
               </Pressable>
@@ -189,16 +187,16 @@ const FolderScreen = ({ navigation }) => {
                     Are you sure you want to delete this folder?
                   </Text>
                   <Pressable
-                    className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center sm:w-32"
+                    className="bg-slate-200 rounded-xl justify-center items-center p-2 mt-5 w-2/4 active:bg-white"
                     onPress={confirmDelete}
                   >
-                    <Text className="text-white sm:text-xl">Confirm</Text>
+                    <Text className="text-black sm:text-xl">Confirm</Text>
                   </Pressable>
                   <Pressable
-                    className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center sm:w-32"
+                    className="bg-slate-200 rounded-xl justify-center items-center p-2 mt-5 w-2/4 active:bg-white"
                     onPress={cancelDelete}
                   >
-                    <Text className="text-white sm:text-xl">Cancel</Text>
+                    <Text className="text-black sm:text-xl">Cancel</Text>
                   </Pressable>
                 </View>
               </View>

@@ -14,7 +14,6 @@ export default function AddDrawing({ isVisible, onClose, folder }) {
   const fetchData = () => {
     const user = auth.currentUser;
     const drawingRef = collection(db, "Users", user.uid, "Drawings");
-    //const drawingQuery = query(drawingRef, orderBy("TimeStamp", "desc"));
 
     const unsubscribe = onSnapshot(drawingRef, (snapshot) => {
       const drawings = [];
@@ -53,7 +52,7 @@ export default function AddDrawing({ isVisible, onClose, folder }) {
                 <View key={index} className="w-1/2 justify-center items-center">
                   <Pressable
                     onPress={() => add(drawing)}
-                    className="mt-5 border rounded-2xl w-11/12 h-10 justify-center items-center bg-white active:bg-slate-500"
+                    className="mt-5 border rounded-2xl w-11/12 h-10 justify-center items-center bg-white active:bg-slate-200"
                   >
                     <Text>{drawing.DrawingName}</Text>
                   </Pressable>

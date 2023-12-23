@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, Image, Pressable, Text } from "react-native";
+import { StyleSheet, Image, Pressable, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FadeInView from "../Components/FadeInView.js";
 

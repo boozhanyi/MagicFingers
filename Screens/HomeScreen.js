@@ -26,20 +26,16 @@ export default function HomeScreen() {
     useState(false);
   const [isFunctionVisible, setFunctionVisible] = useState(false);
   const [isPressedButtonAll, setIsPressedButtonAll] = useState(true);
-  const [isPressedButtonFavourite, setIsPressedButtonFavourite] =
-    useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedProject, setSelectedProject] = useState("");
   const [imageProject, setImageProject] = useState([]);
   const [allDrawing, setAllDrawings] = useState([]);
   const [starDrawing, setStarDrawing] = useState([]);
   const originalDrawing = useRef([]);
-  const allDrawingRef = useRef([]);
 
   useFocusEffect(
     React.useCallback(() => {
       setIsPressedButtonAll(true);
-      setIsPressedButtonFavourite(false);
       setProjectName("");
     }, [])
   );
@@ -53,22 +49,21 @@ export default function HomeScreen() {
     if (isPressedButtonAll) {
       setImageProject(allDrawing);
       setProjectName("");
+      originalDrawing.current = allDrawing;
     }
   }, [allDrawing]);
 
   useEffect(() => {
-    if (isPressedButtonAll) {
-      setImageProject(allDrawing);
-      originalDrawing.current = allDrawing;
-    }
-  }, [isPressedButtonAll]);
-
-  useEffect(() => {
-    if (isPressedButtonFavourite) {
+    if (!isPressedButtonAll) {
       setImageProject(starDrawing);
       setProjectName("");
+      originalDrawing.current = starDrawing;
     }
   }, [starDrawing]);
+
+  useEffect(() => {
+    setFunctionVisible(selectedItems.length === 0 ? false : true);
+  }, [selectedItems]);
 
   const fetchAllDrawing = () => {
     const user = auth.currentUser;
@@ -101,7 +96,6 @@ export default function HomeScreen() {
         }
       });
       setAllDrawings(drawings);
-      allDrawingRef.current = drawings;
     });
     return () => {
       unsubscribe(); // Unsubscribe when the cleanup function is called
@@ -160,6 +154,8 @@ export default function HomeScreen() {
 
   const onModalAction = (item) => {
     setSelectedProject(item);
+    setFunctionVisible(false);
+    setSelectedItems([]);
     setEditProjectNameModalVisible(!isEditProjectNameModalVisible);
   };
 
@@ -169,16 +165,15 @@ export default function HomeScreen() {
 
   const pressedButtonAll = () => {
     setIsPressedButtonAll(true);
-    setIsPressedButtonFavourite(false);
     setImageProject(allDrawing);
+    onFunctionClose();
     originalDrawing.current = allDrawing;
   };
 
   const pressedButtonFavourite = async () => {
-    setIsPressedButtonFavourite(true);
     setIsPressedButtonAll(false);
-    setFunctionVisible(false);
     setImageProject(starDrawing);
+    onFunctionClose();
     originalDrawing.current = starDrawing;
   };
 
@@ -200,10 +195,6 @@ export default function HomeScreen() {
       return updatedSelectedItems;
     });
   };
-
-  useEffect(() => {
-    setFunctionVisible(selectedItems.length === 0 ? false : true);
-  }, [selectedItems]);
 
   return (
     <ImageBackground

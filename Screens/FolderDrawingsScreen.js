@@ -55,7 +55,7 @@ export default function FolderDrawingsScreen({ route, navigation }) {
           }
         });
 
-        setDrawing(drawingData);
+        setDrawing(drawingData.reverse());
       } else {
         console.log("Document does not exist.");
       }
@@ -109,7 +109,7 @@ export default function FolderDrawingsScreen({ route, navigation }) {
             </View>
 
             <View className="flex flex-row flex-wrap mt-5">
-              {drawings.reverse().map((drawing, index) => (
+              {drawings.map((drawing, index) => (
                 <Pressable
                   onLongPress={() => openDeleteModel(drawing)}
                   key={index}
@@ -138,7 +138,7 @@ export default function FolderDrawingsScreen({ route, navigation }) {
             <View className="justify-center items-center mt-5 w-full">
               <Pressable
                 onPress={openModel}
-                className="bg-slate-200 border rounded-2xl w-1/2 h-12 justify-center items-center shadow-2xl shadow-black"
+                className="bg-slate-200 border rounded-2xl w-1/2 h-12 justify-center items-center shadow-2xl shadow-black active:bg-white"
               >
                 <Ionicons name="add" size={24} color="black" />
               </Pressable>
@@ -153,19 +153,20 @@ export default function FolderDrawingsScreen({ route, navigation }) {
               <View className="flex-1 justify-center items-center">
                 <View className="w-11/12 p-10 bg-cyan-50 justify-center items-center border rounded-xl">
                   <Text className="sm:text-2xl">
-                    Are you sure you want to delete this folder?
+                    Are you sure you want to delete this drawing from the
+                    folder?
                   </Text>
                   <Pressable
-                    className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center sm:w-32"
+                    className="bg-slate-200 rounded-xl justify-center items-center p-2 mt-5 w-2/4 active:bg-white"
                     onPress={confirmDelete}
                   >
-                    <Text className="text-white sm:text-xl">Confirm</Text>
+                    <Text className="text-black sm:text-xl">Confirm</Text>
                   </Pressable>
                   <Pressable
-                    className="bg-black p-2 w-20 mt-5 rounded-xl justify-center items-center sm:w-32"
+                    className="bg-slate-200 rounded-xl justify-center items-center p-2 mt-5 w-2/4 active:bg-white"
                     onPress={cancelDelete}
                   >
-                    <Text className="text-white sm:text-xl">Cancel</Text>
+                    <Text className="text-black sm:text-xl">Cancel</Text>
                   </Pressable>
                 </View>
               </View>

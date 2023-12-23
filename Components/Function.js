@@ -82,13 +82,13 @@ export default function ProjectFucntion({ isVisible, onClose, projects }) {
                   Confirm your deletion!
                 </Text>
                 <Pressable
-                  className="bg-slate-200 rounded-xl justify-center items-center p-2 mt-5 w-2/4"
+                  className="bg-slate-200 rounded-xl justify-center items-center p-2 mt-5 w-2/4 active:bg-white"
                   onPress={confirmDelete}
                 >
                   <Text className="font-bold sm:text-xl">Confirm</Text>
                 </Pressable>
                 <Pressable
-                  className="bg-slate-200 rounded-xl justify-center items-center p-2 mt-5 w-2/4"
+                  className="bg-slate-200 rounded-xl justify-center items-center p-2 mt-5 w-2/4 active:bg-white"
                   onPress={cancelDelete}
                 >
                   <Text className="font-bold sm:text-xl">Cancel</Text>

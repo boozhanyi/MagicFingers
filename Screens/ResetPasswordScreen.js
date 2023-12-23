@@ -59,7 +59,7 @@ export default function ResetPassword({ navigation, route }) {
               value={email}
             />
             <Pressable
-              className="w-3/5 h-10 rounded-xl mt-5 justify-center items-center bg-cyan-50 shadow-xl shadow-neutral-950 sm:h-20"
+              className="w-3/5 h-10 rounded-xl mt-5 justify-center items-center bg-cyan-50 shadow-xl shadow-neutral-950 sm:h-20 active:bg-white"
               onPress={setNewPassword}
             >
               <Text className="text-base uppercase text-black font-semibold">
@@ -67,7 +67,7 @@ export default function ResetPassword({ navigation, route }) {
               </Text>
             </Pressable>
             <Pressable
-              className="w-3/5 h-10 rounded-xl mt-5 justify-center items-center bg-cyan-50 shadow-xl shadow-neutral-950 sm:h-20"
+              className="w-3/5 h-10 rounded-xl mt-5 justify-center items-center bg-cyan-50 shadow-xl shadow-neutral-950 sm:h-20 active:bg-white"
               onPress={back}
             >
               <Text className="text-base uppercase text-black font-semibold">

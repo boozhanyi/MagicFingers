@@ -110,13 +110,13 @@ export default function EditProfileScreen({ navigation }) {
                   ></TextInput>
                 </View>
                 <Pressable
-                  className="w-3/5 h-12 rounded-full bg-cyan-50  mt-5 justify-center items-center shadow-lg shadow-neutral-950 sm:h-20"
+                  className="w-3/5 h-12 rounded-full bg-cyan-50  mt-5 justify-center items-center shadow-lg shadow-neutral-950 sm:h-20 active:bg-white"
                   onPress={update}
                 >
                   <Text className="font-bold text-base">Update</Text>
                 </Pressable>
                 <Pressable
-                  className="w-3/5 h-12 rounded-full bg-cyan-50  mt-5 justify-center items-center shadow-lg shadow-neutral-950 sm:h-20"
+                  className="w-3/5 h-12 rounded-full bg-cyan-50  mt-5 justify-center items-center shadow-lg shadow-neutral-950 sm:h-20 active:bg-white"
                   onPress={resetPass}
                 >
                   <Text className="font-bold text-base">Reset Password</Text>

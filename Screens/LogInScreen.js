@@ -21,10 +21,8 @@ export default function LogInScreen({ navigation }) {
 
   const LogIn = async () => {
     const logInStatus = await LogInAccount(email, password);
-    if (logInStatus.status) {
+    if (logInStatus) {
       navigation.navigate("HomeScreen");
-    } else {
-      Alert.alert(logInStatus.error);
     }
   };
 
@@ -87,7 +85,7 @@ export default function LogInScreen({ navigation }) {
               <Text className="sm:text-xl">Forgot Password ?</Text>
             </Pressable>
             <Pressable
-              className=" bg-cyan-50 active:bg-cyan-100 mt-4 w-11/12 h-12 border rounded-xl items-center justify-center p-2 sm:mt-8 sm:h-20"
+              className=" bg-cyan-100 active:bg-white mt-4 w-11/12 h-12 border rounded-xl items-center justify-center p-2 sm:mt-8 sm:h-20"
               onPress={LogIn}
             >
               <Text className="text-md uppercase font-medium sm:text-xl">

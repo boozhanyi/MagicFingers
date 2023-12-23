@@ -4,9 +4,7 @@ import { createFolder } from "../Backend/Firebase";
 
 export default function AddFolder({ isVisible, onClose }) {
   useEffect(() => {
-    if (!isVisible) {
-      setFolderName("");
-    }
+    setFolderName("");
   }, [isVisible]);
 
   const [folderName, setFolderName] = useState("");
@@ -17,7 +15,6 @@ export default function AddFolder({ isVisible, onClose }) {
     } else {
       await createFolder(folderName);
     }
-
     onClose();
   };
 

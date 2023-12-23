@@ -10,7 +10,11 @@ import {
 import { updateDrawingName } from "../Backend/Firebase";
 
 export default function EditProjectName({ isVisible, onClose, project }) {
-  const [projectName, setProjectName] = useState(project.DrawingName || "");
+  useEffect(() => {
+    setProjectName(project.DrawingName);
+  }, [project]);
+
+  const [projectName, setProjectName] = useState("");
 
   const updateProjectName = async () => {
     await updateDrawingName(project, projectName);
@@ -30,13 +34,13 @@ export default function EditProjectName({ isVisible, onClose, project }) {
             value={projectName}
           />
           <Pressable
-            className="bg-slate-200 w-2/4 p-2 mt-5 justify-center items-center rounded-xl"
+            className="bg-slate-200 w-2/4 p-2 mt-5 justify-center items-center rounded-xl active:bg-white"
             onPress={updateProjectName}
           >
             <Text className="font-bold text-sm sm:text-xl">Confirm</Text>
           </Pressable>
           <Pressable
-            className="bg-slate-200 w-2/4 p-2 mt-5 justify-center items-center rounded-xl"
+            className="bg-slate-200 w-2/4 p-2 mt-5 justify-center items-center rounded-xl active:bg-white"
             onPress={onClose}
           >
             <Text className="font-bold text-sm sm:text-xl">Cancel</Text>

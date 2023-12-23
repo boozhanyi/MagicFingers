@@ -1,7 +1,6 @@
 import {
   View,
   TextInput,
-  StyleSheet,
   Text,
   Pressable,
   StatusBar,

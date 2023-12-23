@@ -37,7 +37,7 @@ export default function MoreAboutUsScreen({ navigation }) {
           </Text>
         </View>
         <Pressable
-          className="bg-cyan-50 mt-5 items-center justify-center w-1/2 h-10 rounded-2xl shadow-lg shadow-neutral-950 sm:h-20"
+          className="bg-cyan-50 mt-5 items-center justify-center w-1/2 h-10 rounded-2xl shadow-lg shadow-neutral-950 sm:h-20 active:bg-white"
           onPress={back}
         >
           <Text className="text-base font-bold sm:text-2xl">Back</Text>
