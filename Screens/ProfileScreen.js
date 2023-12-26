@@ -129,7 +129,7 @@ export default function ProfileScreen({ navigation }) {
                 <MaterialIcons name="navigate-next" size={27} color="black" />
               </Pressable>
             </View>
-            {userID === "lwzwq2bOLRfePHVWzxiMPnm20H93" && (
+            {/* {userID === "lwzwq2bOLRfePHVWzxiMPnm20H93" && (
               <View className="flex flex-row mt-6 w-11/12 justify-between items-center">
                 <Entypo name="upload-to-cloud" size={24} color="black" />
                 <Text className="flex-1 text-base font-medium ml-4 sm:text-2xl">
@@ -139,7 +139,7 @@ export default function ProfileScreen({ navigation }) {
                   <MaterialIcons name="navigate-next" size={27} color="black" />
                 </Pressable>
               </View>
-            )}
+            )} */}
             <View className="flex flex-row mt-6 w-11/12 justify-between items-center">
               <MaterialCommunityIcons name="logout" size={24} color="black" />
               <Text className="flex-1 text-base font-medium ml-4 sm:text-2xl">

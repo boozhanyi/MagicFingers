@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { View, Pressable, Modal, Text, Alert } from "react-native";
+import { View, Pressable, Modal, Text, Alert, Image } from "react-native";
 import { deleteDrawing, favouriteDrawings } from "../Backend/Firebase";
-import { AntDesign } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import * as Sharing from "expo-sharing";
@@ -74,6 +73,62 @@ export default function ProjectFucntion({ isVisible, onClose, projects }) {
   return (
     isVisible && (
       <View className="flex-1 justify-center items-center">
+        <Modal animationType="fade" transparent={true}>
+          <View className="flex-1 justify-center items-center">
+            <View className="w-11/12 pt-5 pb-5 pl-5 bg-cyan-50 items-center rounded-xl border gap-y-3 sm:w-1/2">
+              <Pressable
+                onPress={deleteProject}
+                className="flex flex-row w-full h-10 justify-center items-center gap-x-5 active:bg-slate-200"
+              >
+                <Image
+                  className="w-7 h-7"
+                  source={require("../assets/Delete.png")}
+                />
+                <Text>Delete</Text>
+              </Pressable>
+              <Pressable
+                className="flex flex-row w-full h-10 justify-center items-center gap-x-5 active:bg-slate-200"
+                onPress={starProject}
+              >
+                <Image
+                  className="w-7 h-7"
+                  source={require("../assets/Star.png")}
+                />
+                <Text>Star</Text>
+              </Pressable>
+              <Pressable
+                className="flex flex-row w-full h-10 justify-center items-center gap-x-5 active:bg-slate-200 "
+                onPress={onSave}
+              >
+                <Image
+                  className="w-7 h-7"
+                  source={require("../assets/Save.png")}
+                />
+                <Text>Save to your phone</Text>
+              </Pressable>
+              <Pressable
+                className="flex flex-row w-full h-10 justify-center items-center gap-x-5 active:bg-slate-200"
+                onPress={onShare}
+              >
+                <Image
+                  className="w-7 h-7"
+                  source={require("../assets/Share.png")}
+                />
+                <Text>Share</Text>
+              </Pressable>
+              <Pressable
+                className="flex flex-row w-full h-10 justify-center items-center gap-x-5 active:bg-slate-200"
+                onPress={onClose}
+              >
+                <Image
+                  className="w-7 h-7"
+                  source={require("../assets/Close.png")}
+                />
+                <Text>Close</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
         {deleteButton && (
           <Modal animationType="fade" transparent={true}>
             <View className="flex-1 justify-center items-center">
@@ -97,26 +152,6 @@ export default function ProjectFucntion({ isVisible, onClose, projects }) {
             </View>
           </Modal>
         )}
-        <View
-          pointerEvents="box-none"
-          className="flex flex-row bg-cyan-100 p-3 absolute bottom-5 rounded-2xl shadow-xl shadow-slate-950 gap-x-7"
-        >
-          <Pressable onPress={deleteProject} style={{ alignItems: "center" }}>
-            <AntDesign name="delete" size={26} color="blue" />
-          </Pressable>
-          <Pressable style={{ alignItems: "center" }} onPress={starProject}>
-            <AntDesign name="staro" size={26} color="blue" />
-          </Pressable>
-          <Pressable onPress={onSave} style={{ alignItems: "center" }}>
-            <AntDesign name="save" size={26} color="blue" />
-          </Pressable>
-          <Pressable onPress={onShare} style={{ alignItems: "center" }}>
-            <AntDesign name="sharealt" size={26} color="blue" />
-          </Pressable>
-          <Pressable onPress={onClose} style={{ alignItems: "center" }}>
-            <AntDesign name="closecircleo" size={26} color="blue" />
-          </Pressable>
-        </View>
       </View>
     )
   );

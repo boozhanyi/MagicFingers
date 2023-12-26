@@ -203,6 +203,7 @@ export default function HomeScreen() {
         flex: 1,
         height: Dimensions.get("window").height,
         width: Dimensions.get("window").width,
+        opacity: isFunctionVisible || isEditProjectNameModalVisible ? 0.3 : 1,
       }}
       resizeMode="cover"
     >
@@ -326,7 +327,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
     alignItems: "center",
-    elevation: 3,
     borderWidth: 1,
     padding: 5,
   },
