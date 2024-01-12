@@ -232,13 +232,15 @@ const saveDrawing = async (uri, name, projectId) => {
     const downloadUrl = await getDownloadURL(imageRef);
     const userRef = doc(db, "Users", user.uid);
 
-    if (projectId) {
-      const drawingDocRef = doc(userRef, "Drawings", projectId);
+    const drawingDocRef = await getDoc(doc(userRef, "Drawings", projectId));
+
+    if (drawingDocRef.exists()) {
       const starRef = await getDoc(doc(userRef, "StarDrawings", projectId));
       await updateDoc(drawingDocRef, {
         DrawingUrl: downloadUrl,
         TimeStamp: serverTimestamp(),
       });
+
       if (starRef.exists()) {
         const starDocRef = doc(userRef, "StarDrawings", projectId);
         await updateDoc(starDocRef, {
