@@ -53,7 +53,7 @@ export default function LogInScreen({ navigation }) {
           className="flex-1"
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <View className="flex-1 items-center mt-10">
+          <View className="flex-1 items-center mt-10" pointerEvents="auto">
             <Pressable onPress={back} className="w-11/12 justify-start mb-4">
               <Ionicons name="arrow-back" size={24} color="black" />
             </Pressable>

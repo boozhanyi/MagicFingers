@@ -87,7 +87,7 @@ export default function EditProfileScreen({ navigation }) {
                   />
                 </View>
                 <Pressable
-                  className="flex flex-row mt-5 border rounded-lg p-2 gap-x-2 bg-black justify-center items-center"
+                  className="flex flex-row mt-5 border rounded-lg p-2 gap-x-2 bg-black justify-center items-center sm:mt-8"
                   onPress={uploadPhoto}
                 >
                   <Text className="text-white sm:text-xl sm:mr-5">
@@ -113,13 +113,17 @@ export default function EditProfileScreen({ navigation }) {
                   className="w-3/5 h-12 rounded-full bg-cyan-50  mt-5 justify-center items-center shadow-lg shadow-neutral-950 sm:h-20 active:bg-white"
                   onPress={update}
                 >
-                  <Text className="font-bold text-base">Update</Text>
+                  <Text className="font-bold text-base sm:text-2xl">
+                    Update
+                  </Text>
                 </Pressable>
                 <Pressable
                   className="w-3/5 h-12 rounded-full bg-cyan-50  mt-5 justify-center items-center shadow-lg shadow-neutral-950 sm:h-20 active:bg-white"
                   onPress={resetPass}
                 >
-                  <Text className="font-bold text-base">Reset Password</Text>
+                  <Text className="font-bold text-base sm:text-2xl">
+                    Reset Password
+                  </Text>
                 </Pressable>
               </View>
             </KeyboardAwareScrollView>

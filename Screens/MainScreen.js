@@ -22,18 +22,18 @@ export default function MainScreen({ navigation }) {
           className="w-2/4 h-1/4 sm:h-2/5"
         ></Image>
         <Pressable
-          className="bg-cyan-100 active:bg-white w-5/6 h-12 justify-center items-center rounded-full mt-6 border"
+          className="bg-cyan-100 active:bg-white w-5/6 h-12 justify-center items-center  rounded-xl mt-6 border sm:h-20"
           onPress={LogIn}
         >
-          <Text className="text-sm uppercase font-medium sm:text-base ">
+          <Text className="text-sm uppercase font-medium sm:text-2xl">
             Log In
           </Text>
         </Pressable>
         <Pressable
-          className="bg-cyan-100 active:bg-white w-5/6 h-12 justify-center items-center rounded-full mt-6 border "
+          className="bg-cyan-100 active:bg-white w-5/6 h-12 justify-center items-center  rounded-xl mt-6 border  sm:h-20"
           onPress={SignUp}
         >
-          <Text className="text-sm uppercase font-medium sm:text-base">
+          <Text className="text-sm uppercase font-medium sm:text-2xl">
             Sign Up
           </Text>
         </Pressable>

@@ -1,42 +1,97 @@
-import React, { useState } from "react";
-import { View, Text, Dimensions } from "react-native";
-import { TriangleColorPicker } from "react-native-color-picker";
-import Slider from "@react-native-community/slider";
+import React from "react";
+import { View, Pressable, Text } from "react-native";
 
 export default function Pencil({ onSetColor, onSetRadius }) {
-  const [radius, setRadius] = useState(1);
-
-  const onColorChange = (color) => {
-    onSetColor(color);
+  const onSetColorChange = (colorCode) => {
+    onSetColor(colorCode);
   };
 
-  const handleRadiusChange = (value) => {
-    const roundedValue = Math.floor(value);
-    setRadius(roundedValue);
-    onSetRadius(roundedValue);
+  const onSetRadiusChange = (value) => {
+    onSetRadius(value);
   };
 
   return (
-    <View className="justify-center items-center">
-      <View className="flex-1 absolute bottom-20 bg-cyan-50 p-2 border justify-center items-center rounded-xl sm:p-5">
-        <Text className="text-sm text-center sm:text-2xl">
-          Press the color bar to confirm selection of color!
-        </Text>
-        <TriangleColorPicker
-          className="w-4/5 h-40 sm:h-52"
-          onColorSelected={(color) => onColorChange(color)}
-        />
-        <Text className="font-bold mt-5 sm:text-2xl">Stroke</Text>
-        <Text className="mt-5 sm:text-2xl">{radius}</Text>
-        <Slider
-          value={1}
-          style={{ width: Dimensions.get("window").width > 500 ? 400 : 200 }}
-          minimumValue={0}
-          maximumValue={10}
-          minimumTrackTintColor="black"
-          maximumTrackTintColor="black"
-          onValueChange={handleRadiusChange}
-        />
+    <View className="justify-center items-center p-5">
+      <View className="flex-1 absolute bottom-5 bg-cyan-50 p-5 border justify-center items-center rounded-xl sm:p-5">
+        <Text className="text-bold text-xl mb-5">Pencil</Text>
+        <View className="flex flex-row flex-wrap gap-x-3 gap-y-3 justify-center items-center ">
+          <Pressable
+            className="bg-black w-10 h-10 rounded-full "
+            onPress={() => onSetColorChange("#000000")}
+          />
+          <Pressable
+            className="bg-white w-10 h-10 rounded-full border "
+            onPress={() => onSetColorChange("#FFFFFF")}
+          />
+          <Pressable
+            className="bg-red-700 w-10 h-10 rounded-full"
+            onPress={() => onSetColorChange("#b91c1c")}
+          />
+          <Pressable
+            className="bg-pink-400 w-10 h-10 rounded-full"
+            onPress={() => onSetColorChange("#f472b6")}
+          />
+          <Pressable
+            className="bg-purple-800 w-10 h-10 rounded-full"
+            onPress={() => onSetColorChange("#6b21a8")}
+          />
+          <Pressable
+            className="bg-purple-400 w-10 h-10 rounded-full"
+            onPress={() => onSetColorChange("#c084fc")}
+          />
+          <Pressable
+            className="bg-blue-900 w-10 h-10 rounded-full"
+            onPress={() => onSetColorChange("#1e3a8a")}
+          />
+          <Pressable
+            className="bg-blue-400 w-10 h-10 rounded-full"
+            onPress={() => onSetColorChange("#60a5fa")}
+          />
+          <Pressable
+            className="bg-green-900 w-10 h-10 rounded-full"
+            onPress={() => onSetColorChange("#14532d")}
+          />
+          <Pressable
+            className="bg-green-400 w-10 h-10 rounded-full"
+            onPress={() => onSetColorChange("#34d399")}
+          />
+          <Pressable
+            className="bg-yellow-400 w-10 h-10 rounded-full"
+            onPress={() => onSetColorChange("#fde047")}
+          />
+          <Pressable
+            className="bg-orange-400 w-10 h-10 rounded-full"
+            onPress={() => onSetColorChange("#fb923c")}
+          />
+        </View>
+        <View className="flex flex-row flex-wrap gap-x-3 items-center mt-5">
+          <Pressable
+            className="bg-white w-20 h-7 border items-center justify-center rounded-xl"
+            onPress={() => onSetRadiusChange(1)}
+          >
+            <View className="bg-black h-1 w-16 border rounded-full" />
+          </Pressable>
+          <Pressable
+            className="bg-white w-20 h-7 border items-center justify-center rounded-xl"
+            onPress={() => onSetRadiusChange(3)}
+          >
+            <View className="bg-black h-1 w-16 border-2 rounded-full" />
+          </Pressable>
+        </View>
+        <View className="flex flex-row flex-wrap gap-x-3 items-center mt-5">
+          <Pressable
+            className="bg-white w-20 h-7 border items-center justify-center rounded-xl"
+            onPress={() => onSetRadiusChange(6)}
+          >
+            <View className="bg-black h-1 w-16 border-4 rounded-full" />
+          </Pressable>
+          <Pressable
+            className="bg-white w-20 h-7 border items-center justify-center rounded-xl"
+            onPress={() => onSetRadiusChange(10)}
+          >
+            <View className="bg-black h-1 w-16 border-8 rounded-full" />
+          </Pressable>
+        </View>
       </View>
     </View>
   );

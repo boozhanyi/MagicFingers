@@ -85,10 +85,7 @@ export default function ProfileScreen({ navigation }) {
                 className="w-24 h-24 sm:h-40 sm:w-40"
               />
             </View>
-            <Text
-              className="font-bold text-lg mt-5 sm:text-3
-        xl"
-            >
+            <Text className="font-bold text-lg mt-5 sm:text-3xl">
               {username}
             </Text>
             <Pressable
@@ -102,53 +99,65 @@ export default function ProfileScreen({ navigation }) {
             <View className="flex flex-row items-center mt-5 w-11/12">
               <View className="flex-1 h-0.5 bg-black opacity-80" />
             </View>
-            <View className="flex flex-row mt-6 w-11/12 justify-between items-center">
+            <Pressable
+              onPress={yourProject}
+              className="flex flex-row mt-6 w-11/12 justify-between items-center"
+            >
               <FontAwesome name="file" size={24} color="black" />
               <Text className="flex-1 text-base font-medium ml-4 sm:text-2xl">
                 Your Project
               </Text>
-              <Pressable onPress={yourProject}>
-                <MaterialIcons name="navigate-next" size={27} color="black" />
-              </Pressable>
-            </View>
-            <View className="flex flex-row mt-6 w-11/12 justify-between items-center">
+
+              <MaterialIcons name="navigate-next" size={27} color="black" />
+            </Pressable>
+
+            <Pressable
+              onPress={folder}
+              className="flex flex-row mt-6 w-11/12 justify-between items-center sm:mt-10"
+            >
               <Ionicons name="folder" size={24} color="black" />
               <Text className="flex-1 text-base font-medium ml-4 sm:text-2xl">
                 Folder
               </Text>
-              <Pressable onPress={folder}>
-                <MaterialIcons name="navigate-next" size={27} color="black" />
-              </Pressable>
-            </View>
-            <View className="flex flex-row mt-6 w-11/12 justify-between items-center">
+
+              <MaterialIcons name="navigate-next" size={27} color="black" />
+            </Pressable>
+
+            <Pressable
+              onPress={moreAboutUs}
+              className="flex flex-row mt-6 w-11/12 justify-between items-center sm:mt-10"
+            >
               <Entypo name="info-with-circle" size={24} color="black" />
               <Text className="flex-1 text-base font-medium ml-4 sm:text-2xl">
                 More About Us
               </Text>
-              <Pressable onPress={moreAboutUs}>
-                <MaterialIcons name="navigate-next" size={27} color="black" />
-              </Pressable>
-            </View>
-            {/* {userID === "lwzwq2bOLRfePHVWzxiMPnm20H93" && (
-              <View className="flex flex-row mt-6 w-11/12 justify-between items-center">
+
+              <MaterialIcons name="navigate-next" size={27} color="black" />
+            </Pressable>
+
+            {userID === "lwzwq2bOLRfePHVWzxiMPnm20H93" && (
+              <Pressable
+                onPress={uploadVideo}
+                className="flex flex-row mt-6 w-11/12 justify-between items-center sm:mt-10"
+              >
                 <Entypo name="upload-to-cloud" size={24} color="black" />
                 <Text className="flex-1 text-base font-medium ml-4 sm:text-2xl">
                   UploadVideo
                 </Text>
-                <Pressable onPress={uploadVideo}>
-                  <MaterialIcons name="navigate-next" size={27} color="black" />
-                </Pressable>
-              </View>
-            )} */}
-            <View className="flex flex-row mt-6 w-11/12 justify-between items-center">
+
+                <MaterialIcons name="navigate-next" size={27} color="black" />
+              </Pressable>
+            )}
+            <Pressable
+              onPress={LogOut}
+              className="flex flex-row mt-6 w-11/12 justify-between items-center sm:mt-10"
+            >
               <MaterialCommunityIcons name="logout" size={24} color="black" />
               <Text className="flex-1 text-base font-medium ml-4 sm:text-2xl">
                 Log Out
               </Text>
-              <Pressable onPress={LogOut}>
-                <MaterialIcons name="navigate-next" size={27} color="black" />
-              </Pressable>
-            </View>
+              <MaterialIcons name="navigate-next" size={27} color="black" />
+            </Pressable>
           </SafeAreaView>
         </ImageBackground>
       )}

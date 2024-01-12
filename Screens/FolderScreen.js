@@ -7,11 +7,12 @@ import {
   Pressable,
   Modal,
   TextInput,
+  Image,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import { db, auth, deleteFolder } from "../Backend/Firebase";
+import { db, auth, deleteFolder, editFolderName } from "../Backend/Firebase";
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import AddFolder from "../Components/AddFolder";
@@ -20,15 +21,19 @@ const FolderScreen = ({ navigation }) => {
   useEffect(() => {
     fetchAllFolder();
     setAddFolderModel(false);
+    setEditNameModel(false);
     setFolderName("");
   }, []);
 
   const [folder, setFolder] = useState([]);
   const [addFolderModel, setAddFolderModel] = useState(false);
   const [deleteModel, setDeleteModel] = useState(false);
+  const [editNameModel, setEditNameModel] = useState(false);
+  const [functionModel, setFunctonModel] = useState(false);
   const [selectedFolder, setSelectedFolder] = useState("");
   const [folderName, setFolderName] = useState("");
   const originalFolder = useRef();
+  const [newFolderName, setNewFolderName] = useState("");
 
   const closeModel = () => {
     setAddFolderModel(false);
@@ -42,18 +47,42 @@ const FolderScreen = ({ navigation }) => {
     navigation.navigate("FolderDrawingsScreen", { Folder: folder });
   };
 
-  const openDeleteModel = (folder) => {
-    setSelectedFolder(folder);
+  const openFunctionModel = (folder) => {
+    setSelectedFolder(folder.FolderId);
+    setNewFolderName(folder.FolderName);
+    setFunctonModel(true);
+  };
+
+  const openDeleteModel = () => {
     setDeleteModel(true);
+    setFunctonModel(false);
+  };
+
+  const openEditNameModel = () => {
+    setFunctonModel(false);
+    setEditNameModel(true);
   };
 
   const confirmDelete = async () => {
     await deleteFolder(selectedFolder);
     setDeleteModel(false);
+    setFunctonModel(false);
   };
 
   const cancelDelete = () => {
     setDeleteModel(false);
+    setFunctonModel(true);
+  };
+
+  const updateFolderName = async () => {
+    await editFolderName(selectedFolder, newFolderName);
+    setEditNameModel(false);
+    setFunctonModel(false);
+  };
+
+  const onClose = () => {
+    setEditNameModel(false);
+    setFunctonModel(false);
   };
 
   const fetchAllFolder = () => {
@@ -80,7 +109,7 @@ const FolderScreen = ({ navigation }) => {
 
           folder.push({
             FolderName: data.FolderName,
-            FolderID: doc.id,
+            FolderId: doc.id,
             FolderDate: formattedDate,
           });
         }
@@ -117,6 +146,7 @@ const FolderScreen = ({ navigation }) => {
         flex: 1,
         height: Dimensions.get("window").height,
         width: Dimensions.get("window").width,
+        opacity: functionModel || deleteModel || editNameModel ? 0.3 : 1,
       }}
       resizeMode="cover"
     >
@@ -147,56 +177,128 @@ const FolderScreen = ({ navigation }) => {
                 value={folderName}
               ></TextInput>
             </View>
-            {folder.map((folder, index) => (
-              <Pressable
-                key={index}
-                className="flex flex-row bg-slate-100 border rounded-2xl w-11/12 h-16 justify-between items-center pr-5 mt-5 sm:h-20 active:bg-white"
-                onLongPress={() => openDeleteModel(folder.FolderID)}
-              >
-                <View className="flex flex-col">
-                  <Text className="font-bold ml-4 sm:text-xl">
-                    {folder.FolderName}
-                  </Text>
-                  <Text className="font-normal ml-4 mt-2 sm:text-md">
-                    {folder.FolderDate}
-                  </Text>
-                </View>
-                <Pressable onPress={() => openFolder(folder)}>
-                  <MaterialIcons name="navigate-next" size={27} color="black" />
-                </Pressable>
-              </Pressable>
-            ))}
             <View className="justify-center items-center mt-5 w-full">
               <Pressable
                 onPress={openModel}
-                className="bg-slate-200 border rounded-2xl w-1/2 h-12 justify-center items-center active:bg-white"
+                className="flex flex-row bg-slate-200 border rounded-2xl w-11/12 h-12 justify-center items-center active:bg-white sm:h-16"
               >
-                <Ionicons name="add" size={24} color="black" />
+                <Text className="font-bold mr-5 sm:text-xl">Add a folder</Text>
+                <Ionicons name="add" size={20} color="black" />
               </Pressable>
             </View>
+            {folder.map((folder, index) => (
+              <Pressable
+                key={index}
+                className="flex flex-row bg-slate-100 border rounded-2xl w-11/12 h-16 justify-between items-center pr-5 mt-5 sm:h-24 active:bg-white"
+                onLongPress={() => openFunctionModel(folder)}
+                onPress={() => openFolder(folder)}
+              >
+                <View className="flex flex-col">
+                  <Text className="font-bold ml-4 sm:text-2xl">
+                    {folder.FolderName}
+                  </Text>
+                  <Text className="font-normal ml-4 mt-2 sm:text-lg">
+                    {folder.FolderDate}
+                  </Text>
+                </View>
+                <MaterialIcons name="navigate-next" size={27} color="black" />
+              </Pressable>
+            ))}
           </View>
+          {functionModel && (
+            <Modal animationType="fade" transparent={true}>
+              <View className="flex-1 justify-center items-center">
+                <View className="w-11/12 p-10 bg-cyan-50 justify-center items-center border rounded-xl">
+                  <Pressable
+                    className="flex flex-row w-full h-10 justify-center items-center space-x-5 active:bg-slate-200 sm:h-20"
+                    onPress={openDeleteModel}
+                  >
+                    <Image
+                      className="w-7 h-7 sm:h-14 sm:w-14"
+                      source={require("../assets/Delete.png")}
+                    />
+                    <Text className="text-black sm:text-xl">Delete Folder</Text>
+                  </Pressable>
+                  <Pressable
+                    className="flex flex-row w-full h-10 justify-center items-center space-x-5 active:bg-slate-200 sm:h-20 mt-5"
+                    onPress={openEditNameModel}
+                  >
+                    <Image
+                      className="w-7 h-7 sm:h-14 sm:w-14"
+                      source={require("../assets/Edit.png")}
+                    />
+                    <Text className="text-black sm:text-xl">
+                      Edit Folder Name
+                    </Text>
+                  </Pressable>
+                  <Pressable
+                    className="flex flex-row w-full h-10 justify-center items-center space-x-5 active:bg-slate-200 sm:h-20 mt-5"
+                    onPress={onClose}
+                  >
+                    <Image
+                      className="w-7 h-7 sm:h-14 sm:w-14"
+                      source={require("../assets/Close.png")}
+                    />
+                    <Text className="text-black sm:text-xl">Close</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </Modal>
+          )}
           {deleteModel && (
+            <Modal animationType="fade" transparent={true}>
+              <View className="flex-1 justify-center items-center">
+                <View className="w-11/12 p-10 bg-cyan-50 justify-center items-center border rounded-xl">
+                  <Text className="text-black text-md font-bold sm:text-xl mb-10">
+                    Do you want to delete the folder
+                  </Text>
+                  <Pressable
+                    className="flex flex-row w-full h-10 justify-center items-center space-x-5 border rounded-xl bg-slate-200 active:bg-white sm:h-20"
+                    onPress={confirmDelete}
+                  >
+                    <Text className="text-black sm:text-xl">Delete</Text>
+                  </Pressable>
+                  <Pressable
+                    className="flex flex-row w-full h-10 justify-center items-center space-x-5 border rounded-xl bg-slate-200 active:bg-white sm:h-20 mt-5"
+                    onPress={cancelDelete}
+                  >
+                    <Text className="text-black  sm:text-xl">Cancel</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </Modal>
+          )}
+          {editNameModel && (
             <Modal
               animationType="fade"
               transparent={true}
-              visible={deleteModel}
+              onRequestClose={onClose}
             >
               <View className="flex-1 justify-center items-center">
-                <View className="w-11/12 p-10 bg-cyan-50 justify-center items-center border rounded-xl">
-                  <Text className="sm:text-2xl">
-                    Are you sure you want to delete this folder?
+                <View className="w-11/12 p-10 bg-cyan-50 shadow-xl shadow-slate-950 items-center rounded-xl sm:w-1/2">
+                  <Text className="text-base font-bold sm:text-2xl">
+                    Enter New Folder Name
                   </Text>
+                  <TextInput
+                    className="w-11/12 border rounded-xl mt-5 p-2 sm:text-2xl sm:p-3"
+                    onChangeText={(text) => setNewFolderName(text)}
+                    value={newFolderName}
+                  />
                   <Pressable
-                    className="bg-slate-200 rounded-xl justify-center items-center p-2 mt-5 w-2/4 active:bg-white"
-                    onPress={confirmDelete}
+                    className="bg-black w-2/4 p-2 mt-5 justify-center items-center rounded-xl active:bg-slate-300"
+                    onPress={updateFolderName}
                   >
-                    <Text className="text-black sm:text-xl">Confirm</Text>
+                    <Text className="font-bold text-sm sm:text-xl text-white">
+                      Confirm
+                    </Text>
                   </Pressable>
                   <Pressable
-                    className="bg-slate-200 rounded-xl justify-center items-center p-2 mt-5 w-2/4 active:bg-white"
-                    onPress={cancelDelete}
+                    className="bg-black w-2/4 p-2 mt-5 justify-center items-center rounded-xl active:bg-slate-300"
+                    onPress={onClose}
                   >
-                    <Text className="text-black sm:text-xl">Cancel</Text>
+                    <Text className="font-bold text-sm sm:text-xl text-white">
+                      Cancel
+                    </Text>
                   </Pressable>
                 </View>
               </View>

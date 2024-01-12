@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
-import {
-  Modal,
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  Pressable,
-} from "react-native";
+import { Modal, View, Text, TextInput, Pressable } from "react-native";
 import { updateDrawingName } from "../Backend/Firebase";
 
 export default function EditProjectName({ isVisible, onClose, project }) {
-  useEffect(() => {
-    setProjectName(project.DrawingName);
-  }, [project]);
-
   const [projectName, setProjectName] = useState("");
+
+  useEffect(() => {
+    if (project) {
+      setProjectName(project.DrawingName);
+    }
+  }, [project]);
 
   const updateProjectName = async () => {
     await updateDrawingName(project, projectName);
@@ -22,7 +17,12 @@ export default function EditProjectName({ isVisible, onClose, project }) {
   };
 
   return (
-    <Modal animationType="fade" transparent={true} visible={isVisible}>
+    <Modal
+      animationType="fade"
+      transparent={true}
+      onRequestClose={onClose}
+      visible={isVisible}
+    >
       <View className="flex-1 justify-center items-center">
         <View className="w-11/12 p-10 bg-cyan-50 shadow-xl shadow-slate-950 items-center rounded-xl sm:w-1/2">
           <Text className="text-base font-bold sm:text-2xl">
@@ -34,16 +34,20 @@ export default function EditProjectName({ isVisible, onClose, project }) {
             value={projectName}
           />
           <Pressable
-            className="bg-slate-200 w-2/4 p-2 mt-5 justify-center items-center rounded-xl active:bg-white"
+            className="bg-black w-2/4 p-2 mt-5 justify-center items-center rounded-xl active:bg-slate-300"
             onPress={updateProjectName}
           >
-            <Text className="font-bold text-sm sm:text-xl">Confirm</Text>
+            <Text className="font-bold text-sm sm:text-xl text-white">
+              Confirm
+            </Text>
           </Pressable>
           <Pressable
-            className="bg-slate-200 w-2/4 p-2 mt-5 justify-center items-center rounded-xl active:bg-white"
+            className="bg-black w-2/4 p-2 mt-5 justify-center items-center rounded-xl active:bg-slate-300"
             onPress={onClose}
           >
-            <Text className="font-bold text-sm sm:text-xl">Cancel</Text>
+            <Text className="font-bold text-sm sm:text-xl text-white">
+              Cancel
+            </Text>
           </Pressable>
         </View>
       </View>

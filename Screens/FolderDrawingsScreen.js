@@ -25,9 +25,9 @@ export default function FolderDrawingsScreen({ route, navigation }) {
     fetchData();
   }, []);
 
-  const fetchData = () => {
+  const fetchData = async () => {
     const user = auth.currentUser;
-    const folderRef = doc(db, "Users", user.uid, "Folder", folder.FolderID);
+    const folderRef = doc(db, "Users", user.uid, "Folder", folder.FolderId);
 
     const unsubscribe = onSnapshot(folderRef, (docSnapshot) => {
       const drawingData = [];
@@ -49,6 +49,7 @@ export default function FolderDrawingsScreen({ route, navigation }) {
 
             drawingData.push({
               DrawingName: drawing.DrawingName,
+              DrawingId: drawing.DrawingId,
               DrawingUrl: drawing.DrawingUrl,
               TimeStamp: formattedDate,
             });
@@ -124,10 +125,10 @@ export default function FolderDrawingsScreen({ route, navigation }) {
                       />
                     </View>
                     <View className="justify-center items-center">
-                      <Text className="mt-1 text-base font-semibold sm:text-xl">
+                      <Text className="mt-1 text-base font-semibold sm:text-2xl">
                         {drawing.DrawingName}
                       </Text>
-                      <Text className="mt-1 text-base font-semibold sm:text-md">
+                      <Text className="mt-1 text-base font-semibold sm:text-lg">
                         {drawing.TimeStamp}
                       </Text>
                     </View>

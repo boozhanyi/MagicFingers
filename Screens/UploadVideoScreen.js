@@ -1,5 +1,12 @@
 import * as React from "react";
-import { StyleSheet, Text, View, Pressable, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  TextInput,
+  Alert,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useState } from "react";
@@ -14,8 +21,12 @@ export default function UploadVideoScreen({ navigation }) {
   const [videoSource, setVideoSource] = useState(null);
 
   const confirm = async () => {
-    await uploadVideo(videoName, description, videoSource);
-    navigation.navigate("Profile");
+    if (videoSource && videoName && description) {
+      await uploadVideo(videoName, description, videoSource);
+      navigation.navigate("Profile");
+    } else {
+      Alert.alert("Please make sure all info is keyed");
+    }
   };
 
   const selectVideo = async () => {
@@ -61,7 +72,7 @@ export default function UploadVideoScreen({ navigation }) {
             )}
           </View>
           <Pressable
-            className="w-3/5 mt-5 justify-center items-center bg-cyan-50 shadow-xl shadow-neutral-950 h-10 rounded-xl sm:h-16"
+            className="w-3/5 mt-5 justify-center items-center bg-cyan-50 shadow-xl shadow-neutral-950 h-10 rounded-xl sm:h-16 active:bg-white"
             onPress={selectVideo}
           >
             <Text className="text-base font-bold sm:text-xl">Upload Video</Text>
@@ -85,7 +96,7 @@ export default function UploadVideoScreen({ navigation }) {
             />
           </View>
           <Pressable
-            className="bg-cyan-50 mt-10 w-1/2 h-10 justify-center items-center rounded-xl shadow-lg shadow-neutral-950 sm:h-16"
+            className="bg-cyan-50 mt-10 w-1/2 h-10 justify-center items-center rounded-xl shadow-lg shadow-neutral-950 sm:h-16 active:bg-white"
             onPress={confirm}
           >
             <Text className="text-base font-bold sm:text-xl">Confirm</Text>

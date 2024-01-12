@@ -4,13 +4,17 @@ import FunctionScreen from "./FunctionScreen";
 import ProfileScreen from "./ProfileScreen";
 import HomeScreen from "./HomeScreen";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { useWindowDimensions } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
+  const { width } = useWindowDimensions();
+  const iconSize = width > 600 ? 50 : 24;
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        tabBarStyle: { height: width > 600 ? 80 : 50 },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
@@ -22,10 +26,12 @@ export default function TabNavigator() {
             iconName = focused ? "person-circle" : "person-circle-outline";
           }
 
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return <Ionicons name={iconName} size={iconSize} color={color} />;
         },
         tabBarActiveTintColor: "blue",
         tabBarInactiveTintColor: "gray",
+        tabBarLabelStyle: { fontSize: width > 600 ? 20 : 10 },
+        tabBarIconStyle: { width: 50 },
       })}
     >
       <Tab.Screen

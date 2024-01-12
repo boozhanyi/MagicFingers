@@ -6,7 +6,6 @@ import {
   Path,
   Line,
   vec,
-  useValue,
   Circle,
   RoundedRect,
   Oval,
@@ -15,6 +14,9 @@ import {
   useCanvasRef,
   Image as BackgroundImage,
   useImage,
+  PaintStyle,
+  StrokeCap,
+  StrokeJoin,
 } from "@shopify/react-native-skia";
 import {
   StyleSheet,
@@ -42,8 +44,6 @@ export default function A({ route, navigation }) {
   const imageRef = useCanvasRef();
   const currentPath = useRef(null);
   const currentVector = useRef(null);
-  const cx = useValue(190);
-  const cy = useValue(250);
   const selectedColor = useRef("black");
   const selectedRadius = useRef(1);
   const selectedCircleRadius = useRef(50);
@@ -65,9 +65,9 @@ export default function A({ route, navigation }) {
   const [background, backgroundSelected] = useState(false);
   const [canvaWidth, setCanvaWidth] = useState(0);
   const [canvaHeight, setCanvaHeight] = useState(0);
-  const [footerHeight, setFooterHeight] = useState(0);
   const [headerHeight, setHeaderHeight] = useState(0);
   const drawingName = route.params?.Name;
+  const project = route.params?.project;
   const [backModelVisible, setBackModelVisible] = useState(false);
   const additionalHeight = 100;
 
@@ -78,6 +78,22 @@ export default function A({ route, navigation }) {
       backgroundSelected(false);
     }
   }, []);
+
+  const back = () => {
+    if (canva.length > 0) {
+      setBackModelVisible(true);
+    } else {
+      navigation.navigate("Function");
+    }
+  };
+
+  const confirmBack = () => {
+    navigation.navigate("Function");
+  };
+
+  const cancelBack = () => {
+    setBackModelVisible(false);
+  };
 
   if (status === null) {
     requestPermission();
@@ -90,10 +106,10 @@ export default function A({ route, navigation }) {
         format: "png",
       });
 
-      await saveDrawing(localUri, drawingName);
+      await saveDrawing(localUri, drawingName, project);
 
       Alert.alert("Saved!");
-      navigation.navigate("Function");
+      navigation.navigate("Home");
     } catch (e) {
       console.log(e);
     }
@@ -219,8 +235,6 @@ export default function A({ route, navigation }) {
       setLineVisible(false);
       setShapeVisible(false);
       setTextVisible(false);
-      selectedColor.current = "black";
-      selectedRadius.current = 1;
     }
   };
 
@@ -233,8 +247,6 @@ export default function A({ route, navigation }) {
       setLineVisible(true);
       setShapeVisible(false);
       setTextVisible(false);
-      selectedColor.current = "black";
-      selectedRadius.current = 1;
     }
   };
 
@@ -246,8 +258,6 @@ export default function A({ route, navigation }) {
       setLineVisible(false);
       setShapeVisible(true);
       setTextVisible(false);
-      selectedColor.current = "black";
-      selectedRadius.current = 1;
     }
   };
 
@@ -274,8 +284,8 @@ export default function A({ route, navigation }) {
       setCanva((prevCanva) => [
         ...prevCanva,
         {
-          cx: cx.current,
-          cy: cy.current,
+          cx: 190,
+          cy: 250,
           color: selectedColor.current,
           radius: selectedCircleRadius.current,
           type: "circle",
@@ -308,6 +318,19 @@ export default function A({ route, navigation }) {
     }
   };
 
+  const getPaint = () => {
+    const paint = Skia.Paint();
+    paint.setStrokeWidth(selectedRadius.current);
+    paint.setStyle(PaintStyle.Stroke);
+    paint.setStrokeMiter(5);
+    paint.setStrokeCap(StrokeCap.Round);
+    paint.setStrokeJoin(StrokeJoin.Round);
+    paint.setAntiAlias(true);
+    const _color = paint.copy();
+    _color.setColor(Skia.Color(selectedColor.current));
+    return _color;
+  };
+
   const onTouch = useTouchHandler({
     onStart: ({ x, y }) => {
       setLineVisible(false);
@@ -315,6 +338,14 @@ export default function A({ route, navigation }) {
       if (drawingTools.current === 1) {
         currentPath.current = Skia.Path.Make();
         currentPath.current.moveTo(x, y);
+        setCanva((prevCanva) => [
+          ...prevCanva,
+          {
+            path: currentPath.current,
+            type: "drawing",
+            paint: getPaint(),
+          },
+        ]);
       } else if (drawingTools.current === 2) {
         currentVector.current = vec(x, y);
       } else if (drawingTools.current === 3) {
@@ -361,29 +392,28 @@ export default function A({ route, navigation }) {
     },
     onActive: ({ x, y }) => {
       if (drawingTools.current === 1) {
-        currentPath.current?.lineTo(x, y);
+        setCanva((prevCanva) => {
+          currentPath.current.lineTo(x, y);
+          return [
+            ...prevCanva.slice(0, prevCanva.length - 1),
+            {
+              path: currentPath.current,
+              type: "drawing",
+              paint: getPaint(),
+            },
+          ];
+        });
       }
     },
     onEnd: ({ x, y }) => {
-      if (drawingTools.current === 1) {
-        setCanva((prevCanva) => [
-          ...prevCanva,
-          {
-            path: currentPath.current,
-            color: selectedColor.current,
-            radius: selectedRadius.current,
-            type: "drawing",
-          },
-        ]);
-      } else if (drawingTools.current === 2) {
+      if (drawingTools.current === 2) {
         setCanva((prevCanva) => [
           ...prevCanva,
           {
             startCoor: currentVector.current,
             endCoor: vec(x, y),
-            width: selectedRadius.current,
-            color: selectedColor.current,
             type: "line",
+            paint: getPaint(),
           },
         ]);
       }
@@ -391,22 +421,6 @@ export default function A({ route, navigation }) {
       currentVector.current = null;
     },
   });
-
-  const back = () => {
-    if (canva.length > 0) {
-      setBackModelVisible(true);
-    } else {
-      navigation.navigate("Function");
-    }
-  };
-
-  const confirmBack = () => {
-    navigation.navigate("Function");
-  };
-
-  const cancelBack = () => {
-    setBackModelVisible(false);
-  };
 
   return (
     <SafeAreaView className="flex-1">
@@ -417,7 +431,7 @@ export default function A({ route, navigation }) {
       >
         <View className="flex-1 ">
           <View
-            className="flex flex-row bg-cyan-50 p-2 items-center border justify-center sm:p-3"
+            className="flex flex-row bg-cyan-50 p-2 items-center border justify-between sm:p-5"
             onLayout={(event) => {
               const height = event.nativeEvent.layout.height;
               setHeaderHeight(height);
@@ -426,20 +440,53 @@ export default function A({ route, navigation }) {
             <Pressable onPress={back} className="ml-1">
               <Ionicons name="arrow-back" size={20} color="black" />
             </Pressable>
-            <Text className="text-base ml-5 flex-1 sm:text-2xl">
-              {drawingName}
-            </Text>
-            <Pressable
-              className="bg-blue-50 rounded-2xl shadow-xl shadow-slate-950 p-3"
-              onPress={onSaveImage}
-            >
-              <Text className="font-bold text-xs sm:text-xl">Save</Text>
+            <Pressable onPress={onOpenPencil}>
+              <Image
+                className="w-7 h-7 sm:h-10 sm:w-10"
+                source={require("../assets/Pencil.png")}
+              />
             </Pressable>
-            <Pressable
-              className="bg-blue-50 rounded-2xl shadow-xl shadow-slate-950 p-3 ml-3 "
-              onPress={onDownloadImage}
-            >
-              <Text className="font-bold text-xs sm:text-xl">Download</Text>
+            <Pressable onPress={onOpenLine}>
+              <Image
+                className="w-7 h-7 sm:h-10 sm:w-10"
+                source={require("../assets/Line.png")}
+              />
+            </Pressable>
+            <Pressable onPress={onOpenShape}>
+              <Image
+                className="w-7 h-7 sm:h-10 sm:w-10"
+                source={require("../assets/Shapes.png")}
+              />
+            </Pressable>
+            {/* <Pressable onPress={onOpenText}>
+              <Image
+                className="w-7 h-7"
+                source={require("../assets/Text.png")}
+              />
+            </Pressable> */}
+            <Pressable onPress={undo}>
+              <Image
+                className="w-7 h-7 sm:h-10 sm:w-10"
+                source={require("../assets/Undo.png")}
+              />
+            </Pressable>
+            <Pressable onPress={redo}>
+              <Image
+                className="w-7 h-7 sm:h-10 sm:w-10"
+                source={require("../assets/Redo.png")}
+              />
+            </Pressable>
+            <Pressable onPress={deleteCanva}>
+              <Image
+                className="w-7 h-7 sm:h-10 sm:w-10"
+                source={require("../assets/Delete.png")}
+              />
+            </Pressable>
+            <Pressable onPress={onSaveImage}>
+              <Image
+                className="w-6 h-6 sm:h-10 sm:w-10"
+                source={require("../assets/Save.png")}
+              />
             </Pressable>
           </View>
           <Canvas
@@ -451,7 +498,6 @@ export default function A({ route, navigation }) {
               {
                 height:
                   Dimensions.get("window").height -
-                  footerHeight -
                   headerHeight -
                   (Dimensions.get("window").height > 1000
                     ? additionalHeight
@@ -480,23 +526,14 @@ export default function A({ route, navigation }) {
             )}
             {canva.map((item, index) => {
               if (item.type === "drawing") {
-                return (
-                  <Path
-                    key={index}
-                    path={item.path}
-                    style="stroke"
-                    strokeWidth={item.radius}
-                    color={item.color}
-                  />
-                );
+                return <Path key={index} path={item.path} paint={item.paint} />;
               } else if (item.type === "line") {
                 return (
                   <Line
                     key={index}
                     p1={item.startCoor}
                     p2={item.endCoor}
-                    strokeWidth={item.width}
-                    color={item.color}
+                    paint={item.paint}
                   />
                 );
               } else if (item.type === "circle") {
@@ -545,56 +582,6 @@ export default function A({ route, navigation }) {
               }
             })}
           </Canvas>
-          <View
-            className="flex flex-row bg-cyan-50 mt-1 border bottom-0 items-center justify-evenly p-3 sm:bottom-0"
-            onLayout={(event) => {
-              const height = event.nativeEvent.layout.height;
-              setFooterHeight(height);
-            }}
-          >
-            <Pressable onPress={onOpenPencil}>
-              <Image
-                className="w-7 h-7"
-                source={require("../assets/Pencil.png")}
-              />
-            </Pressable>
-            <Pressable onPress={onOpenLine}>
-              <Image
-                className="w-7 h-7"
-                source={require("../assets/Line.png")}
-              />
-            </Pressable>
-            <Pressable onPress={onOpenShape}>
-              <Image
-                className="w-7 h-7"
-                source={require("../assets/Shapes.png")}
-              />
-            </Pressable>
-            <Pressable onPress={onOpenText}>
-              <Image
-                className="w-7 h-7"
-                source={require("../assets/Text.png")}
-              />
-            </Pressable>
-            <Pressable onPress={undo}>
-              <Image
-                className="w-7 h-7"
-                source={require("../assets/Undo.png")}
-              />
-            </Pressable>
-            <Pressable onPress={redo}>
-              <Image
-                className="w-7 h-7"
-                source={require("../assets/Redo.png")}
-              />
-            </Pressable>
-            <Pressable onPress={deleteCanva}>
-              <Image
-                className="w-7 h-7"
-                source={require("../assets/Delete.png")}
-              />
-            </Pressable>
-          </View>
         </View>
         <StatusBar style="auto" />
         <View>

@@ -154,23 +154,19 @@ const deleteDrawing = async (drawing) => {
     const user = auth.currentUser;
     const drawingRef = collection(db, "Users", user.uid, "Drawings");
     const documentRef = collection(db, "Users", user.uid, "StarDrawings");
+    const starDrawingRef = await getDoc(doc(documentRef, drawing.DrawingId));
 
-    for (const drawingItem of drawing) {
-      await deleteDoc(doc(drawingRef, drawingItem.DrawingId));
-
-      const starDrawingRef = await getDoc(
-        doc(documentRef, drawingItem.DrawingId)
-      );
-
-      if (starDrawingRef.exists()) {
-        await deleteDoc(doc(documentRef, drawingItem.DrawingId));
-      }
-
-      const storageRef = ref(storage, drawingItem.DrawingUrl);
-      await deleteObject(storageRef);
-
-      console.log(`Drawing with ID ${drawingItem.DrawingId} deleted.`);
+    if (!starDrawingRef.exists()) {
+      await deleteDoc(doc(documentRef, drawing.DrawingId));
+      await deleteDoc(doc(drawingRef, drawing.DrawingId));
+    } else {
+      Alert.alert("You cannot delete favvourite drawing! Unfavourite it first");
     }
+
+    // const storageRef = ref(storage, drawing.DrawingUrl);
+    // await deleteObject(storageRef);
+
+    console.log(`Drawing with ID ${drawing.DrawingId} deleted.`);
   } catch (error) {
     console.error("Error delete drawing", error);
   }
@@ -181,32 +177,87 @@ const favouriteDrawings = async (drawing) => {
     const user = auth.currentUser;
     const documentRef = doc(db, "Users", user.uid);
 
-    for (const drawingItem of drawing) {
-      const drawingData = {
-        DrawingName: drawingItem.DrawingName,
-        DrawingUrl: drawingItem.DrawingUrl,
-        TimeStamp: serverTimestamp(),
-      };
+    const drawingData = {
+      DrawingName: drawing.DrawingName,
+      DrawingUrl: drawing.DrawingUrl,
+      TimeStamp: serverTimestamp(),
+    };
 
-      const starDrawingRef = await getDoc(
-        doc(documentRef, "StarDrawings", drawingItem.DrawingId)
+    const starDrawingRef = await getDoc(
+      doc(documentRef, "StarDrawings", drawing.DrawingId)
+    );
+
+    if (starDrawingRef.exists()) {
+      await deleteDoc(doc(documentRef, "StarDrawings", drawing.DrawingId));
+      console.log("Drawings Unstared!");
+    } else {
+      await setDoc(
+        doc(documentRef, "StarDrawings", drawing.DrawingId),
+        drawingData
       );
-
-      if (starDrawingRef.exists()) {
-        await deleteDoc(
-          doc(documentRef, "StarDrawings", drawingItem.DrawingId)
-        );
-        console.log("Drawings Unstared!");
-      } else {
-        await setDoc(
-          doc(documentRef, "StarDrawings", drawingItem.DrawingId),
-          drawingData
-        );
-        console.log("Drawings Stared!");
-      }
+      console.log("Drawings Stared!");
     }
   } catch (error) {
     console.error("Error starring drawings:", error);
+  }
+};
+
+const saveDrawing = async (uri, name, projectId) => {
+  try {
+    const user = auth.currentUser;
+
+    Alert.alert("Saving your dawing");
+
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.log(e);
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+
+    const imageRef = ref(
+      storage,
+      `images/${user.uid}/${Date.now()}-${Math.floor(Math.random() * 100000)}`
+    );
+    await uploadBytes(imageRef, blob);
+    blob.close();
+
+    const downloadUrl = await getDownloadURL(imageRef);
+    const userRef = doc(db, "Users", user.uid);
+
+    if (projectId) {
+      const drawingDocRef = doc(userRef, "Drawings", projectId);
+      const starRef = await getDoc(doc(userRef, "StarDrawings", projectId));
+      await updateDoc(drawingDocRef, {
+        DrawingUrl: downloadUrl,
+        TimeStamp: serverTimestamp(),
+      });
+      if (starRef.exists()) {
+        const starDocRef = doc(userRef, "StarDrawings", projectId);
+        await updateDoc(starDocRef, {
+          DrawingUrl: downloadUrl,
+          TimeStamp: serverTimestamp(),
+        });
+      }
+    } else {
+      const drawingDocRef = collection(userRef, "Drawings");
+      await addDoc(drawingDocRef, {
+        DrawingName: name,
+        DrawingUrl: downloadUrl,
+        TimeStamp: serverTimestamp(),
+      });
+    }
+
+    console.log("Succesfully Saved to database");
+  } catch (error) {
+    console.error("Error Saving Drawings", error);
   }
 };
 
@@ -296,13 +347,28 @@ const deleteFolder = async (folderID) => {
   }
 };
 
+const editFolderName = async (folderID, folderName) => {
+  try {
+    const user = auth.currentUser;
+    const folderRef = doc(db, "Users", user.uid, "Folder", folderID);
+
+    await updateDoc(folderRef, {
+      FolderName: folderName,
+    });
+    console.log("Successfully updated the name");
+  } catch (error) {
+    console.error("Error updating name:", error);
+  }
+};
+
 const addDrawing = async (drawing, folder) => {
   try {
     const user = auth.currentUser;
-    const folderRef = doc(db, "Users", user.uid, "Folder", folder.FolderID);
+    const folderRef = doc(db, "Users", user.uid, "Folder", folder.FolderId);
 
     await updateDoc(folderRef, {
       Drawings: arrayUnion({
+        DrawingId: drawing.DrawingId,
         DrawingName: drawing.DrawingName,
         DrawingUrl: drawing.DrawingUrl,
         TimeStamp: drawing.Time,
@@ -315,14 +381,15 @@ const addDrawing = async (drawing, folder) => {
 
 const deleteDrawingfromFolder = async (drawing, folder) => {
   try {
+    Alert.alert("Removing from folder!");
     const user = auth.currentUser;
-    const folderRef = doc(db, "Users", user.uid, "Folder", folder.FolderID);
+    const folderRef = doc(db, "Users", user.uid, "Folder", folder.FolderId);
 
     const docSnap = await getDoc(folderRef);
     const documentData = docSnap.data().Drawings;
 
     const itemIndex = documentData.findIndex(
-      (item) => item.DrawingUrl === drawing.DrawingUrl
+      (item) => item.DrawingId === drawing.DrawingId
     );
 
     if (itemIndex !== -1) {
@@ -332,8 +399,10 @@ const deleteDrawingfromFolder = async (drawing, folder) => {
     await updateDoc(folderRef, {
       Drawings: documentData,
     });
+
+    Alert.alert("Removed! ");
   } catch (error) {
-    console.error("Error add drawings:", error);
+    console.error("Error remove drawings:", error);
   }
 };
 
@@ -439,43 +508,6 @@ const setWatchHistory = async (video) => {
   }
 };
 
-const saveDrawing = async (uri, name) => {
-  try {
-    const user = auth.currentUser;
-
-    const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function (e) {
-        console.log(e);
-        reject(new TypeError("Network request failed"));
-      };
-      xhr.responseType = "blob";
-      xhr.open("GET", uri, true);
-      xhr.send(null);
-    });
-
-    const imageRef = ref(storage, `images/${user.uid}/${name}`);
-    await uploadBytes(imageRef, blob);
-    blob.close();
-
-    const downloadUrl = await getDownloadURL(imageRef);
-    const userRef = collection(db, "Users", user.uid, "Drawings");
-
-    await addDoc(userRef, {
-      DrawingName: name,
-      DrawingUrl: downloadUrl,
-      TimeStamp: serverTimestamp(),
-    });
-
-    console.log("Succesfully Saved to database");
-  } catch (error) {
-    console.error("Error Saving Drawings", error);
-  }
-};
-
 export {
   db,
   auth,
@@ -496,4 +528,5 @@ export {
   deleteFolder,
   addDrawing,
   deleteDrawingfromFolder,
+  editFolderName,
 };
